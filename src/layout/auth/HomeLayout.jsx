@@ -1,20 +1,20 @@
 import { Outlet } from 'react-router-dom';
-import Container from '../container/Container';
+import MainContainer from '../container/MainContainer';
 import Footer from '../footer/Footer';
 import Header from '../header/Header';
 
-function AuthLayout() {
+function HomeLayout() {
   return (
     <>
       <div className="min-h-screen">
         <Header />
-        <Container>
+        <MainContainer>
           <Outlet />
-        </Container>
+        </MainContainer>
       </div>
       <Footer />
     </>
   );
 }
 
-export default AuthLayout;
+export default HomeLayout;
