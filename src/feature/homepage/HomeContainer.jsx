@@ -7,7 +7,8 @@ function HomeContainer() {
     roomTitle: 'Khaothong, Thailand',
     roomLocation: 'Khao Phanom Bencha National Park',
     roomOpen: 'Oct 27 – Nov 1',
-    roomPrice: '฿8,331 per night',
+    roomPrice: '฿8,331',
+
     roomRate: '4.75',
     imageList: [
       'https://a0.muscache.com/im/pictures/ade75bc6-9a2a-453f-9d6d-b7919ff7bd4a.jpg?im_w=720',

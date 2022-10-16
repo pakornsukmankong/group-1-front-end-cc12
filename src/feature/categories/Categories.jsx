@@ -103,9 +103,33 @@ function Categories() {
           <i className="fa-solid fa-chevron-left text-[0.75rem] h-3 w-3"></i>
         </button>
         <Swiper
-          slidesPerView={10}
-          spaceBetween={100}
-          slidesPerGroup={10}
+          breakpoints={{
+            320: {
+              slidesPerView: 1,
+              spaceBetween: 1,
+              slidesPerGroup: 1
+            },
+            425: {
+              slidesPerView: 3,
+              spaceBetween: 1,
+              slidesPerGroup: 3
+            },
+            768: {
+              slidesPerView: 4,
+              spaceBetween: 1,
+              slidesPerGroup: 4
+            },
+            1024: {
+              slidesPerView: 5,
+              spaceBetween: 1,
+              slidesPerGroup: 5
+            },
+            1440: {
+              slidesPerView: 10,
+              spaceBetween: 100,
+              slidesPerGroup: 10
+            }
+          }}
           loop={true}
           loopFillGroupWithBlank={true}
           modules={[Pagination, Navigation]}

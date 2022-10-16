@@ -1,6 +1,6 @@
 function Search() {
   return (
-    <div className="relative w-6/12">
+    <div className="relative sm:w-12/12 md:w-12/12 lg:w-6/12 xl:w-6/12 ">
       <input
         type="search"
         name="q"

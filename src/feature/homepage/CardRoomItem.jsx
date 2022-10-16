@@ -100,7 +100,10 @@ function CardRoomItem({ dataItem }) {
         </div>
         <div className="font-light text-gray">{roomLocation}</div>
         <div className="font-light text-gray">{roomOpen}</div>
-        <div className="font-medium">{roomPrice}</div>
+        <div className="font-medium">
+          <span>{roomPrice}</span>
+          <span className="font-light"> night </span>
+        </div>
       </div>
     </div>
   );

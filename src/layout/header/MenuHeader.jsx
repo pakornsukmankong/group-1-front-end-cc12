@@ -9,7 +9,7 @@ function MenuHeader() {
   // const [user, setUser] = useState();
   return (
     <>
-      <div className="font-medium rounded-full flex flex-row w-auto p-2 cursor-pointer hover:shadow mr-2">
+      <div className="font-medium rounded-full flex flex-row w-auto p-2 cursor-pointer hover:shadow mr-2 ">
         {user ? 'Switch to hosting' : 'Become a Host'}
       </div>
       <div className="rounded-full flex flex-row w-auto p-2 cursor-pointer hover:shadow mr-5">
