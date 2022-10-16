@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
 
@@ -10,41 +10,97 @@ import 'swiper/css/navigation';
 // import required modules
 import { Pagination, Navigation } from 'swiper';
 
-import './slider-style.css';
+import './categories.css';
 
 function Categories() {
-  let data = new Array(20).fill(1);
+  const listMock = [
+    {
+      name: 'Creative spaces',
+      image:
+        'https://a0.muscache.com/pictures/8a43b8c6-7eb4-421c-b3a9-1bd9fcb26622.jpg',
+      active: false
+    },
+    {
+      name: 'Design',
+      image:
+        'https://a0.muscache.com/pictures/50861fca-582c-4bcc-89d3-857fb7ca6528.jpg',
+      active: false
+    },
+    {
+      name: 'Amazing views',
+      image:
+        'https://a0.muscache.com/pictures/3b1eb541-46d9-4bef-abc4-c37d77e3c21b.jpg',
+      active: false
+    },
+    {
+      name: 'Beachfront',
+      image:
+        'https://a0.muscache.com/pictures/bcd1adc0-5cee-4d7a-85ec-f6730b0f8d0c.jpg',
+      active: false
+    },
+    {
+      name: 'Castles',
+      image:
+        'https://a0.muscache.com/pictures/1b6a8b70-a3b6-48b5-88e1-2243d9172c06.jpg',
+      active: false
+    },
+    {
+      name: 'Lake',
+      image:
+        'https://a0.muscache.com/pictures/a4634ca6-1407-4864-ab97-6e141967d782.jpg',
+      active: false
+    },
+    {
+      name: 'Beach',
+      image:
+        'https://a0.muscache.com/pictures/10ce1091-c854-40f3-a2fb-defc2995bcaf.jpg',
+      active: false
+    }
+  ];
+  const getRandom = (min, max) => {
+    return Math.floor(Math.random() * (max - min)) + min;
+  };
 
   const [prevEl, setPrevEl] = useState(null);
   const [nextEl, setNextEl] = useState(null);
 
+  const [category, setCategory] = useState();
+
+  const onClickSlider = (indexActive) => {
+    let newArr = category.map((item, index) => {
+      if (index === indexActive) {
+        return {
+          ...item,
+          active: true
+        };
+      }
+      return {
+        ...item,
+        active: false
+      };
+    });
+    setCategory([...newArr]);
+  };
+
+  useEffect(() => {
+    function initCategory() {
+      let mockData = new Array(20).fill(1).map((i) => {
+        return listMock[getRandom(0, listMock.length)];
+      });
+      setCategory(mockData);
+    }
+
+    initCategory();
+  }, []);
+
   return (
-    <header className="bg-white border-b h-20  flex flex-row w-full">
+    <header className="px-12 bg-white border-b h-20 flex flex-row w-full ">
       <div className="flex flex-row justify-between items-center w-full blur-left">
         <button
-          className="bg-white border rounded-full p-2 left-button"
+          className="bg-white border rounded-full left-button flex p-2"
           ref={(node) => setPrevEl(node)}
         >
-          <svg
-            viewBox="0 0 32 32"
-            xmlns="http://www.w3.org/2000/svg"
-            aria-hidden="true"
-            role="presentation"
-            focusable="false"
-            style={{
-              display: 'block',
-              fill: 'none',
-              height: '12px',
-              width: '12px',
-              stroke: 'currentcolor',
-              strokeWidth: '5.33333',
-              overflow: 'visible'
-            }}
-          >
-            <g fill="none">
-              <path d="m20 28-11.29289322-11.2928932c-.39052429-.3905243-.39052429-1.0236893 0-1.4142136l11.29289322-11.2928932" />
-            </g>
-          </svg>
+          <i className="fa-solid fa-chevron-left text-[0.75rem] h-3 w-3"></i>
         </button>
         <Swiper
           slidesPerView={10}
@@ -56,73 +112,31 @@ function Categories() {
           navigation={{ prevEl, nextEl }}
           className="mySwiper"
         >
-          {data.map((i, keys) => {
-            return (
-              <SwiperSlide key={keys}>
-                <div className="flex flex-col justify-center items-center gap-x-5 cursor-pointer select-none	">
-                  <img
-                    src="https://a0.muscache.com/pictures/8a43b8c6-7eb4-421c-b3a9-1bd9fcb26622.jpg"
-                    alt="icon"
-                    width="24"
-                    height="24"
-                  />
-                  <div className=" w-24">
-                    <span className="text-xs">Creative spaces</span>
+          {category &&
+            category.map((item, keys) => {
+              return (
+                <SwiperSlide key={keys} onClick={() => onClickSlider(keys)}>
+                  <div
+                    className={`flex flex-col justify-center items-center gap-x-5 cursor-pointer select-none ${
+                      item.active ? 'item-active' : ''
+                    }`}
+                  >
+                    <img src={item.image} alt="icon" width="24" height="24" />
+                    <div className="w-24 text-center">
+                      <span className="text-xs">{item.name}</span>
+                    </div>
                   </div>
-                </div>
-              </SwiperSlide>
-            );
-          })}
+                </SwiperSlide>
+              );
+            })}
         </Swiper>
         <button
-          className="bg-white border rounded-full p-2"
+          className="bg-white border rounded-full left-button flex p-2"
           ref={(node) => setNextEl(node)}
         >
-          <svg
-            viewBox="0 0 32 32"
-            xmlns="http://www.w3.org/2000/svg"
-            aria-hidden="true"
-            role="presentation"
-            focusable="false"
-            style={{
-              display: 'block',
-              fill: 'none',
-              height: '12px',
-              width: '12px',
-              stroke: 'currentcolor',
-              strokeWidth: '5.33333',
-              overflow: 'visible'
-            }}
-          >
-            <g fill="none">
-              <path d="m12 4 11.2928932 11.2928932c.3905243.3905243.3905243 1.0236893 0 1.4142136l-11.2928932 11.2928932" />
-            </g>
-          </svg>
+          <i className="fa-solid fa-chevron-right text-[0.75rem] h-3 w-3"></i>
         </button>
       </div>
-      {/* <div className="flex flex-row justify-end items-center w-1/12">
-        <button
-          type="button"
-          className="bg-white border rounded-lg flex flex-row items-center justify-between  h-10 p-3 "
-        >
-          <svg
-            viewBox="0 0 16 16"
-            xmlns="http://www.w3.org/2000/svg"
-            aria-hidden="true"
-            role="presentation"
-            focusable="false"
-            style={{
-              display: 'block',
-              height: '14px',
-              width: '14px',
-              fill: 'currentcolor'
-            }}
-          >
-            <path d="M5 8c1.306 0 2.418.835 2.83 2H14v2H7.829A3.001 3.001 0 1 1 5 8zm0 2a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm6-8a3 3 0 1 1-2.829 4H2V4h6.17A3.001 3.001 0 0 1 11 2zm0 2a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
-          </svg>
-          <span>Filters</span>
-        </button>
-      </div> */}
     </header>
   );
 }
