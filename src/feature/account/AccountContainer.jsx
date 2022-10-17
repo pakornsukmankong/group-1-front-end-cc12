@@ -7,13 +7,13 @@ function AccountContainer() {
 				<span>Personal info</span>
 			</div>
 			<div className=' text-left text-[2rem] font-bold'>Personal info</div>
-			<div className=''>
+			<div>
 				<div className='mt-[1.8rem] flex justify-between'>
 					{/* table 1 */}
-					<div className=''>
+					<div>
 						<div className='w-[37.5rem] flex'>
-							<div className=''>
-								<div className=''>
+							<div>
+								<div>
 									<div className='mt-[1.875rem] text-left  w-[31.25rem]'>
 										Legal Name
 									</div>
@@ -30,8 +30,8 @@ function AccountContainer() {
 						{/* table 2 */}
 						<div>
 							<div className='w-[37.5rem] flex mt-[0.313rem]'>
-								<div className=''>
-									<div className=''>
+								<div>
+									<div>
 										<div className='mt-[1.875rem] text-left  w-[31.25rem]'>
 											Gender
 										</div>
@@ -49,8 +49,8 @@ function AccountContainer() {
 						{/* table 3 */}
 						<div className='mt-[0.313rem]'>
 							<div className='w-[37.5rem] flex mt-[0.938rem]'>
-								<div className=''>
-									<div className=''>
+								<div>
+									<div>
 										<div className='mt-[1.875rem] text-left  w-[31.25rem]'>
 											Email address
 										</div>
@@ -68,8 +68,8 @@ function AccountContainer() {
 						{/* table 4  */}
 						<div className='mt-[-0.938rem]'>
 							<div className='w-[37.5rem] flex mt-[0.938rem]'>
-								<div className=''>
-									<div className=''>
+								<div>
+									<div>
 										<div className='mt-[1.875rem] text-left  w-[31.25rem]'>
 											Phone numbers
 										</div>
@@ -89,8 +89,8 @@ function AccountContainer() {
 						{/* table 5 */}
 						<div className='mt-[-0.938rem]'>
 							<div className='w-[37.5rem] flex mt-[0.938rem]'>
-								<div className=''>
-									<div className=''>
+								<div>
+									<div>
 										<div className='mt-[1.875rem] text-left  w-[31.25rem]'>
 											Government ID
 										</div>
@@ -108,8 +108,8 @@ function AccountContainer() {
 						{/* table 6 */}
 						<div className='mt-[1rem]'>
 							<div className='w-[38rem] flex mt-[1rem]'>
-								<div className=''>
-									<div className=''>
+								<div>
+									<div>
 										<div className='mt-[2rem] text-left  w-[31rem]'>
 											Address
 										</div>
@@ -127,8 +127,8 @@ function AccountContainer() {
 						{/* table 7 */}
 						<div className='mt-[1rem]'>
 							<div className='w-[38rem] flex mt-[1rem]'>
-								<div className=''>
-									<div className=''>
+								<div>
+									<div>
 										<div className='mt-[2rem] text-left  w-[31rem]'>
 											Emergency contact
 										</div>
@@ -146,8 +146,8 @@ function AccountContainer() {
 						{/* table 8 */}
 						<div className='mt-[1rem]'>
 							<div className='w-[37.5rem] flex mt-[0.938rem]'>
-								<div className=''>
-									<div className=''>
+								<div>
+									<div>
 										<div className='mt-[1.875rem] text-left  w-[31.25rem]'>
 											Password
 										</div>
@@ -165,8 +165,8 @@ function AccountContainer() {
 						{/* table 9 */}
 						<div className='mt-[-0.938rem]'>
 							<div className='w-[37.5rem] flex mt-[0.938rem]'>
-								<div className=''>
-									<div className=''>
+								<div>
+									<div>
 										<div className='mt-[1.875rem] text-left  w-[31.25rem]'>
 											Deactivate your account
 										</div>
@@ -182,7 +182,7 @@ function AccountContainer() {
 						<hr className='mt-[1.875rem]'></hr>
 						{/* end table */}
 					</div>
-					<div className=''>
+					<div>
 						{/* table 1 */}
 						<div className='w-[25rem] border rounded-xl'>
 							<div className='flex start mt-[1.25rem] ml-[1.875rem]'>
@@ -191,7 +191,7 @@ function AccountContainer() {
 							<div className='mt-[0.625rem] text-[1.25rem] font-bold text-opacity-10 w-[18.75rem] text-left mx-auto'>
 								<p>
 									Why isn’t my info shown <br></br>
-									<p>here?</p>
+									here?
 								</p>
 							</div>
 							<div className='mt-[0.625rem] text-[1rem] w-[18.75rem] text-left mx-auto text-gray-400'>
@@ -202,7 +202,7 @@ function AccountContainer() {
 							<hr className='mt-[1.875rem] w-[18.75rem] mx-auto'></hr>
 							{/* table 2 */}
 							<div className='flex start mt-[1.25rem] ml-[1.875rem]'>
-								<i class='fa-solid fa-lock text-[3.125rem] ml-[1.25rem]'></i>
+								<i className='fa-solid fa-lock text-[3.125rem] ml-[1.25rem]'></i>
 							</div>
 							<div className='mt-[0.625rem] text-[1.25rem] font-bold text-opacity-10 w-[18.75rem] text-left mx-auto'>
 								<p>Which details can be edited?</p>
@@ -218,7 +218,7 @@ function AccountContainer() {
 							<hr className='mt-[1.875rem] w-[18.75rem] mx-auto'></hr>
 							{/* table 3 */}
 							<div className='flex start mt-[1.25rem] ml-[1.875rem]'>
-								<i class='fa-regular fa-eye text-[3.125rem] ml-[1.25rem]'></i>
+								<i className='fa-regular fa-eye text-[3.125rem] ml-[1.25rem]'></i>
 							</div>
 							<div className='mt-[0.625rem] text-[1.25rem] font-bold text-opacity-10 w-[18.75rem] text-left mx-auto'>
 								<p>What info is shared with others?</p>
