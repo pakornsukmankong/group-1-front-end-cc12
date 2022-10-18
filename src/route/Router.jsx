@@ -2,6 +2,7 @@
 import { Routes, Route } from 'react-router-dom'
 import EmailLoginModal from '../components/Modal/EmailLoginModal';
 import LoginRegisterModal from '../components/Modal/LoginRegisterModal';
+import RegisterModal from '../components/Modal/RegisterModal';
 import AuthLayout from '../layout/auth/AuthLayout'
 import HomeLayout from '../layout/auth/HomeLayout'
 import AccountPage from '../pages/AccountPage'
@@ -25,6 +26,7 @@ function Router() {
           <Route path="/rooms" element={<RoomPage />} />
           <Route path="/login" element={<LoginRegisterModal />}></Route>
           <Route path="/loginEmail" element={<EmailLoginModal />}></Route>
+          <Route path="/register" element={<RegisterModal />}></Route>
         </Route>
       </Routes>
     </>
