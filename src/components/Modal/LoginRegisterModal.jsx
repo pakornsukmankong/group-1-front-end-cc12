@@ -39,7 +39,7 @@ function LoginRegisterModal() {
                   className="pl-5 min-w-full min-h-full rounded-b-xl text-lg hover:border-2 hover:border-black hover:rounded-xl"
                 />
               </div>
-              <div className="my-2 text-xs">
+              <div className="my-2 text-xs text-gray-300">
                 Well call or text you to confirm your number. Standard message
                 and data rates apply.
                 <a to="/" className="underline font-bold cursor-pointer">
