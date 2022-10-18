@@ -1,6 +1,7 @@
 import WhitelisItem from './WhitelisItem';
 
 function WhitelistContainer() {
+
 	return (
 		<>
 			<div className='mx-[5rem]'>
@@ -22,3 +23,4 @@ function WhitelistContainer() {
 }
 
 export default WhitelistContainer;
+
