@@ -1,11 +1,16 @@
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { sendOutOtp } from '../../store/AuthSlice';
+import PhoneAuthModal from './PhoneAuthModal';
 
 function LoginRegisterModal({ closeModal }) {
 	const [logEmail, setlogEmail] = useState(false);
 	const [phoneNumber, setPhoneNumber] = useState('');
-	const [prefixPhone, setPrefixPhone] = useState('Phone Number');
+	const [modal, setModal] = useState(false);
 
-	console.log(phoneNumber);
+	// const selectd = useSelector();
+	const dispatch = useDispatch();
+
 	return (
 		<div className='fixed top-0 bottom-0 left-0 right-0 bg-gray-900 bg-opacity-50 z-50 leading-5'>
 			<div className='flex flex-col justify-center items-center h-full'>
@@ -42,12 +47,10 @@ function LoginRegisterModal({ closeModal }) {
 								<input
 									type='text'
 									name='phone'
-									placeholder={prefixPhone}
+									placeholder='Phone Number'
 									className='pl-5 min-w-full min-h-full rounded-b-xl text-lg hover:border-2 hover:border-black hover:rounded-xl'
-									// onClick={() => setPrefixPhone('+66')}
 									value={phoneNumber}
 									onChange={(e) => setPhoneNumber(e.target.value)}
-									onClick={() => setPhoneNumber('+66')}
 								/>
 							</div>
 							<div className='my-2 text-xs text-gray-300'>
@@ -59,7 +62,9 @@ function LoginRegisterModal({ closeModal }) {
 							</div>
 							<button
 								className='my-3 min-w-full h-12 text-base  flex items-center justify-center text-white rounded-lg bg-[#FF385C] hover:bg-[#ff0532]'
-								onClick={() => console.log('555')}
+								onClick={() => {
+									dispatch(sendOutOtp(phoneNumber));
+								}}
 							>
 								Continue
 							</button>
@@ -94,6 +99,7 @@ function LoginRegisterModal({ closeModal }) {
 					</div>
 				</div>
 			</div>
+			<div>{modal ? <PhoneAuthModal /> : ''}</div>
 		</div>
 	);
 }
