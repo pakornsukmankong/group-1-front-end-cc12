@@ -1,0 +1,58 @@
+.card-container:hover .card-navigation {
+  display: flex;
+}
+
+.card-container .card-navigation {
+  display: none;
+}
+
+.card-navigation {
+  position: absolute;
+  top: 45%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 1rem;
+  z-index: 3;
+  cursor: pointer;
+}
+
+.card-prev.swiper-button-disabled,
+.card-next.swiper-button-disabled {
+  display: none;
+}
+
+.card-favorite-icon {
+  position: absolute;
+  top: 7%;
+  right: 0;
+  display: flex;
+  justify-content: flex-end;
+  z-index: 3;
+  cursor: pointer;
+}
+
+.card-icon {
+  display: block;
+  fill: rgba(0, 0, 0, 0.5);
+  height: 24px;
+  width: 24px;
+  stroke: white;
+  stroke-width: 2;
+  overflow: visible;
+}
+
+.card-icon.active {
+  fill: #ff385c;
+  stroke: white;
+}
+
+.swiper-pagination-bullet {
+  background-color: white;
+  opacity: 0.6;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: white;
+  opacity: 1;
+}
