@@ -49,7 +49,7 @@ function CardProperty() {
         <div className="w-[26rem] border border-b-gray-300"></div>
         <div className="flex justify-between font-semibold  my-8">
           <div className="underline">Total &#40; THB&#41;</div>
-          <div>฿1,172.52</div>
+          <div>฿8933.76</div>
         </div>
       </div>
     </div>
