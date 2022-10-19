@@ -18,7 +18,7 @@ function MenuHeader() {
 			<div className='rounded-full flex flex-row w-auto p-2 cursor-pointer hover:shadow mr-5'>
 				<i className='fa-solid fa-globe  text-gray-600 text-[1rem]'></i>
 			</div>
-			{!user ? <MenuDropDownAsUser /> : <MenuDropDownGuest />}
+			{user ? <MenuDropDownAsUser /> : <MenuDropDownGuest />}
 		</>
 	);
 }

@@ -2,6 +2,7 @@ import { Fragment, useState } from 'react';
 import { Menu, Transition } from '@headlessui/react';
 import LoginRegisterModal from '../../components/Modal/LoginRegisterModal';
 import PhoneAuthModal from '../../components/Modal/PhoneAuthModal';
+import { Link } from 'react-router-dom';
 
 function MenuDropDownGuest() {
 	function classNames(...classes) {
@@ -64,41 +65,41 @@ function MenuDropDownGuest() {
 					<div className='py-1'>
 						<Menu.Item>
 							{({ active }) => (
-								<a
-									href='#'
+								<Link
+									to='#'
 									className={classNames(
 										active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
 										'block px-4 py-2 text-sm'
 									)}
 								>
 									Host your home
-								</a>
+								</Link>
 							)}
 						</Menu.Item>
 						<Menu.Item>
 							{({ active }) => (
-								<a
-									href='#'
+								<Link
+									to='#'
 									className={classNames(
 										active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
 										'block px-4 py-2 text-sm'
 									)}
 								>
 									Host an experience
-								</a>
+								</Link>
 							)}
 						</Menu.Item>
 						<Menu.Item>
 							{({ active }) => (
-								<a
-									href='#'
+								<Link
+									to='#'
 									className={classNames(
 										active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
 										'block px-4 py-2 text-sm'
 									)}
 								>
 									Help
-								</a>
+								</Link>
 							)}
 						</Menu.Item>
 					</div>
