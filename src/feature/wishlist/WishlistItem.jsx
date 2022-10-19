@@ -1,30 +1,71 @@
-function WishlistItem() {
-	return (
-		<div className='mx-auto mt-[2rem]'>
-			<div className='w-[26rem] h-[16rem] flex'>
-				<div>
-					<img
-						className='w-[20rem] h-[16rem] rounded-tl-3xl rounded-bl-3xl hover:shadow-2xl cursor-pointer'
-						src='https://img.freepik.com/free-photo/pattaya-city_1203-2712.jpg?w=2000&t=st=1665733615~exp=1665734215~hmac=2526010c52349328b0727832f7d88a57c756a91e55661fa4e349541616d8a23b'
-					></img>
-				</div>
-				<div className='flex-colum'>
-					<img
-						className='w-[10rem] h-[8rem] rounded-tr-3xl hover:shadow-2xl cursor-pointer'
-						src='https://img.freepik.com/free-photo/relax-couple-lay-down-beach-chiar-with-sea-wave-man-woman-have-vacation-sea-nature-concept_1150-13745.jpg?w=2000&t=st=1665733679~exp=1665734279~hmac=bcf104ce3e032a4556781e8d23de6f15a4b4ef2a6c85bf7a563bceaad0e87a4e'
-					></img>
+import { useState } from 'react'
 
-					<img
-						className='w-[10rem] h-[8rem] rounded-br-3xl hover:shadow-2xl cursor-pointer'
-						src='https://img.freepik.com/free-photo/wooden-bridge-koh-nangyuan-island-surat-thani-thailand_335224-1082.jpg?w=2000&t=st=1665733695~exp=1665734295~hmac=1e872fa6e5e8d628ab9670fcfc5f4ee4e8ccea4b74ae6a7ddcad79970c3e0984'
-					></img>
-				</div>
-			</div>
-			<div className='text-[1.5rem]'>
-				<h1>Test</h1>
-			</div>
-		</div>
-	);
+// Import Swiper React components
+import { Swiper, SwiperSlide } from 'swiper/react'
+
+// Import Swiper styles
+import 'swiper/css'
+import 'swiper/css/pagination'
+import 'swiper/css/navigation'
+
+// import required modules
+import { Pagination, Navigation } from 'swiper'
+
+import './wishlists-item.css'
+import { Link } from 'react-router-dom'
+
+function WishlistItem() {
+  const mockData = [
+    'https://a0.muscache.com/im/pictures/ade75bc6-9a2a-453f-9d6d-b7919ff7bd4a.jpg?im_w=720',
+    'https://a0.muscache.com/im/pictures/f255c96c-a0f0-44f0-a975-fcb63ec74e71.jpg?im_w=720',
+    'https://a0.muscache.com/im/pictures/70bca335-129b-4a83-bfe0-6a8c52baf448.jpg?im_w=720',
+    'https://a0.muscache.com/im/pictures/4abb7e2c-ad31-4f84-a36a-40e1a8b15084.jpg?im_w=720',
+    'https://a0.muscache.com/im/pictures/ffadcfe3-75de-4c1d-b94c-2c609bf96c38.jpg?im_w=720',
+  ]
+
+  const [prevEl, setPrevEl] = useState(null)
+  const [nextEl, setNextEl] = useState(null)
+
+  return (
+    <div className="card-container">
+      <Swiper
+        pagination={{
+          dynamicBullets: true,
+        }}
+        spaceBetween={10}
+        modules={[Pagination, Navigation]}
+        navigation={{ prevEl, nextEl }}
+        className="room-card-swiper">
+        {mockData.map((item, index) => (
+          <SwiperSlide key={index}>
+            <Link to="/rooms/:id">
+              <img
+                src={item}
+                alt="image"
+                className="w-screen rounded-lg h-[20rem] "
+              />
+            </Link>
+          </SwiperSlide>
+        ))}
+        <div className="card-navigation">
+          <div>
+            <button
+              className="bg-white shadow border rounded-full flex p-2 card-prev"
+              ref={(node) => setPrevEl(node)}>
+              <i className="fa-solid fa-chevron-left text-[0.75rem] h-3 w-3"></i>
+            </button>
+          </div>
+          <div>
+            <button
+              className="bg-white shadow border rounded-full flex p-2 card-next"
+              ref={(node) => setNextEl(node)}>
+              <i className="fa-solid fa-chevron-right text-[0.75rem] h-3 w-3"></i>
+            </button>
+          </div>
+        </div>
+      </Swiper>
+    </div>
+  )
 }
 
-export default WishlistItem;
+export default WishlistItem
