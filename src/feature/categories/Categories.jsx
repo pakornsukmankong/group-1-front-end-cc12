@@ -10,8 +10,6 @@ import 'swiper/css/navigation';
 // import required modules
 import { Pagination, Navigation } from 'swiper';
 
-import './categories.css';
-
 function Categories() {
   const listMock = [
     {
@@ -94,8 +92,8 @@ function Categories() {
   }, []);
 
   return (
-    <header className="px-12 bg-white border-b h-20 flex flex-row w-full ">
-      <div className="flex flex-row justify-between items-center w-full blur-left">
+    <header className="bg-white border-b h-20 flex flex-row w-full ">
+      <div className="flex flex-row justify-between items-center w-full gap-x-4">
         <button
           className="bg-white border rounded-full left-button flex p-2"
           ref={(node) => setPrevEl(node)}
@@ -140,13 +138,13 @@ function Categories() {
             category.map((item, keys) => {
               return (
                 <SwiperSlide key={keys} onClick={() => onClickSlider(keys)}>
-                  <div
-                    className={`flex flex-col justify-center items-center gap-x-5 cursor-pointer select-none ${
-                      item.active ? 'item-active' : ''
-                    }`}
-                  >
+                  <div className="flex flex-col justify-center items-center gap-x-5 cursor-pointer select-none">
                     <img src={item.image} alt="icon" width="24" height="24" />
-                    <div className="w-24 text-center">
+                    <div
+                      className={`w-24 text-center ${
+                        item.active ? ' border-b-2 border-b-black ' : ''
+                      } `}
+                    >
                       <span className="text-xs">{item.name}</span>
                     </div>
                   </div>
