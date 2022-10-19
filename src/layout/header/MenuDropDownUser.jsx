@@ -32,7 +32,7 @@ function MenuDropDownAsUser() {
 						<Menu.Item>
 							{({ active }) => (
 								<Link
-									to='/whitelist/:id'
+									to='/wishlist/:id'
 									className={classNames(
 										active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
 										'block px-4 py-2 text-sm'
@@ -61,28 +61,28 @@ function MenuDropDownAsUser() {
 					<div className='py-1'>
 						<Menu.Item>
 							{({ active }) => (
-								<a
-									href='#'
+								<Link
+									to='#'
 									className={classNames(
 										active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
 										'block px-4 py-2 text-sm'
 									)}
 								>
 									Help
-								</a>
+								</Link>
 							)}
 						</Menu.Item>
 						<Menu.Item>
 							{({ active }) => (
-								<a
-									href='#'
+								<Link
+									to='#'
 									className={classNames(
 										active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
 										'block px-4 py-2 text-sm'
 									)}
 								>
 									Log out
-								</a>
+								</Link>
 							)}
 						</Menu.Item>
 					</div>
