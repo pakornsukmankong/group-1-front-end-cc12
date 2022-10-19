@@ -16,6 +16,8 @@ import CreateHostPage from '../pages/CreateHostPage';
 import TypeGroupContainer from '../feature/create-host/TypeGroupContainer';
 import PropertyTypeContainer from '../feature/create-host/PropertyTypeContainer';
 import PrivacyTypeContainer from '../feature/create-host/PrivacyTypeContainer';
+import LocationContainer from '../feature/create-host/LocationContainer';
+import FloorPlanContainer from '../feature/create-host/FloorPlanContainer';
 
 function Router() {
   return (
@@ -50,7 +52,8 @@ function Router() {
             path="privacy-type/:id"
             element={<PrivacyTypeContainer />}
           ></Route>
-          <Route path="location/:id" element={<CreateHostPage />}></Route>
+          <Route path="location/:id" element={<LocationContainer />}></Route>
+          <Route path="floor-plan/:id" element={<FloorPlanContainer />}></Route>
         </Route>
       </Routes>
     </>

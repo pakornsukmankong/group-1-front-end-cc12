@@ -2,14 +2,13 @@ import { Link } from 'react-router-dom';
 
 function CreateHostContainer() {
   return (
-    <div className="flex flex-row min-h-screen">
-      <div className="basis-2/4   bg-slate-500 ">
+    <div className="flex min-h-screen flex-col sm:flex-row">
+      <div className="basis-2/4 bg-slate-500">
         <video
-          className="h-screen"
+          className="h-[30%] w-full object-none object-center sm:h-screen"
+          controls
           autoPlay
-          crossOrigin="anonymous"
-          playsInline
-          preload="auto"
+          muted
           style={{ objectFit: 'cover', objectPosition: '0px 25%' }}
         >
           <source
@@ -20,22 +19,22 @@ function CreateHostContainer() {
       </div>
       <div className="basis-2/4 bg-black flex flex-col justify-between">
         <div className="pt-8 px-12 flex justify-end">
-          <button className="px-4 py-2  font-semibold text-sm bg-gray-800 text-white rounded-full shadow-sm">
+          <button className="px-4 py-2  font-light text-xs bg-gray-800 text-gray-300 rounded-full shadow-sm">
             Exit
           </button>
         </div>
         <div className=" text-white px-5 text-center">
-          <h1 className="text-[2.8rem] p-12 font-bold">
+          <h1 className="text-[2.8rem] p-12 font-bold tracking-[0.18rem]">
             Become a Host in 10 easy steps
           </h1>
           <span className="text-[1.2rem]">
             Join us. We'll help you every step of the way.
           </span>
         </div>
-        <div className="flex justify-end border-t border-t-slate-700 py-4 pr-12">
+        <div className="flex justify-end border-t border-t-slate-800 py-4 pr-12">
           <Link
             to={'/create-host/property-type-group'}
-            className="px-8 py-4 font-semibold text-white bg-gradient-to-r from-pink-500 to-pink-600 rounded shadow-sm bt-let-go"
+            className="px-5 py-3 font-semibold text-white bg-gradient-to-r from-red-500 to-pink-600 rounded shadow-sm bt-let-go"
           >
             Let's go!
           </Link>
