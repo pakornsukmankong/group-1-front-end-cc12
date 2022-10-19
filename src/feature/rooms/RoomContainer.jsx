@@ -3,6 +3,7 @@ import Facility from './Facility'
 import Highlight from './Highlight'
 import Map from './Map'
 import { useLoadScript } from '@react-google-maps/api'
+import ImageItem from './ImageItem'
 
 function RoomContainer() {
   const { isLoaded } = useLoadScript({
@@ -11,15 +12,6 @@ function RoomContainer() {
 
   return (
     <>
-      {/* property Image */}
-      <div className="flex">
-        <img
-          src="https://a0.muscache.com/im/pictures/d10645a3-6fa0-4a17-9ae8-02278355e9f5.jpg?im_w=720"
-          alt="propertyImage"
-          className="w-screen"
-        />
-      </div>
-
       {/* property name ,review, location */}
       <div className="flex flex-col gap-2 py-5 border-b-2">
         <p className="text-3xl">Rare Villa right on the beach!!</p>
@@ -33,46 +25,59 @@ function RoomContainer() {
         </div>
       </div>
 
-      {/* owner and property info */}
-      <div className="flex gap-2 py-5 border-b-2 justify-between items-center">
-        <div className="flex flex-col gap-2">
-          <p className="text-2xl">Entire home hosted by Floksong</p>
-          <p className="font-light">
-            6 guests &middot; 2 bedrooms &middot; 3 beds &middot; 2 baths
-          </p>
+      {/* property Image */}
+      <ImageItem />
+
+      <div className="md:grid md:grid-cols-2">
+        <div>
+          {/* owner and property info */}
+          <div className="flex gap-2 py-5 border-b-2 justify-between items-center">
+            <div className="flex flex-col gap-2">
+              <p className="text-2xl">Entire home hosted by Floksong</p>
+              <p className="font-light">
+                6 guests &middot; 2 bedrooms &middot; 3 beds &middot; 2 baths
+              </p>
+            </div>
+            <Avatar hSize="h-10" wSize="w-10" />
+          </div>
+
+          {/* Highlight */}
+          <div className="flex flex-col gap-2 py-5 border-b-2 justify-start">
+            <Highlight />
+            <Highlight />
+            <Highlight />
+          </div>
+
+          {/* about this place */}
+          <div className="flex flex-col gap-2 py-5 border-b-2 justify-start">
+            <p className="text-xl">About this place</p>
+            <p className="font-light">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              Provident, hic repellendus voluptatibus veritatis architecto
+              impedit minus quam sed possimus. Distinctio harum ad praesentium
+              tempore, cumque cupiditate eveniet omnis porro veritatis
+              reiciendis id, mollitia blanditiis? Nostrum molestias error
+              possimus, odio repellendus ipsum facilis quis laboriosam veritatis
+              voluptatum inventore eaque delectus dolores.
+            </p>
+          </div>
+
+          {/* What this place offers */}
+          <div className="flex flex-col gap-2 py-5 border-b-2 justify-start">
+            <p className="text-xl my-2">What this place offers</p>
+            <Facility />
+            <Facility />
+            <Facility />
+            <Facility />
+            <Facility />
+          </div>
         </div>
-        <Avatar hSize="h-10" wSize="w-10" />
-      </div>
-
-      {/* Highlight */}
-      <div className="flex flex-col gap-2 py-5 border-b-2 justify-start">
-        <Highlight />
-        <Highlight />
-        <Highlight />
-      </div>
-
-      {/* about this place */}
-      <div className="flex flex-col gap-2 py-5 border-b-2 justify-start">
-        <p className="text-xl">About this place</p>
-        <p className="font-light">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident,
-          hic repellendus voluptatibus veritatis architecto impedit minus quam
-          sed possimus. Distinctio harum ad praesentium tempore, cumque
-          cupiditate eveniet omnis porro veritatis reiciendis id, mollitia
-          blanditiis? Nostrum molestias error possimus, odio repellendus ipsum
-          facilis quis laboriosam veritatis voluptatum inventore eaque delectus
-          dolores.
-        </p>
-      </div>
-
-      {/* What this place offers */}
-      <div className="flex flex-col gap-2 py-5 border-b-2 justify-start">
-        <p className="text-xl my-2">What this place offers</p>
-        <Facility />
-        <Facility />
-        <Facility />
-        <Facility />
-        <Facility />
+        <div className="sticky">
+          <img
+            className=""
+            src="https://a0.muscache.com/im/pictures/ade75bc6-9a2a-453f-9d6d-b7919ff7bd4a.jpg?im_w=720"
+          />
+        </div>
       </div>
 
       {/* Where you will be */}
@@ -111,8 +116,13 @@ function RoomContainer() {
 
       {/* Hosted By */}
       <div className="flex flex-col py-5 border-b-2 ">
-        <p className="text-xl">Hosted By Floksong</p>
-        <p className="text-sm font-thin mb-3">Joined in October 2013</p>
+        <div className="flex gap-3">
+          <Avatar hSize="h-12" wSize="w-12" />
+          <div className="flex flex-col">
+            <p className="text-xl">Hosted By Floksong</p>
+            <p className="text-sm font-thin mb-3">Joined in October 2013</p>
+          </div>
+        </div>
         <div className="flex items-center justify-start mb-3">
           <svg viewBox="0 0 32 32" className="block h-[1rem] w-[1rem]">
             <path d="M15.094 1.579l-4.124 8.885-9.86 1.27a1 1 0 0 0-.542 1.736l7.293 6.565-1.965 9.852a1 1 0 0 0 1.483 1.061L16 25.951l8.625 4.997a1 1 0 0 0 1.482-1.06l-1.965-9.853 7.293-6.565a1 1 0 0 0-.541-1.735l-9.86-1.271-4.127-8.885a1 1 0 0 0-1.814 0z" />

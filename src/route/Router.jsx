@@ -32,7 +32,7 @@ function Router() {
         </Route>
       </Routes>
     </>
-  );
+  )
 }
 
-export default Router;
+export default Router

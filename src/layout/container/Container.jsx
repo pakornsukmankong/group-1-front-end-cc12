@@ -1,5 +1,5 @@
 function Container({ children }) {
-  return <div className="px-20">{children}</div>;
+  return <div className="">{children}</div>
 }
 
-export default Container;
+export default Container
