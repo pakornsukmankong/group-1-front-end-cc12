@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 function ConfirmForm() {
   useEffect(() => {
@@ -16,6 +17,14 @@ function ConfirmForm() {
     });
   }, []);
 
+  // Must be  props from customer booking
+  const Booking = {
+    email: 'john@gmail.com',
+    name: 'john',
+    amount: 893376,
+    //property
+  };
+
   const creditCardConfigure = () => {
     OmiseCard.configure({
       defaultPaymentMehod: 'credit_card',
@@ -28,9 +37,14 @@ function ConfirmForm() {
   const omiseCardHandler = () => {
     OmiseCard.open({
       frameDescription: 'Invoice #0001',
-      amount: 2000,
+      amount: Booking.amount,
       onCreateTokenSuccess: (token) => {
-        console.log(token);
+        createCreditCardCharge(
+          Booking.email,
+          Booking.name,
+          Booking.amount,
+          token
+        );
       },
       onFormClose: () => {},
     });
@@ -42,7 +56,22 @@ function ConfirmForm() {
     omiseCardHandler();
   };
 
-  const createCreditCardCharge = () => {};
+  const createCreditCardCharge = async (email, name, amount, token) => {
+    try {
+      await axios({
+        method: 'post',
+        url: 'http://localhost:8000/checkout-credit-card',
+        data: {
+          email,
+          name,
+          amount,
+          token,
+        },
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const [methodPay, setMethodPay] = useState('CREDIT_CARD');
   return (
