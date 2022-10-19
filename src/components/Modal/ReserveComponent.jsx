@@ -1,18 +1,20 @@
 import { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import {
-  increase,
-  decrease,
-  increase1,
-  decrease1,
-} from '../../store/AdultsChildCounter'
+  adultIncrease,
+  adultDecrease,
+  childIncrease,
+  childDecrease,
+} from '../../store/ReserveCounterSlice'
 
 function ReserveComponent() {
   const [input, setInput] = useState('')
   const [isOpen, setIsOpen] = useState(false)
   const dispatch = useDispatch()
-  const count = useSelector((state) => state.counter.adultsCount)
-  const count2 = useSelector((state) => state.counter.childrenCount2)
+  const adultCounter = useSelector((state) => state.reserveCounter.adultsCount)
+  const childCounter = useSelector(
+    (state) => state.reserveCounter.childrenCount
+  )
   const handleClick = () => {
     setIsOpen((prev) => !prev)
   }
@@ -71,7 +73,7 @@ function ReserveComponent() {
             GUESTS
           </div>
           <div className="font-light text-[0.8rem] ml-[0.5rem]">
-            {count + count2} guest
+            {adultCounter + childCounter} guest
             <i className="fa-solid fa-chevron-down ml-[9rem] mt-[-0.9rem]"></i>
           </div>
           {/* setShow */}
@@ -91,13 +93,15 @@ function ReserveComponent() {
               </div>
               <div className="flex flex-row w-[6rem] ml-[-1.6rem]">
                 <button
-                  onClick={() => dispatch(decrease())}
+                  onClick={() => dispatch(adultDecrease())}
                   className="border w-[2rem] h-[2rem] text-gray-400 rounded-full mt-[0.5rem] hover:border-black hover:text-black">
                   -
                 </button>
-                <div className="w-[2rem] text-center mt-[0.7rem]">{count}</div>
+                <div className="w-[2rem] text-center mt-[0.7rem]">
+                  {adultCounter}
+                </div>
                 <button
-                  onClick={() => dispatch(increase())}
+                  onClick={() => dispatch(adultIncrease())}
                   className="border w-[2rem] h-[2rem] text-gray-400 rounded-full mt-[0.5rem] hover:border-black hover:text-black">
                   +
                 </button>
@@ -111,13 +115,15 @@ function ReserveComponent() {
               </div>
               <div className="flex flex-row w-[10rem] ml-[-1.6rem]">
                 <button
-                  onClick={() => dispatch(decrease1())}
+                  onClick={() => dispatch(childDecrease())}
                   className="border w-[2rem] h-[2rem] text-gray-400 rounded-full mt-[0.5rem] hover:border-black hover:text-black">
                   -
                 </button>
-                <div className="w-[2rem] text-center mt-[0.7rem]">{count2}</div>
+                <div className="w-[2rem] text-center mt-[0.7rem]">
+                  {childCounter}
+                </div>
                 <button
-                  onClick={() => dispatch(increase1())}
+                  onClick={() => dispatch(childIncrease())}
                   className="border  w-[2rem] h-[2rem] text-gray-400 rounded-full mt-[0.5rem] hover:border-black hover:text-black">
                   +
                 </button>
