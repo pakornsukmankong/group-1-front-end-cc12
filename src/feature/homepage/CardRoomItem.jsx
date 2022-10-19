@@ -20,30 +20,22 @@ function CardRoomItem({ dataItem }) {
   const [prevEl, setPrevEl] = useState(null);
   const [nextEl, setNextEl] = useState(null);
 
-  const [swiperActive, setSwiperActive] = useState();
-
   const [favorite, setFavorite] = useState(false);
-
-  const activeChange = (swiper) => {
-    setSwiperActive(swiper);
-  };
 
   const favAction = (item) => {
     setFavorite(!favorite);
   };
 
   return (
-    <div className="cursor-pointer card-container">
+    <div className="group cursor-pointer card-container">
       <div className="aspect-[149125/141668]">
         <Swiper
-          onActiveIndexChange={activeChange}
           pagination={{
             dynamicBullets: true
           }}
           spaceBetween={10}
           modules={[Pagination, Navigation]}
           navigation={{ prevEl, nextEl }}
-          className="room-card-swiper"
         >
           {imageList.map((item, keys) => {
             return (
@@ -56,10 +48,12 @@ function CardRoomItem({ dataItem }) {
               </SwiperSlide>
             );
           })}
-          <div className="card-favorite-icon text-white text-[1.25rem] flex justify-end mx-5">
+          <div className="text-white text-[1.25rem] flex justify-end mx-5 absolute top-[7%] right-0 z-[3] ">
             <svg
               onClick={favAction}
-              className={`card-icon ${favorite ? 'active' : ''}`}
+              className={`fill-black/50 w-6 h-6 stroke-white stroke-2 ${
+                favorite ? 'fill-[#ff385c]' : ''
+              }`}
               viewBox="0 0 32 32"
               xmlns="http://www.w3.org/2000/svg"
               aria-hidden="true"
@@ -69,7 +63,7 @@ function CardRoomItem({ dataItem }) {
               <path d="m16 28c7-4.733 14-10 14-17 0-1.792-.683-3.583-2.05-4.95-1.367-1.366-3.158-2.05-4.95-2.05-1.791 0-3.583.684-4.949 2.05l-2.051 2.051-2.05-2.051c-1.367-1.366-3.158-2.05-4.95-2.05-1.791 0-3.583.684-4.949 2.05-1.367 1.367-2.051 3.158-2.051 4.95 0 7 7 12.267 14 17z" />
             </svg>
           </div>
-          <div className="card-navigation">
+          <div className="hidden group-hover:flex justify-between absolute top-[45%] w-full px-[1rem] z-[3] cursor-pointer">
             <div>
               <button
                 className="bg-white shadow border rounded-full flex p-2 card-prev"
