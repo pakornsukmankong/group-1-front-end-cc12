@@ -4,6 +4,7 @@ import Highlight from './Highlight'
 import Map from './Map'
 import { useLoadScript } from '@react-google-maps/api'
 import ImageItem from './ImageItem'
+import ReserveComponent from '../../components/Modal/ReserveComponent'
 
 function RoomContainer() {
   const { isLoaded } = useLoadScript({
@@ -72,11 +73,10 @@ function RoomContainer() {
             <Facility />
           </div>
         </div>
-        <div className="sticky">
-          <img
-            className=""
-            src="https://a0.muscache.com/im/pictures/ade75bc6-9a2a-453f-9d6d-b7919ff7bd4a.jpg?im_w=720"
-          />
+
+        {/* reserve component */}
+        <div className="flex justify-center sticky ">
+          <ReserveComponent />
         </div>
       </div>
 
