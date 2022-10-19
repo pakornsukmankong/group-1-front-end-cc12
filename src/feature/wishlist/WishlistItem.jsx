@@ -1,4 +1,4 @@
-function WhitelisItem() {
+function WishlistItem() {
 	return (
 		<div className='mx-auto mt-[2rem]'>
 			<div className='w-[26rem] h-[16rem] flex'>
@@ -27,4 +27,4 @@ function WhitelisItem() {
 	);
 }
 
-export default WhitelisItem;
+export default WishlistItem;

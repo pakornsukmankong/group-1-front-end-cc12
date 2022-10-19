@@ -11,7 +11,7 @@ import BecomeHostPage from '../pages/BecomeHostPage';
 import ConfirmPaymentPage from '../pages/ConfirmPaymentPage';
 import HomePage from '../pages/HomePage';
 import RoomPage from '../pages/RoomPage';
-import WhitelistPage from '../pages/WhitelistPage';
+import WishlistPage from '../pages/WishlistPage';
 
 function Router() {
 	return (
@@ -22,7 +22,7 @@ function Router() {
 				</Route>
 				<Route path='/' element={<HomeLayout />}>
 					<Route path='/account/:id' element={<AccountPage />} />
-					<Route path='/whitelist/:id' element={<WhitelistPage />} />
+					<Route path='/wishlist/:id' element={<WishlistPage />} />
 					<Route path='/confirmPayment/:id' element={<ConfirmPaymentPage />} />
 					<Route path='/rooms/:id' element={<RoomPage />} />
 					<Route path='/login' element={<LoginRegisterModal />}></Route>
