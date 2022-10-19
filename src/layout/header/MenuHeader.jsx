@@ -7,7 +7,7 @@ function MenuHeader() {
 	const [user, setUser] = useState({
 		userId: '1',
 	});
-	// const [user, setUser] = useState();
+
 	return (
 		<>
 			<Link to='/becomeHosting'>

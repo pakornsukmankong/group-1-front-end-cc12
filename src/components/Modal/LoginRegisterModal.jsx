@@ -1,15 +1,22 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { sendOutOtp } from '../../store/AuthSlice';
-import PhoneAuthModal from './PhoneAuthModal';
 
-function LoginRegisterModal({ closeModalOtp }) {
+function LoginRegisterModal({ closeModalOtp, openModelVerify }) {
 	const [logEmail, setlogEmail] = useState(false);
 	const [phoneNumber, setPhoneNumber] = useState('');
-	const [modalVerify, setModalVerify] = useState(false);
 
-	// const selectd = useSelector();
 	const dispatch = useDispatch();
+
+	const handleContinueBtn = async () => {
+		try {
+			await dispatch(sendOutOtp(phoneNumber));
+			closeModalOtp();
+			openModelVerify();
+		} catch (err) {
+			console.log(err);
+		}
+	};
 
 	return (
 		<div className='fixed top-0 bottom-0 left-0 right-0 bg-gray-900 bg-opacity-50 z-50 leading-5'>
@@ -62,9 +69,7 @@ function LoginRegisterModal({ closeModalOtp }) {
 							</div>
 							<button
 								className='my-3 min-w-full h-12 text-base  flex items-center justify-center text-white rounded-lg bg-[#FF385C] hover:bg-[#ff0532]'
-								onClick={() => {
-									dispatch(sendOutOtp(phoneNumber));
-								}}
+								onClick={handleContinueBtn}
 							>
 								Continue
 							</button>
@@ -99,7 +104,6 @@ function LoginRegisterModal({ closeModalOtp }) {
 					</div>
 				</div>
 			</div>
-			<div>{modalVerify ? <PhoneAuthModal /> : ''}</div>
 		</div>
 	);
 }
