@@ -2,6 +2,7 @@ import { Fragment, useState } from 'react';
 import { Menu, Transition } from '@headlessui/react';
 import LoginRegisterModal from '../../components/Modal/LoginRegisterModal';
 import PhoneAuthModal from '../../components/Modal/PhoneAuthModal';
+import RegisterModal from '../../components/Modal/RegisterModal';
 import { Link } from 'react-router-dom';
 
 function MenuDropDownGuest() {
@@ -11,6 +12,10 @@ function MenuDropDownGuest() {
 
 	const [modalOtp, setModalOtp] = useState(false);
 	const [modalVerify, setModalVerify] = useState(false);
+	const [modalRegis, setModalRegis] = useState(false);
+	const [user, setUser] = useState({
+		userId: '1',
+	});
 
 	return (
 		<Menu
@@ -119,11 +124,24 @@ function MenuDropDownGuest() {
 						<PhoneAuthModal
 							closeModalVerify={() => setModalVerify(false)}
 							openModalOtp={() => setModalOtp(true)}
+							user
+							openModalRegis={() => setModalRegis(true)}
 						/>
 					) : (
 						''
 					)}
 				</div>
+				<div>
+					{modalRegis ? (
+						<RegisterModal
+							openModalOtp={() => setModalOtp(true)}
+							closeModalRegis={() => setModalRegis(false)}
+						/>
+					) : (
+						''
+					)}
+				</div>
+				<div></div>
 			</div>
 		</Menu>
 	);

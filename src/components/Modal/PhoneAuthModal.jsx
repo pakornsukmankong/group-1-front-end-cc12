@@ -2,10 +2,16 @@ import { useState } from 'react';
 import { verifyOtp } from '../../store/AuthSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
-function PhoneAuthModal({ closeModalVerify, openModalOtp }) {
+function PhoneAuthModal({
+	closeModalVerify,
+	openModalOtp,
+	user,
+	openModalRegis,
+}) {
+	console.log(user);
 	const [valueOtp, setValueOtp] = useState('');
-
 	const dispatch = useDispatch();
+
 	const initialPhoneNumber = useSelector((state) => {
 		return state.auth.phoneNumber;
 	});
@@ -20,7 +26,11 @@ function PhoneAuthModal({ closeModalVerify, openModalOtp }) {
 	const handleClickVerifyOtp = async () => {
 		try {
 			await dispatch(verifyOtp(initialPhoneNumber, valueOtp));
-		} catch (err) {}
+			closeModalVerify();
+			openModalRegis();
+		} catch (err) {
+			console.log(err);
+		}
 	};
 
 	return (
