@@ -5,26 +5,27 @@ const AuthSlice = createSlice({
 	name: 'Auth',
 	initialState: { phoneNumber: '', verifyStatus: '' },
 	reducers: {
-		Otp: (state, action) => {
+		otp: (state, action) => {
 			state.phoneNumber = action.payload;
 			console.log(state.phoneNumber, 'phoneState');
 		},
 		verify: (state, action) => {
 			state.verifyStatus = action.payload;
-			console.log(state.verifyStatus, verifyStatus);
+			console.log(state.verifyStatus, 'verifyStatus');
 		},
 	},
 });
 
 export default AuthSlice.reducer;
-export const { Otp } = AuthSlice.actions;
+export const { otp } = AuthSlice.actions;
 
 export const sendOutOtp = (phoneNumber) => async (dispatch) => {
 	try {
 		const res = await authService.sendOtp(phoneNumber);
-		console.log(res.data, 'res.data');
-		// console.log(phoneNumber);
-		dispatch(Otp(res.data.data.status));
+		dispatch(otp(res.data.customerPhoneNumber));
+
+		// console.log(res.data, 'res.data');
+		// console.log(res.data.customerPhoneNumber, 'customerPhoneNumber');
 	} catch (err) {
 		console.log(err);
 	}
@@ -33,10 +34,9 @@ export const sendOutOtp = (phoneNumber) => async (dispatch) => {
 export const verifyOtp = (phoneNumber, code) => async (dispatch) => {
 	try {
 		const res = await authService.verify(phoneNumber, code);
-		console.log(res.data, 'res.data');
-		// console.log(phoneNumber);
-		// dispatch(Otp({ phoneNumber: res.data }));
-		// console.log('verify');
+		dispatch(verify(res.data.statusOtp));
+
+		// console.log(res.data.statusOtp, 'statusOtp');
 	} catch (err) {
 		console.log(err);
 	}
