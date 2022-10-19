@@ -1,7 +1,6 @@
-
 import { Routes, Route } from 'react-router-dom'
-import EmailLoginModal from '../components/Modal/EmailLoginModal';
-import LoginRegisterModal from '../components/Modal/LoginRegisterModal';
+import EmailLoginModal from '../components/Modal/EmailLoginModal'
+import LoginRegisterModal from '../components/Modal/LoginRegisterModal'
 import AuthLayout from '../layout/auth/AuthLayout'
 import HomeLayout from '../layout/auth/HomeLayout'
 import AccountPage from '../pages/AccountPage'
@@ -9,7 +8,6 @@ import ConfirmPaymentPage from '../pages/ConfirmPaymentPage'
 import HomePage from '../pages/HomePage'
 import RoomPage from '../pages/RoomPage'
 import WhitelistPage from '../pages/WhitelistPage'
-
 
 function Router() {
   return (
@@ -28,7 +26,7 @@ function Router() {
         </Route>
       </Routes>
     </>
-  );
+  )
 }
 
-export default Router;
+export default Router
