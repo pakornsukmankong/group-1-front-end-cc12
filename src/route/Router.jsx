@@ -21,16 +21,16 @@ function Router() {
 					<Route path='/' element={<HomePage />} />
 				</Route>
 				<Route path='/' element={<HomeLayout />}>
-					<Route path='/account' element={<AccountPage />} />
-					<Route path='/whitelist' element={<WhitelistPage />} />
-					<Route path='/confirmPayment' element={<ConfirmPaymentPage />} />
-					<Route path='/rooms' element={<RoomPage />} />
+					<Route path='/account/:id' element={<AccountPage />} />
+					<Route path='/whitelist/:id' element={<WhitelistPage />} />
+					<Route path='/confirmPayment/:id' element={<ConfirmPaymentPage />} />
+					<Route path='/rooms/:id' element={<RoomPage />} />
 					<Route path='/login' element={<LoginRegisterModal />}></Route>
-					<Route path='/loginEmail' element={<EmailLoginModal />}></Route>
-					<Route path='/register' element={<RegisterModal />}></Route>
-					<Route path='/reserve' element={<ReserveComponent />}></Route>
-					<Route path='/phoneAuth' element={<PhoneAuthModal />}></Route>
 					<Route path='/becomeHosting' element={<BecomeHostPage />}></Route>
+					{/* <Route path='/loginEmail' element={<EmailLoginModal />}></Route>
+					<Route path='/register' element={<RegisterModal />}></Route>
+					<Route path='/phoneAuth' element={<PhoneAuthModal />}></Route>
+					<Route path='/reserve' element={<ReserveComponent />}></Route> */}
 				</Route>
 			</Routes>
 		</>
