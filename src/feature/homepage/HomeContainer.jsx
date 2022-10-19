@@ -23,10 +23,10 @@ function HomeContainer() {
 
   return (
     <>
-      <div className="sticky top-20 left-0 right-0 " style={{ zIndex: 5 }}>
+      <div className="sticky top-20 left-0 right-0 z-[5]">
         <Categories />
       </div>
-      <main className="block px-12 mt-5">
+      <main className="my-5">
         <div className="grid gap-x-7 gap-y-7 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {rooms.map((item, keys) => {
             return <CardRoomItem key={keys} dataItem={item} />;
