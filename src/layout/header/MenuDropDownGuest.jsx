@@ -7,7 +7,7 @@ function MenuDropDownGuest() {
 		return classes.filter(Boolean).join(' ');
 	}
 
-	const [modal, setModal] = useState(false);
+	const [modalOtp, setModalOtp] = useState(false);
 
 	return (
 		<Menu
@@ -39,7 +39,7 @@ function MenuDropDownGuest() {
 										active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
 										'flex justify-start px-4 py-2 text-sm font-semibold w-full'
 									)}
-									onClick={() => setModal(true)}
+									onClick={() => setModalOtp(true)}
 								>
 									Log In
 								</button>
@@ -52,7 +52,7 @@ function MenuDropDownGuest() {
 										active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
 										'flex justify-start px-4 py-2 text-sm w-full'
 									)}
-									onClick={() => setModal(true)}
+									onClick={() => setModalOtp(true)}
 								>
 									Sign Up
 								</button>
@@ -103,7 +103,11 @@ function MenuDropDownGuest() {
 				</Menu.Items>
 			</Transition>
 			<div>
-				{modal ? <LoginRegisterModal closeModal={() => setModal(false)} /> : ''}
+				{modalOtp ? (
+					<LoginRegisterModal closeModalOtp={() => setModalOtp(false)} />
+				) : (
+					''
+				)}
 			</div>
 		</Menu>
 	);

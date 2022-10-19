@@ -3,10 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { sendOutOtp } from '../../store/AuthSlice';
 import PhoneAuthModal from './PhoneAuthModal';
 
-function LoginRegisterModal({ closeModal }) {
+function LoginRegisterModal({ closeModalOtp }) {
 	const [logEmail, setlogEmail] = useState(false);
 	const [phoneNumber, setPhoneNumber] = useState('');
-	const [modal, setModal] = useState(false);
+	const [modalVerify, setModalVerify] = useState(false);
 
 	// const selectd = useSelector();
 	const dispatch = useDispatch();
@@ -17,7 +17,7 @@ function LoginRegisterModal({ closeModal }) {
 				<div className='relative w-[568px] h-[4rem] px-6 bg-white rounded-t-xl flex justify-center items-center font-extrabold text-base'>
 					<i
 						className='absolute left-6 fa-solid fa-xmark rounded-full text-lg cursor-pointer'
-						onClick={() => closeModal()}
+						onClick={() => closeModalOtp()}
 					></i>
 					<div className='flex justify-center'> Log in or Sign up</div>
 					<hr />
@@ -99,7 +99,7 @@ function LoginRegisterModal({ closeModal }) {
 					</div>
 				</div>
 			</div>
-			<div>{modal ? <PhoneAuthModal /> : ''}</div>
+			<div>{modalVerify ? <PhoneAuthModal /> : ''}</div>
 		</div>
 	);
 }
