@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import axios from '../config/axios';
+// import axios from 'axios';
 
 function ConfirmForm() {
   useEffect(() => {
@@ -11,7 +12,7 @@ function ConfirmForm() {
       image:
         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQD_TqPBvcf1ps6F-vN5KHDqq3JQ3MThjPqxNFEjbUu&s',
       frameLabel: 'airBnb',
-      amount: 893376,
+      amount: Booking.amount,
       submitLabel: 'Pay now',
       buttonLabel: 'Confirm and pay',
     });
@@ -21,9 +22,11 @@ function ConfirmForm() {
   const Booking = {
     email: 'john@gmail.com',
     name: 'john',
-    amount: 893376,
+    amount: 2000,
     //property
   };
+
+  const [charge, setCharge] = useState(undefined);
 
   const creditCardConfigure = () => {
     OmiseCard.configure({
@@ -37,7 +40,7 @@ function ConfirmForm() {
   const omiseCardHandler = () => {
     OmiseCard.open({
       frameDescription: 'Invoice #0001',
-      amount: Booking.amount,
+      // amount: Booking.amount,
       onCreateTokenSuccess: (token) => {
         createCreditCardCharge(
           Booking.email,
@@ -58,16 +61,24 @@ function ConfirmForm() {
 
   const createCreditCardCharge = async (email, name, amount, token) => {
     try {
-      await axios({
-        method: 'post',
-        url: 'http://localhost:8000/checkout-credit-card',
-        data: {
-          email,
-          name,
-          amount,
-          token,
-        },
+      const res = await axios.post('/checkout-credit-card', {
+        email,
+        name,
+        amount,
+        token,
       });
+      setCharge(res.data);
+      console.log(charge)
+      // await axios({
+      //   method: 'post',
+      //   url: 'http://localhost:8000/checkout-credit-card',
+      //   data: {
+      //     email,
+      //     name,
+      //     amount,
+      //     token,
+      //   },
+      // });
     } catch (err) {
       console.log(err);
     }
