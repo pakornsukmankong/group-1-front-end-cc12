@@ -8,7 +8,6 @@ function PhoneAuthModal({
 	user,
 	openModalRegis,
 }) {
-	console.log(user);
 	const [valueOtp, setValueOtp] = useState('');
 	const dispatch = useDispatch();
 
