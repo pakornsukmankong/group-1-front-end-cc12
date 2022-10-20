@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { register } from '../../store/AuthSlice';
+import { register, verify } from '../../store/AuthSlice';
 
 function RegisterModal({ openModalOtp, closeModalRegis }) {
 	const [logEmail, setlogEmail] = useState(false);
 	const dispatch = useDispatch();
 	const phoneNumber = useSelector((state) => state.auth.phoneNumber);
+
 	const [input, setInput] = useState({
 		firstName: '',
 		lastName: '',
@@ -18,14 +19,13 @@ function RegisterModal({ openModalOtp, closeModalRegis }) {
 		setInput({ ...input, [e.target.name]: e.target.value });
 	};
 
-	const handleClickBack = () => {
-		closeModalRegis();
+	const handleClickBack = async () => {
+		await dispatch(verify(''));
 		openModalOtp();
 	};
 
 	const handleClickRegister = async () => {
 		await dispatch(register(input));
-		// closeModalRegis();
 	};
 
 	return (
@@ -33,7 +33,7 @@ function RegisterModal({ openModalOtp, closeModalRegis }) {
 			<div className='flex flex-col justify-center items-center h-full'>
 				<div className='relative w-[568px] h-[4rem] px-6 bg-white rounded-t-xl flex justify-center items-center font-extrabold border border-b-gray-300 text-base'>
 					<i
-						className='absolute left-6 fa-solid fa-angle-left rounded-full text-lg'
+						className='absolute left-6 fa-solid fa-angle-left rounded-full text-lg cursor-pointer'
 						onClick={handleClickBack}
 					></i>
 					<div className='flex justify-center'> Finish Signing Up</div>
