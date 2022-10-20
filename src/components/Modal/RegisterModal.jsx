@@ -1,15 +1,18 @@
 import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { register } from '../../store/AuthSlice';
 
 function RegisterModal({ openModalOtp, closeModalRegis }) {
 	const [logEmail, setlogEmail] = useState(false);
+	const dispatch = useDispatch();
+	const phoneNumber = useSelector((state) => state.auth.phoneNumber);
 	const [input, setInput] = useState({
 		firstName: '',
 		lastName: '',
 		email: '',
 		password: '',
+		phoneNumber: phoneNumber,
 	});
-
-	// console.log(input);
 
 	const handleChangeInput = (e) => {
 		setInput({ ...input, [e.target.name]: e.target.value });
@@ -20,8 +23,9 @@ function RegisterModal({ openModalOtp, closeModalRegis }) {
 		openModalOtp();
 	};
 
-	const handleClickRegister = () => {
-		closeModalRegis();
+	const handleClickRegister = async () => {
+		await dispatch(register(input));
+		// closeModalRegis();
 	};
 
 	return (
