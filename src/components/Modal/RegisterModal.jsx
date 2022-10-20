@@ -1,27 +1,31 @@
 import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { register, verify } from '../../store/AuthSlice';
 
 function RegisterModal({ openModalOtp, closeModalRegis }) {
 	const [logEmail, setlogEmail] = useState(false);
+	const dispatch = useDispatch();
+	const phoneNumber = useSelector((state) => state.auth.phoneNumber);
+
 	const [input, setInput] = useState({
 		firstName: '',
 		lastName: '',
 		email: '',
 		password: '',
+		phoneNumber: phoneNumber,
 	});
-
-	// console.log(input);
 
 	const handleChangeInput = (e) => {
 		setInput({ ...input, [e.target.name]: e.target.value });
 	};
 
-	const handleClickBack = () => {
-		closeModalRegis();
+	const handleClickBack = async () => {
+		await dispatch(verify(''));
 		openModalOtp();
 	};
 
-	const handleClickRegister = () => {
-		closeModalRegis();
+	const handleClickRegister = async () => {
+		await dispatch(register(input));
 	};
 
 	return (
@@ -29,7 +33,7 @@ function RegisterModal({ openModalOtp, closeModalRegis }) {
 			<div className='flex flex-col justify-center items-center h-full'>
 				<div className='relative w-[568px] h-[4rem] px-6 bg-white rounded-t-xl flex justify-center items-center font-extrabold border border-b-gray-300 text-base'>
 					<i
-						className='absolute left-6 fa-solid fa-angle-left rounded-full text-lg'
+						className='absolute left-6 fa-solid fa-angle-left rounded-full text-lg cursor-pointer'
 						onClick={handleClickBack}
 					></i>
 					<div className='flex justify-center'> Finish Signing Up</div>
@@ -134,13 +138,16 @@ function RegisterModal({ openModalOtp, closeModalRegis }) {
 								marketing notification.
 							</div>
 
-							<div class='flex items-center'>
+							<div className='flex items-center'>
 								<input
 									type='checkbox'
 									value=''
-									class='w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+									className='w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
 								/>
-								<label for='link-checkbox' class='ml-2 text-xs font-light '>
+								<label
+									htmlFor='link-checkbox'
+									className='ml-2 text-xs font-light '
+								>
 									I don't want to receive marketing messages from Airbnb.
 								</label>
 							</div>

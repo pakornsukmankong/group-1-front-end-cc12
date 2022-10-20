@@ -1,4 +1,5 @@
 import { Fragment, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Menu, Transition } from '@headlessui/react';
 import LoginRegisterModal from '../../components/Modal/LoginRegisterModal';
 import PhoneAuthModal from '../../components/Modal/PhoneAuthModal';
@@ -12,10 +13,10 @@ function MenuDropDownGuest() {
 
 	const [modalOtp, setModalOtp] = useState(false);
 	const [modalVerify, setModalVerify] = useState(false);
-	const [modalRegis, setModalRegis] = useState(false);
-	const [user, setUser] = useState({
-		userId: '1',
-	});
+	const [regisModal, setModalRegis] = useState(false);
+	const userInfo = useSelector((state) => state.auth.userInfo);
+	const verifyStatus = useSelector((state) => state.auth.verifyStatus);
+	const userStatus = useSelector((state) => state.auth.userStatus);
 
 	return (
 		<Menu
@@ -124,7 +125,7 @@ function MenuDropDownGuest() {
 						<PhoneAuthModal
 							closeModalVerify={() => setModalVerify(false)}
 							openModalOtp={() => setModalOtp(true)}
-							user
+							regisModal
 							openModalRegis={() => setModalRegis(true)}
 						/>
 					) : (
@@ -132,11 +133,8 @@ function MenuDropDownGuest() {
 					)}
 				</div>
 				<div>
-					{modalRegis ? (
-						<RegisterModal
-							openModalOtp={() => setModalOtp(true)}
-							closeModalRegis={() => setModalRegis(false)}
-						/>
+					{verifyStatus === 'approved' && !userStatus ? (
+						<RegisterModal openModalOtp={() => setModalOtp(true)} />
 					) : (
 						''
 					)}

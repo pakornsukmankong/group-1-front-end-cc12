@@ -1,8 +1,16 @@
-import { useEffect } from 'react'
+import { useLoading } from './contexts/LoadingContext'
 import Router from './route/Router'
+import Spinner from './components/Spinner'
 
 function App() {
-  return <Router />
+  const { loading } = useLoading()
+
+  return (
+    <>
+      {loading && <Spinner />}
+      <Router />
+    </>
+  )
 }
 
 export default App
