@@ -6,4 +6,7 @@ export const sendOtp = (phoneNumber) =>
 export const verifyOtp = (phoneNumber, code) =>
 	axios.post('/auth/verify', { phoneNumber: phoneNumber, code: code });
 
+export const getUserByPhoneNumber = (phoneNumber) =>
+	axios.post('/auth/getuserbyphone', phoneNumber);
 export const register = (input) => axios.post('/auth/register', input);
+export const login = (input) => axios.post('/auth/login', input);

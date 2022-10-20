@@ -8,7 +8,12 @@ import {
 
 const AuthSlice = createSlice({
 	name: 'Auth',
-	initialState: { phoneNumber: '', verifyStatus: '', userStatus: false },
+	initialState: {
+		phoneNumber: '',
+		verifyStatus: '',
+		userStatus: false,
+		userInfo: '',
+	},
 	reducers: {
 		otp: (state, action) => {
 			state.phoneNumber = action.payload;
@@ -22,16 +27,23 @@ const AuthSlice = createSlice({
 			state.userStatus = action.payload;
 			console.log(state.userStatus, 'userStatus');
 		},
+		setUserInfo: (state, action) => {
+			state.userInfo = action.payload;
+			if (!state.userInfo) {
+				throw { message: 'userInfo Undifined' };
+			}
+			console.log(state.userInfo, 'userInfo');
+		},
 	},
 });
 
 export default AuthSlice.reducer;
-export const { otp, verify, setUser } = AuthSlice.actions;
+export const { otp, verify, setUser, setUserInfo } = AuthSlice.actions;
 
 export const sendOutOtp = (phoneNumber) => async (dispatch) => {
 	try {
 		const res = await authService.sendOtp(phoneNumber);
-		// dispatch(otp(phoneNumber));
+		// // dispatch(otp(phoneNumber));
 		dispatch(otp(res.data.customerPhoneNumber));
 		// console.log(res.data, 'res.data');
 		// console.log(res.data.customerPhoneNumber, 'customerPhoneNumber');
@@ -43,9 +55,15 @@ export const sendOutOtp = (phoneNumber) => async (dispatch) => {
 export const verifyOtp = (phoneNumber, code) => async (dispatch) => {
 	try {
 		const res = await authService.verifyOtp(phoneNumber, code);
-		// console.log(res.data, 'res.data');
-		// console.log(res.data.statusOtp, 'statusOtp');
-		dispatch(verify(res.data.statusOtp));
+		// // console.log(res, 'res');
+		// // console.log(res.data, 'res.data');
+		// // console.log(res.data.statusOtp, 'statusOtp');
+		// // console.log(phoneNumber, 'logJs');
+		await dispatch(verify(res.data.statusOtp));
+		// // // ############################################
+		await dispatch(setUserInfo(res.data.user));
+		addLocalStorage(res.data.token);
+		await dispatch(setUser(true));
 	} catch (err) {
 		console.log(err);
 	}
@@ -53,9 +71,9 @@ export const verifyOtp = (phoneNumber, code) => async (dispatch) => {
 
 export const register = (input) => async (dispatch) => {
 	try {
-		console.log(input);
+		// console.log(input);
 		const res = await authService.register(input);
-		console.log(res.data);
+		// // console.log(res.data);
 		addLocalStorage(res.data.token);
 		dispatch(setUser(true));
 	} catch (err) {
