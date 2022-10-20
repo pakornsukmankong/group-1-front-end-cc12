@@ -12,6 +12,7 @@ import 'swiper/css/navigation'
 import { Pagination, Navigation } from 'swiper'
 
 import './card-room-item.css'
+import { Link } from 'react-router-dom'
 
 function CardRoomItem({ dataItem }) {
   const { roomTitle, roomLocation, roomOpen, roomPrice, roomRate, imageList } =
@@ -20,8 +21,7 @@ function CardRoomItem({ dataItem }) {
   const [prevEl, setPrevEl] = useState(null)
   const [nextEl, setNextEl] = useState(null)
 
-
-  const [favorite, setFavorite] = useState(false);
+  const [favorite, setFavorite] = useState(false)
 
   const favAction = (item) => {
     setFavorite(!favorite)
@@ -36,17 +36,17 @@ function CardRoomItem({ dataItem }) {
           }}
           spaceBetween={10}
           modules={[Pagination, Navigation]}
-          navigation={{ prevEl, nextEl }}
-
-        >
+          navigation={{ prevEl, nextEl }}>
           {imageList.map((item, keys) => {
             return (
               <SwiperSlide key={keys}>
-                <img
-                  className="object-cover aspect-[149125/141668] rounded-lg"
-                  src={item}
-                  alt={roomTitle}
-                />
+                <Link to="/rooms/:id">
+                  <img
+                    className="object-cover aspect-[149125/141668] rounded-lg"
+                    src={item}
+                    alt={roomTitle}
+                  />
+                </Link>
               </SwiperSlide>
             )
           })}
@@ -83,21 +83,23 @@ function CardRoomItem({ dataItem }) {
         </Swiper>
       </div>
 
-      <div className="py-2">
-        <div className="font-bold flex justify-between">
-          <span>{roomTitle}</span>
-          <div className="font-bold flex items-center">
-            <i className="fa-solid fa-star text-[0.7rem] mr-1"></i>
-            <span className="font-light">{roomRate}</span>
+      <Link to="/rooms/:id">
+        <div className="py-2">
+          <div className="font-bold flex justify-between">
+            <span>{roomTitle}</span>
+            <div className="font-bold flex items-center">
+              <i className="fa-solid fa-star text-[0.7rem] mr-1"></i>
+              <span className="font-light">{roomRate}</span>
+            </div>
+          </div>
+          <div className="font-light text-gray">{roomLocation}</div>
+          <div className="font-light text-gray">{roomOpen}</div>
+          <div className="font-medium">
+            <span>{roomPrice}</span>
+            <span className="font-light"> night </span>
           </div>
         </div>
-        <div className="font-light text-gray">{roomLocation}</div>
-        <div className="font-light text-gray">{roomOpen}</div>
-        <div className="font-medium">
-          <span>{roomPrice}</span>
-          <span className="font-light"> night </span>
-        </div>
-      </div>
+      </Link>
     </div>
   )
 }

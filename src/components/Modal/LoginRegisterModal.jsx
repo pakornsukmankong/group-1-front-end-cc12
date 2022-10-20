@@ -1,18 +1,33 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { sendOutOtp } from '../../store/AuthSlice';
 
-function LoginRegisterModal({ closeModal }) {
+function LoginRegisterModal({ closeModalOtp, openModelVerify }) {
 	const [logEmail, setlogEmail] = useState(false);
 	const [phoneNumber, setPhoneNumber] = useState('');
-	const [prefixPhone, setPrefixPhone] = useState('Phone Number');
 
-	console.log(phoneNumber);
+	const dispatch = useDispatch();
+
+	const handleContinueBtn = async () => {
+		try {
+			await dispatch(sendOutOtp(phoneNumber));
+			if (phoneNumber.length !== 10 || !phoneNumber) {
+				return console.log('first');
+			}
+			closeModalOtp();
+			openModelVerify();
+		} catch (err) {
+			console.log(err);
+		}
+	};
+
 	return (
 		<div className='fixed top-0 bottom-0 left-0 right-0 bg-gray-900 bg-opacity-50 z-50 leading-5'>
 			<div className='flex flex-col justify-center items-center h-full'>
 				<div className='relative w-[568px] h-[4rem] px-6 bg-white rounded-t-xl flex justify-center items-center font-extrabold text-base'>
 					<i
 						className='absolute left-6 fa-solid fa-xmark rounded-full text-lg cursor-pointer'
-						onClick={() => closeModal()}
+						onClick={() => closeModalOtp()}
 					></i>
 					<div className='flex justify-center'> Log in or Sign up</div>
 					<hr />
@@ -42,12 +57,10 @@ function LoginRegisterModal({ closeModal }) {
 								<input
 									type='text'
 									name='phone'
-									placeholder={prefixPhone}
+									placeholder='Phone Number'
 									className='pl-5 min-w-full min-h-full rounded-b-xl text-lg hover:border-2 hover:border-black hover:rounded-xl'
-									// onClick={() => setPrefixPhone('+66')}
 									value={phoneNumber}
 									onChange={(e) => setPhoneNumber(e.target.value)}
-									onClick={() => setPhoneNumber('+66')}
 								/>
 							</div>
 							<div className='my-2 text-xs text-gray-300'>
@@ -59,7 +72,7 @@ function LoginRegisterModal({ closeModal }) {
 							</div>
 							<button
 								className='my-3 min-w-full h-12 text-base  flex items-center justify-center text-white rounded-lg bg-[#FF385C] hover:bg-[#ff0532]'
-								onClick={() => console.log('555')}
+								onClick={handleContinueBtn}
 							>
 								Continue
 							</button>

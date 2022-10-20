@@ -1,13 +1,21 @@
 import { Fragment, useState } from 'react';
 import { Menu, Transition } from '@headlessui/react';
 import LoginRegisterModal from '../../components/Modal/LoginRegisterModal';
+import PhoneAuthModal from '../../components/Modal/PhoneAuthModal';
+import RegisterModal from '../../components/Modal/RegisterModal';
+import { Link } from 'react-router-dom';
 
 function MenuDropDownGuest() {
 	function classNames(...classes) {
 		return classes.filter(Boolean).join(' ');
 	}
 
-	const [modal, setModal] = useState(false);
+	const [modalOtp, setModalOtp] = useState(false);
+	const [modalVerify, setModalVerify] = useState(false);
+	const [modalRegis, setModalRegis] = useState(false);
+	const [user, setUser] = useState({
+		userId: '1',
+	});
 
 	return (
 		<Menu
@@ -39,7 +47,7 @@ function MenuDropDownGuest() {
 										active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
 										'flex justify-start px-4 py-2 text-sm font-semibold w-full'
 									)}
-									onClick={() => setModal(true)}
+									onClick={() => setModalOtp(true)}
 								>
 									Log In
 								</button>
@@ -52,7 +60,7 @@ function MenuDropDownGuest() {
 										active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
 										'flex justify-start px-4 py-2 text-sm w-full'
 									)}
-									onClick={() => setModal(true)}
+									onClick={() => setModalOtp(true)}
 								>
 									Sign Up
 								</button>
@@ -62,48 +70,78 @@ function MenuDropDownGuest() {
 					<div className='py-1'>
 						<Menu.Item>
 							{({ active }) => (
-								<a
-									href='#'
+								<Link
+									to='#'
 									className={classNames(
 										active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
 										'block px-4 py-2 text-sm'
 									)}
 								>
 									Host your home
-								</a>
+								</Link>
 							)}
 						</Menu.Item>
 						<Menu.Item>
 							{({ active }) => (
-								<a
-									href='#'
+								<Link
+									to='#'
 									className={classNames(
 										active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
 										'block px-4 py-2 text-sm'
 									)}
 								>
 									Host an experience
-								</a>
+								</Link>
 							)}
 						</Menu.Item>
 						<Menu.Item>
 							{({ active }) => (
-								<a
-									href='#'
+								<Link
+									to='#'
 									className={classNames(
 										active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
 										'block px-4 py-2 text-sm'
 									)}
 								>
 									Help
-								</a>
+								</Link>
 							)}
 						</Menu.Item>
 					</div>
 				</Menu.Items>
 			</Transition>
 			<div>
-				{modal ? <LoginRegisterModal closeModal={() => setModal(false)} /> : ''}
+				{modalOtp ? (
+					<LoginRegisterModal
+						closeModalOtp={() => setModalOtp(false)}
+						openModelVerify={() => setModalVerify(true)}
+					/>
+				) : (
+					''
+				)}
+				<div>
+					{modalVerify ? (
+						<PhoneAuthModal
+							closeModalVerify={() => setModalVerify(false)}
+							openModalOtp={() => setModalOtp(true)}
+							user
+							openModalRegis={() => setModalRegis(true)}
+						/>
+					) : (
+						''
+					)}
+				</div>
+				<div>
+					{modalRegis ? (
+						<RegisterModal
+							openModalOtp={() => setModalOtp(true)}
+							closeModalRegis={() => setModalRegis(false)}
+						/>
+					) : (
+						''
+					)}
+				</div>
+				<div></div>
 			</div>
 		</Menu>
 	);
