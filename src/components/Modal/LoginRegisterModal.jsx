@@ -11,6 +11,9 @@ function LoginRegisterModal({ closeModalOtp, openModelVerify }) {
 	const handleContinueBtn = async () => {
 		try {
 			await dispatch(sendOutOtp(phoneNumber));
+			if (phoneNumber.length !== 10 || !phoneNumber) {
+				return console.log('first');
+			}
 			closeModalOtp();
 			openModelVerify();
 		} catch (err) {

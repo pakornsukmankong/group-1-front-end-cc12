@@ -17,7 +17,7 @@ const AuthSlice = createSlice({
 });
 
 export default AuthSlice.reducer;
-export const { otp } = AuthSlice.actions;
+export const { otp, verify } = AuthSlice.actions;
 
 export const sendOutOtp = (phoneNumber) => async (dispatch) => {
 	try {
@@ -33,11 +33,13 @@ export const sendOutOtp = (phoneNumber) => async (dispatch) => {
 
 export const verifyOtp = (phoneNumber, code) => async (dispatch) => {
 	try {
-		const res = await authService.verify(phoneNumber, code);
-		dispatch(verify(res.data.statusOtp));
+		const res = await authService.verifyOtp(phoneNumber, code);
 
-		// console.log(res.data.statusOtp, 'statusOtp');
+		console.log(res.data, 'res.data');
+		console.log(res.data.statusOtp, 'statusOtp');
 	} catch (err) {
 		console.log(err);
 	}
 };
+
+// dispatch(verify(res.data.statusOtp));
