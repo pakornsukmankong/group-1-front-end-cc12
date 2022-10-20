@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from '../config/axios';
-// import axios from 'axios';
+import SuccessPayment from './Modal/SuccessPayment';
+import * as paymentService from '../api/omiseApi';
 
 function ConfirmForm() {
   useEffect(() => {
@@ -12,7 +13,6 @@ function ConfirmForm() {
       image:
         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQD_TqPBvcf1ps6F-vN5KHDqq3JQ3MThjPqxNFEjbUu&s',
       frameLabel: 'airBnb',
-      amount: Booking.amount,
       submitLabel: 'Pay now',
       buttonLabel: 'Confirm and pay',
     });
@@ -22,11 +22,11 @@ function ConfirmForm() {
   const Booking = {
     email: 'john@gmail.com',
     name: 'john',
-    amount: 2000,
-    //property
+    amount: 2300,
   };
 
   const [charge, setCharge] = useState(undefined);
+  console.log(charge);
 
   const creditCardConfigure = () => {
     OmiseCard.configure({
@@ -40,7 +40,7 @@ function ConfirmForm() {
   const omiseCardHandler = () => {
     OmiseCard.open({
       frameDescription: 'Invoice #0001',
-      // amount: Booking.amount,
+      amount: Booking.amount,
       onCreateTokenSuccess: (token) => {
         createCreditCardCharge(
           Booking.email,
@@ -59,26 +59,25 @@ function ConfirmForm() {
     omiseCardHandler();
   };
 
-  const createCreditCardCharge = async (email, name, amount, token) => {
+  const createCreditCardCharge = async (
+    email,
+    name,
+    amount,
+    token,
+    headers = {
+      'Content-Type': 'application/json',
+    }
+  ) => {
     try {
-      const res = await axios.post('/checkout-credit-card', {
+      const res = await paymentService.payment({
         email,
         name,
         amount,
         token,
+        headers,
       });
-      setCharge(res.data);
-      console.log(charge)
-      // await axios({
-      //   method: 'post',
-      //   url: 'http://localhost:8000/checkout-credit-card',
-      //   data: {
-      //     email,
-      //     name,
-      //     amount,
-      //     token,
-      //   },
-      // });
+      console.log(res);
+      setCharge({ amount: res.data.amount.amount, status: res.data.status });
     } catch (err) {
       console.log(err);
     }
@@ -150,55 +149,6 @@ function ConfirmForm() {
           <option value="OMISE">OMISE</option>
         </select>
       </div>
-
-      {/* <div>
-        <div className=" mb-3 border border-gray-300 w-[34rem] h-[9rem] rounded-xl flex flex-col ">
-          <div className=" h-[4.5rem] w-[33.9rem] border-b border-b-gray-300 hover:border-0">
-            <input
-              type="text"
-              name="creditCardNumber"
-              placeholder="Card number  "
-              className="pl-5 min-w-full min-h-full bg-gray-50 rounded-xl border-0  outline-0 hover:border-2 hover:border-red-800 hover:rounded-xl"
-            />
-          </div>
-          <div className="w-[34rem] flex flex-rows gap-[0.1px]">
-            <input
-              type="text"
-              name="Expiration"
-              placeholder="Expiration"
-              className="pl-5 rounded-xl  bg-gray-50 w-[16.9rem] h-[4.5rem] border-0 hover:border-2 hover:border-red-800 hover:rounded-xl"
-            />
-            <div className="border-l h-[4.5rem]"></div>
-            <input
-              type="text"
-              placeholder="CVV"
-              name="CVV"
-              className="pl-5 rounded-xl bg-gray-50 w-[16.9rem] h-[4.5rem]  border-0 hover:border-2 hover:border-red-800 hover:rounded-xl"
-            />
-          </div>
-        </div>
-      </div>
-      <div className="mb-3 h-[4.5rem] w-[33.9rem] border rounded-xl  border-b-gray-300 hover:border-0">
-        <input
-          type="text"
-          name="zipCode"
-          placeholder="ZIP code"
-          className="pl-5 min-w-full min-h-full bg-gray-50 rounded-xl border-0  outline-0 hover:border-2 hover:border-red-800 hover:rounded-xl"
-        />
-      </div>
-      <div className="mt-4 relative h-[4rem] w-[33.9rem] border rounded-xl  border-b-gray-300 hover:border-0">
-        <span className="absolute top-1 left-5 text-sm font-normal">
-          Country
-        </span>
-        <input
-          type="text"
-          name="zipCode"
-          disabled
-          defaultValue="Thailand"
-          placeholder="Thailand"
-          className="pl-5 min-w-full min-h-full bg-gray-50 rounded-xl border-0 disabled text-gray-700  hover:border-2 hover:border-red-800 hover:rounded-xl"
-        />
-      </div> */}
       <div className="flex justify-center my-10">
         Secured by &nbsp;
         <img
@@ -234,7 +184,6 @@ function ConfirmForm() {
           </span>
         </div>
       </div>
-
       <button
         id="credit-card"
         className="text-center text-white my-8 h-[3.5rem] w-[12.75rem] bg-[#FF385C] flex justify-center items-center rounded-lg"
@@ -242,6 +191,7 @@ function ConfirmForm() {
       >
         Confirm and pay
       </button>
+      {charge && <SuccessPayment Booking={Booking} charge={charge}/>}
     </form>
   );
 }
