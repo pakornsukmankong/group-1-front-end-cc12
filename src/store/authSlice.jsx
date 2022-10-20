@@ -80,3 +80,8 @@ export const register = (input) => async (dispatch) => {
 		console.log(err);
 	}
 };
+
+export const logout = () => async (dispatch) => {
+	removeLocalStorage();
+	dispatch(setUser(false));
+};
