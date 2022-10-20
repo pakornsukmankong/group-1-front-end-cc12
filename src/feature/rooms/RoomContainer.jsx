@@ -5,6 +5,7 @@ import Map from './Map'
 import { useLoadScript } from '@react-google-maps/api'
 import ImageItem from './ImageItem'
 import ReserveComponent from '../../components/Modal/ReserveComponent'
+import StickyBox from 'react-sticky-box'
 
 function RoomContainer() {
   const { isLoaded } = useLoadScript({
@@ -74,9 +75,11 @@ function RoomContainer() {
           </div>
         </div>
 
-        {/* reserve component */}
-        <div className="flex justify-center sticky ">
-          <ReserveComponent />
+        <div className="">
+          {/* reserve component */}
+          <StickyBox>
+            <ReserveComponent />
+          </StickyBox>
         </div>
       </div>
 
