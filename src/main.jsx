@@ -9,14 +9,17 @@ import './index.css'
 import { Provider } from 'react-redux'
 import { store } from './store/index'
 import LoadingContextProvider from './contexts/LoadingContext'
+import AuthContextProvider from './contexts/AuthContext'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   // <React.StrictMode>
   <BrowserRouter>
     <LoadingContextProvider>
-      <Provider store={store}>
-        <App />
-      </Provider>
+      <AuthContextProvider>
+        <Provider store={store}>
+          <App />
+        </Provider>
+      </AuthContextProvider>
     </LoadingContextProvider>
   </BrowserRouter>
   // </React.StrictMode>
