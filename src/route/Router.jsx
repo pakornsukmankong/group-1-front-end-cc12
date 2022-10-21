@@ -1,4 +1,5 @@
 import { Routes, Route } from 'react-router-dom'
+import { Navigate } from 'react-router-dom'
 import EmailLoginModal from '../components/Modal/EmailLoginModal'
 import LoginRegisterModal from '../components/Modal/LoginRegisterModal'
 import PhoneAuthModal from '../components/Modal/PhoneAuthModal'
@@ -44,11 +45,12 @@ function Router() {
                 element={<ConfirmPaymentPage />}
               />
               <Route path="/becomeHosting" element={<BecomeHostPage />} />
+              <Route path="/rooms/:id" element={<RoomPage />} />
+              <Route path="*" element={<Navigate to="/" />} />
             </>
           ) : (
             <>
-              <Route path="/rooms/:id" element={<RoomPage />} />
-              <Route path="*" element={<HomePage />} />
+              <Route path="*" element={<Navigate to="/" />} />
             </>
           )}
           {/* <Route path="/login" element={<LoginRegisterModal />}></Route> */}
