@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import BottomMenu from './BottomMenu';
 import TopMenu from './TopMenu';
 
-function DescriptionDataContainer() {
+function DescriptionContainer() {
   const maxLength = 500;
   const [count, setCount] = useState(0);
 
@@ -36,7 +36,7 @@ function DescriptionDataContainer() {
             maxLength={maxLength}
             rows={4}
             onChange={(e) => setCount(e.target.value.length)}
-            className="px-6 py-4 w-full h-[10rem] text-[1.15rem] bg-white border-gray flex justify-center items-center flex-col border-2 rounded-lg  hover:border-black  focus:border-black focus-visible:border-black"
+            className="px-6 py-4 w-full h-[10rem] text-[1.15rem] bg-white border-gray flex justify-center items-center flex-col border-2 rounded-lg  hover:border-black  focus:border-black focus-visible:border-black focus-visible:outline-black "
             defaultValue={
               "You'll have a great time at this comfortable place to stay."
             }
@@ -53,4 +53,4 @@ function DescriptionDataContainer() {
     </div>
   );
 }
-export default DescriptionDataContainer;
+export default DescriptionContainer;
