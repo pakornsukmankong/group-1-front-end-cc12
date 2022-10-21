@@ -4,7 +4,10 @@ import { Menu, Transition } from '@headlessui/react';
 import LoginRegisterModal from '../../components/Modal/LoginRegisterModal';
 import PhoneAuthModal from '../../components/Modal/PhoneAuthModal';
 import RegisterModal from '../../components/Modal/RegisterModal';
+import RegisterModalEmail from '../../components/Modal/RegisterModalEmail';
+import EmailLoginModal from '../../components/Modal/EmailLoginModal';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../../contexts/AuthContext';
 
 function MenuDropDownGuest() {
 	function classNames(...classes) {
@@ -13,8 +16,9 @@ function MenuDropDownGuest() {
 
 	const [modalOtp, setModalOtp] = useState(false);
 	const [modalVerify, setModalVerify] = useState(false);
-	const [regisModal, setModalRegis] = useState(false);
-	const userInfo = useSelector((state) => state.auth.userInfo);
+	const [modalRegisEmail, setModalRegisEmail] = useState(false);
+	const [emailLoginModal, setEmailLoginModal] = useState(false);
+
 	const verifyStatus = useSelector((state) => state.auth.verifyStatus);
 	const userStatus = useSelector((state) => state.auth.userStatus);
 
@@ -116,6 +120,7 @@ function MenuDropDownGuest() {
 					<LoginRegisterModal
 						closeModalOtp={() => setModalOtp(false)}
 						openModelVerify={() => setModalVerify(true)}
+						openEmailLoginModal={() => setEmailLoginModal(true)}
 					/>
 				) : (
 					''
@@ -126,7 +131,6 @@ function MenuDropDownGuest() {
 							closeModalVerify={() => setModalVerify(false)}
 							openModalOtp={() => setModalOtp(true)}
 							regisModal
-							openModalRegis={() => setModalRegis(true)}
 						/>
 					) : (
 						''
@@ -139,7 +143,26 @@ function MenuDropDownGuest() {
 						''
 					)}
 				</div>
-				<div></div>
+				<div>
+					{emailLoginModal ? (
+						<EmailLoginModal
+							closeEmailLoginModal={() => setEmailLoginModal(false)}
+							openRegisModalEmail={() => setModalRegisEmail(true)}
+						/>
+					) : (
+						''
+					)}
+				</div>
+				<div>
+					{modalRegisEmail ? (
+						<RegisterModalEmail
+							closeModalRegisEmail={() => setModalRegisEmail(false)}
+							openModalOtp={() => setModalOtp(true)}
+						/>
+					) : (
+						''
+					)}
+				</div>
 			</div>
 		</Menu>
 	);

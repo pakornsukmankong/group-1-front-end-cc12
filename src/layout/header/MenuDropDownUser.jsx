@@ -1,11 +1,20 @@
 import { Fragment } from 'react';
 import { Menu, Transition } from '@headlessui/react';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { logout } from '../../store/authSlice';
 
 function MenuDropDownAsUser() {
 	function classNames(...classes) {
 		return classes.filter(Boolean).join(' ');
 	}
+
+	const dispatch = useDispatch();
+
+	const handleClickLogout = () => {
+		dispatch(logout());
+		window.location.assign('/');
+	};
 
 	return (
 		<Menu
@@ -75,14 +84,15 @@ function MenuDropDownAsUser() {
 						</Menu.Item>
 						<Menu.Item>
 							{({ active }) => (
-								<button
+								<div
+									onClick={handleClickLogout}
 									className={classNames(
 										active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-										'block px-4 py-2 text-sm'
+										'block px-4 py-2 text-sm cursor-pointer'
 									)}
 								>
 									Log out
-								</button>
+								</div>
 							)}
 						</Menu.Item>
 					</div>

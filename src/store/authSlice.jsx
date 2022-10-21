@@ -1,10 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import * as authService from '../api/authApi';
-import {
-	addLocalStorage,
-	getLocalStorage,
-	removeLocalStorage,
-} from '../utils/localStorage';
+import { addLocalStorage, removeLocalStorage } from '../utils/localStorage';
 
 const AuthSlice = createSlice({
 	name: 'Auth',
@@ -83,5 +79,4 @@ export const register = (input) => async (dispatch) => {
 
 export const logout = () => async (dispatch) => {
 	removeLocalStorage();
-	dispatch(setUser(false));
 };
