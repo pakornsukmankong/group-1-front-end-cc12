@@ -23,7 +23,7 @@ function PrivacyTypeContainer() {
             return (
               <button
                 key={keys}
-                className="px-7 py-7 bg-white border-gray text-start border-2 w-full justify-between rounded-lg mt-5 hover:border-black focus:bg-gray-50 focus:border-black"
+                className="px-7 py-8 mt-3 bg-white border-gray text-start border-2 w-full justify-between rounded-xl hover:border-black focus:bg-gray-50 focus:border-black"
               >
                 <p className="text-start font-medium">{item.privacyName}</p>
               </button>

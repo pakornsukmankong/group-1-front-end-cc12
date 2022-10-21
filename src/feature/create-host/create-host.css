@@ -17,3 +17,13 @@ input:checked+svg {
     width : 0;
     height: 0;
 }
+
+.search-list,
+.box-list {
+    visibility: hidden;
+}
+
+.input-active .search-list,
+.input-active .box-list {
+    visibility: visible;
+}
