@@ -1,8 +1,20 @@
+import { useState } from 'react'
 import { useAuth } from '../../contexts/AuthContext'
+import EditEmailForm from './EditEmailForm'
+import EditGenderForm from './EditGenderForm'
+import EditNameForm from './EditNameForm'
+import EditPasswordFrom from './EditPasswordFrom'
+import EditPhoneForm from './EditPhoneForm'
 
 function AccountContainer() {
   const { user } = useAuth()
   const { firstName, lastName, phone, email } = user
+
+  const [isEditName, setIsEditName] = useState(false)
+  const [isEditEmail, setIsEditEmail] = useState(false)
+  const [isEditPhone, setIsEditPhone] = useState(false)
+  const [isEditGender, setIsEditGender] = useState(false)
+  const [isEditPassword, setIsEditPassword] = useState(false)
 
   return (
     <div className="mx-[5rem]">
@@ -18,17 +30,30 @@ function AccountContainer() {
           <div>
             <div className="w-[37.5rem] flex">
               <div>
-                <div>
-                  <div className="mt-[1.875rem] text-left  w-[31.25rem]">
-                    Legal Name
-                  </div>
-                  <div className="text-left text-gray-400 w-[31.25rem]">
-                    {firstName} {lastName}
-                  </div>
+                <div className="mt-[1.875rem] text-left  w-[31.25rem]">
+                  Legal Name
+                </div>
+                <div className="text-left text-gray-400 w-[31.25rem]">
+                  {firstName} {lastName}
                 </div>
               </div>
               <div className="w-[6.25rem] mt-[1.813rem]">
-                <button className="hover:underline">edit</button>
+                {isEditName ? (
+                  <>
+                    <button
+                      className="hover:underline"
+                      onClick={() => setIsEditName(false)}>
+                      cancel
+                    </button>
+                    <EditNameForm />
+                  </>
+                ) : (
+                  <button
+                    className="hover:underline"
+                    onClick={() => setIsEditName(true)}>
+                    edit
+                  </button>
+                )}
               </div>
             </div>
             <hr className="mt-[1.875rem]"></hr>
@@ -46,7 +71,22 @@ function AccountContainer() {
                   </div>
                 </div>
                 <div className="w-[6.25rem] mt-[1.813rem]">
-                  <button className="hover:underline">edit</button>
+                  {isEditGender ? (
+                    <>
+                      <button
+                        className="hover:underline"
+                        onClick={() => setIsEditGender(false)}>
+                        cancel
+                      </button>
+                      <EditGenderForm />
+                    </>
+                  ) : (
+                    <button
+                      className="hover:underline"
+                      onClick={() => setIsEditGender(true)}>
+                      edit
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
@@ -65,7 +105,22 @@ function AccountContainer() {
                   </div>
                 </div>
                 <div className="w-[6.25rem] mt-[1.813rem]">
-                  <button className="hover:underline">edit</button>
+                  {isEditEmail ? (
+                    <>
+                      <button
+                        className="hover:underline"
+                        onClick={() => setIsEditEmail(false)}>
+                        cancel
+                      </button>
+                      <EditEmailForm />
+                    </>
+                  ) : (
+                    <button
+                      className="hover:underline"
+                      onClick={() => setIsEditEmail(true)}>
+                      edit
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
@@ -79,69 +134,27 @@ function AccountContainer() {
                       Phone numbers
                     </div>
                     <div className="text-left text-gray-400 w-[31.25rem]">
-                      {phone}
+                      {phone || 'No phone number'}
                     </div>
                   </div>
                 </div>
                 <div className="w-[6.25rem] mt-[1.875rem]">
-                  <button className="hover:underline">Add</button>
-                </div>
-              </div>
-            </div>
-            <hr className="mt-[1.875rem]"></hr>
-            {/* table 5 */}
-            <div className="mt-[-0.938rem]">
-              <div className="w-[37.5rem] flex mt-[0.938rem]">
-                <div>
-                  <div>
-                    <div className="mt-[1.875rem] text-left  w-[31.25rem]">
-                      Government ID
-                    </div>
-                    <div className="text-left text-gray-400 w-[31.25rem]">
-                      Not provided
-                    </div>
-                  </div>
-                </div>
-                <div className="w-[6.25rem] mt-[1.813rem]">
-                  <button className="hover:underline">Add</button>
-                </div>
-              </div>
-            </div>
-            <hr className="mt-[2rem]"></hr>
-            {/* table 6 */}
-            <div className="mt-[1rem]">
-              <div className="w-[38rem] flex mt-[1rem]">
-                <div>
-                  <div>
-                    <div className="mt-[2rem] text-left  w-[31rem]">
-                      Address
-                    </div>
-                    <div className="text-left text-gray-400 w-[31rem]">
-                      Not provided
-                    </div>
-                  </div>
-                </div>
-                <div className="w-[6rem] mt-[2rem]">
-                  <button className="hover:underline">Edit</button>
-                </div>
-              </div>
-            </div>
-            <hr className="mt-[2rem]"></hr>
-            {/* table 7 */}
-            <div className="mt-[1rem]">
-              <div className="w-[38rem] flex mt-[1rem]">
-                <div>
-                  <div>
-                    <div className="mt-[2rem] text-left  w-[31rem]">
-                      Emergency contact
-                    </div>
-                    <div className="text-left text-gray-400 w-[31rem]">
-                      Not provided
-                    </div>
-                  </div>
-                </div>
-                <div className="w-[6rem] mt-[2rem]">
-                  <button className="hover:underline">Add</button>
+                  {isEditPhone ? (
+                    <>
+                      <button
+                        className="hover:underline"
+                        onClick={() => setIsEditPhone(false)}>
+                        cancel
+                      </button>
+                      <EditPhoneForm />
+                    </>
+                  ) : (
+                    <button
+                      className="hover:underline"
+                      onClick={() => setIsEditPhone(true)}>
+                      edit
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
@@ -154,13 +167,31 @@ function AccountContainer() {
                     <div className="mt-[1.875rem] text-left  w-[31.25rem]">
                       Password
                     </div>
-                    <div className="text-left text-gray-400 w-[31.25rem]">
-                      Last updated 18 hours ago
-                    </div>
+                    {isEditPassword ? (
+                      <EditPasswordFrom />
+                    ) : (
+                      <div className="text-left text-gray-400 w-[31.25rem]">
+                        Last updated 18 hours ago
+                      </div>
+                    )}
                   </div>
                 </div>
-                <div className="w-[6.25rem] mt-[1.813rem] text-green-600">
-                  <a className="hover:underline cursor-pointer">Update</a>
+                <div className="w-[6.25rem] mt-[1.813rem]">
+                  {isEditPassword ? (
+                    <>
+                      <button
+                        className="hover:underline cursor-pointer"
+                        onClick={() => setIsEditPassword(false)}>
+                        cancel
+                      </button>
+                    </>
+                  ) : (
+                    <button
+                      className="hover:underline cursor-pointer"
+                      onClick={() => setIsEditPassword(true)}>
+                      Update
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
