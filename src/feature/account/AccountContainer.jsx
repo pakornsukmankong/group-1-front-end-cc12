@@ -4,7 +4,6 @@ function AccountContainer() {
   const { user } = useAuth()
   const { firstName, lastName, phone, email } = user
 
-  console.log(user)
   return (
     <div className="mx-[5rem]">
       <div className="mt-[1rem] text-left flex gap-2 text-gray-400">
