@@ -42,7 +42,7 @@ function TitleContainer() {
             maxLength={maxLength}
             rows={4}
             onChange={(e) => setCount(e.target.value.length)}
-            className="px-7 py-4 w-[100%] h-[20rem] text-[2rem] bg-white border-gray flex justify-center items-center flex-col border-2 rounded-lg  hover:border-black  focus:border-black focus-visible:border-black"
+            className="px-7 py-4 w-[100%] h-[20rem] text-[2rem] bg-white border-gray flex justify-center items-center flex-col border-2 rounded-lg  hover:border-black  focus:border-black focus-visible:border-black focus-visible:outline-black "
           ></textarea>
           <p className="text-[.95rem] mt-4">
             {count}/{maxLength}
