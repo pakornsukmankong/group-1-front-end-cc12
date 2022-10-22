@@ -14,10 +14,6 @@ function AuthContextProvider({ children }) {
   const [verifyStatus, setVerifyStatus] = useState('')
   const [initialLoading, setInitialLoading] = useState(true)
 
-  console.log(user)
-  console.log(phoneNumber, 'phoneNumber')
-  console.log(verifyStatus, 'verifyStatus')
-
   useEffect(() => {
     const fetchMe = async () => {
       try {
