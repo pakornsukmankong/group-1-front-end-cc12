@@ -1,14 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit'
 import * as authService from '../api/authApi'
-import { addLocalStorage, removeLocalStorage } from '../utils/localStorage'
+import { addLocalStorage } from '../utils/localStorage'
 
 const AuthSlice = createSlice({
   name: 'Auth',
   initialState: {
     phoneNumber: '',
     verifyStatus: '',
+    loading: false,
     userStatus: false,
-    userInfo: '',
+    userInfo: null,
   },
   reducers: {
     otp: (state, action) => {
@@ -30,14 +31,22 @@ const AuthSlice = createSlice({
       }
       console.log(state.userInfo, 'userInfo')
     },
+    startLoading: (state, action) => {
+      state.loading = true
+    },
+    stopLoading: (state, action) => {
+      state.loading = false
+    },
   },
 })
 
 export default AuthSlice.reducer
-export const { otp, verify, setUser, setUserInfo } = AuthSlice.actions
+export const { otp, verify, setUser, setUserInfo, startLoading, stopLoading } =
+  AuthSlice.actions
 
 export const sendOutOtp = (phoneNumber) => async (dispatch) => {
   try {
+    dispatch(startLoading())
     const res = await authService.sendOtp(phoneNumber)
     // // dispatch(otp(phoneNumber));
     dispatch(otp(res.data.customerPhoneNumber))
@@ -45,11 +54,14 @@ export const sendOutOtp = (phoneNumber) => async (dispatch) => {
     // console.log(res.data.customerPhoneNumber, 'customerPhoneNumber');
   } catch (err) {
     console.log(err)
+  } finally {
+    dispatch(stopLoading())
   }
 }
 
 export const verifyOtp = (phoneNumber, code) => async (dispatch) => {
   try {
+    dispatch(startLoading())
     const res = await authService.verifyOtp(phoneNumber, code)
     // // console.log(res, 'res');
     // // console.log(res.data, 'res.data');
@@ -62,17 +74,7 @@ export const verifyOtp = (phoneNumber, code) => async (dispatch) => {
     await dispatch(setUser(true))
   } catch (err) {
     console.log(err)
-  }
-}
-
-export const register = (input) => async (dispatch) => {
-  try {
-    // console.log(input);
-    const res = await authService.register(input)
-    // // console.log(res.data);
-    addLocalStorage(res.data.token)
-    dispatch(setUser(true))
-  } catch (err) {
-    console.log(err)
+  } finally {
+    dispatch(stopLoading())
   }
 }

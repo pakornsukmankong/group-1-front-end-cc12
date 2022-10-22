@@ -10,9 +10,13 @@ const AuthContext = createContext()
 
 function AuthContextProvider({ children }) {
   const [user, setUser] = useState(null)
+  const [phoneNumber, setPhoneNumber] = useState('')
+  const [verifyStatus, setVerifyStatus] = useState('')
   const [initialLoading, setInitialLoading] = useState(true)
 
   console.log(user)
+  console.log(phoneNumber, 'phoneNumber')
+  console.log(verifyStatus, 'verifyStatus')
 
   useEffect(() => {
     const fetchMe = async () => {
@@ -34,15 +38,26 @@ function AuthContextProvider({ children }) {
     setUser(res.data.user)
   }
 
+  const sendOutOtp = async (phoneNumber) => {
+    const res = await authService.sendOtp(phoneNumber)
+    setPhoneNumber(res.data.customerPhoneNumber)
+  }
+
+  const verifyOtp = async (phoneNumber, code) => {
+    const res = await authService.verifyOtp(phoneNumber, code)
+    addLocalStorage(res.data.token)
+    setUser(res.data.user)
+    setVerifyStatus(res.data.statusOtp)
+  }
+
   const loginWithEmail = async (email) => {
     const res = await authService.loginWithEmail(email)
     addLocalStorage(res.data.token)
     getMe()
   }
 
-  const registerWithEmail = async (input) => {
+  const register = async (input) => {
     const res = await authService.register(input)
-
     addLocalStorage(res.data.token)
     getMe()
   }
@@ -50,6 +65,8 @@ function AuthContextProvider({ children }) {
   const logout = async () => {
     removeLocalStorage()
     setUser(null)
+    setPhoneNumber('')
+    setVerifyStatus('')
   }
 
   return (
@@ -58,8 +75,12 @@ function AuthContextProvider({ children }) {
         initialLoading,
         user,
         loginWithEmail,
-        registerWithEmail,
+        register,
         logout,
+        sendOutOtp,
+        verifyOtp,
+        phoneNumber,
+        verifyStatus,
       }}>
       {children}
     </AuthContext.Provider>
