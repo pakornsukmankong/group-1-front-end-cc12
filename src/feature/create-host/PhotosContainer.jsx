@@ -1,13 +1,157 @@
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import BottomMenu from './BottomMenu';
 import TopMenu from './TopMenu';
 
+import './create-host.css';
+
+const ImageBox = ({ imageURLs, onImageChange, onRemoveImage }) => {
+  let imageArraySize = imageURLs?.length >= 5 ? imageURLs?.length : 4;
+
+  let boxSize = new Array(imageArraySize).fill({});
+
+  if (imageURLs?.length === 0) {
+    return (
+      <div className="flew flex-col justify-between">
+        <div className="px-32 pb-10 h-full">
+          <div className="px-7 py-4 w-[100%] h-[20rem] bg-white border-gray flex justify-center items-center flex-col border-dashed border-2 focus:bg-gray-50 focus:border-black">
+            <i className="fa-solid fa-images text-[4rem] mb-5"></i>
+            <p className="text-center font-medium text-[1.5rem] mb-2">
+              Drag your photos here
+            </p>
+            <p className="text-center font-light text-md mb-3">
+              Add at least 5 photos
+            </p>
+            <label
+              htmlFor="files"
+              className="text-center text-sm mt-3 underline cursor-pointer"
+            >
+              Upload from your device
+            </label>
+            <input
+              id="files"
+              style={{ visibility: 'hidden' }}
+              type="file"
+              multiple
+              accept="image/*"
+              onChange={onImageChange}
+            ></input>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex flex-col">
+      <div className="px-10 pb-5">
+        <div className="sticky top-0 right-0 z-50 flex justify-between items-center">
+          <div>
+            <div className="text-[1.5rem]">Add at least 5 photos</div>
+            <div className="text-[1rem] font-light">Drag to reorder</div>
+          </div>
+          <label
+            htmlFor="files"
+            className="px-3 py-2 text-black bg-white border-black border rounded-lg shadow-sm"
+          >
+            <i className="fa-solid fa-upload mr-3 text-[1.2rem]"></i>
+            <span>Upload</span>
+            <input
+              multiple
+              accept="image/*"
+              id="files"
+              style={{ display: 'none' }}
+              type="file"
+              onChange={onImageChange}
+            ></input>
+          </label>
+        </div>
+      </div>
+      <div className="h-[60vh] overflow-y-scroll pb-10 photo-box">
+        <div className="px-10 pb-5">
+          <div className="relative aspect-[577/374] bg-white border-gray flex justify-center items-center flex-col  focus:bg-gray-50 focus:border-black">
+            <img className="aspect-[577/374]" src={imageURLs[0]} alt={'0'} />
+            <div className="absolute top-3 left-4 px-2  text-[0.9rem] text-black bg-white border-gray-300 border rounded">
+              Cover photo
+            </div>
+            <button
+              onClick={() => onRemoveImage(imageURLs[0])}
+              className="absolute z-[5] top-2 right-3 bg-gray-100 px-3 py-1.5 rounded-full shadow-lg"
+            >
+              <i className="fa-solid fa-trash text-[0.9rem] text-black cursor-pointer"></i>
+            </button>
+          </div>
+        </div>
+        <div className="px-10 grid grid-cols-2 gap-4">
+          {boxSize.map((x, index) => {
+            if (imageURLs[index + 1] === undefined) {
+              return (
+                <label
+                  key={index}
+                  htmlFor="files"
+                  className="relative aspect-[577/374] bg-white border-gray-400 flex justify-center items-center flex-col border-dashed border hover:border-black hover:border-solid"
+                >
+                  <i className="fa-regular fa-image text-[2rem] cursor-pointer"></i>
+                </label>
+              );
+            }
+            return (
+              <div
+                key={index}
+                className="relative aspect-[577/374] bg-white flex justify-center items-center flex-col"
+              >
+                <button
+                  onClick={() => onRemoveImage(imageURLs[index + 1])}
+                  className="absolute z-[5] top-2 right-3 bg-gray-100 px-3 py-1.5 rounded-full shadow-lg"
+                >
+                  <i className="fa-solid fa-trash text-[0.9rem] text-black cursor-pointer"></i>
+                </button>
+                <img
+                  className="aspect-[577/374]"
+                  src={imageURLs[index + 1]}
+                  alt={index + 1}
+                />
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+};
+
 function PhotosContainer() {
-  let dataMock = new Array(21).fill({
-    propertyName: 'Villa',
-    propertyDetail:
-      'A luxury home that may have indoor-outdoor spaces, gardens, and pools.'
-  });
+  const [update, setUpdate] = useState(false);
+  const [images, setImages] = useState([]);
+  const [imageURLs, setImageURLs] = useState([]);
+
+  useEffect(() => {
+    const handleImage = () => {
+      if (images.length < 1) return;
+
+      if (!update) return;
+
+      const newImageUrls = [...imageURLs];
+      images.forEach((image) => {
+        newImageUrls.push(URL.createObjectURL(image));
+      });
+
+      setImageURLs(newImageUrls);
+      setUpdate(false);
+    };
+
+    handleImage();
+  }, [images]);
+
+  const onImageChange = (e) => {
+    setUpdate(true);
+    setImages([...e.target.files]);
+  };
+
+  const onRemoveImage = (item) => {
+    const filterImage = imageURLs.filter((i) => i !== item);
+    setImageURLs(filterImage);
+  };
 
   return (
     <div className="flex min-h-screen flex-col sm:flex-row">
@@ -27,21 +171,11 @@ function PhotosContainer() {
       </div>
       <div className="basis-2/4 bg-white flex flex-col justify-between">
         <TopMenu />
-        <div className="px-32 pb-10">
-          <button
-            role="checkbox"
-            className="px-7 py-4 w-[100%] h-[20rem] bg-white border-gray flex justify-center items-center flex-col border-dashed border-2  hover:border-black focus:bg-gray-50 focus:border-black"
-          >
-            <i className="fa-solid fa-images text-[4rem] mb-5"></i>
-            <p className="text-center font-medium text-[1.5rem] mb-2">
-              Drag your photos here
-            </p>
-            <p className="text-center font-light text-md mb-3">
-              Add at least 5 photos
-            </p>
-            <p className="text-center text-sm">Upload from your device</p>
-          </button>
-        </div>
+        <ImageBox
+          imageURLs={imageURLs}
+          onImageChange={onImageChange}
+          onRemoveImage={onRemoveImage}
+        />
         <BottomMenu
           back={'/create-host/amenities/123'}
           next={'/create-host/title/123'}

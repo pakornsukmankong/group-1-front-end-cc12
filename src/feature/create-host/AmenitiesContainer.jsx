@@ -3,6 +3,23 @@ import { Link } from 'react-router-dom';
 import BottomMenu from './BottomMenu';
 import TopMenu from './TopMenu';
 
+const BoxChecked = ({ item }) => {
+  const [checked, setChecked] = useState(false);
+
+  const checkedClass = `${
+    checked ? 'bg-gray-50 border-black' : 'bg-white border-gray'
+  }`;
+  return (
+    <button
+      onClick={() => setChecked(!checked)}
+      className={`px-7 py-4 h-40 w-44  flex flex-col justify-center cursor-pointer items-center  border-2 rounded-lg hover:border-black ${checkedClass}`}
+    >
+      <i className={`${item.icon} text-[1.9rem] mb-5`}></i>
+      <p className="text-center text-sm">{item.name}</p>
+    </button>
+  );
+};
+
 function AmenitiesContainer() {
   let dataMock = [
     {
@@ -51,16 +68,7 @@ function AmenitiesContainer() {
                 </div>
                 <div className="grid gap-x-7 gap-y-4 grid-cols-3 ">
                   {lists.map((item, keys) => {
-                    return (
-                      <button
-                        role="checkbox"
-                        key={keys}
-                        className="px-7 py-4 h-40 w-44 bg-white border-gray flex flex-col justify-center items-center  border-2  rounded-lg hover:border-black focus:bg-gray-50 focus:border-black"
-                      >
-                        <i className={`${item.icon} text-[1.9rem] mb-5`}></i>
-                        <p className="text-center text-sm">{item.name}</p>
-                      </button>
-                    );
+                    return <BoxChecked key={keys} item={item} />;
                   })}
                 </div>
               </div>
