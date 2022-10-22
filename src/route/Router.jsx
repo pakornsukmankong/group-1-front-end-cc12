@@ -34,6 +34,7 @@ function Router() {
       <Routes>
         <Route path="/" element={<AuthLayout />}>
           <Route path="/" element={<HomePage />} />
+          <Route path="*" element={<Navigate to="/" />} />
         </Route>
         <Route path="/" element={<HomeLayout />}>
           {user ? (
@@ -44,12 +45,12 @@ function Router() {
                 path="/confirmPayment/:id"
                 element={<ConfirmPaymentPage />}
               />
-              <Route path="/becomeHosting" element={<BecomeHostPage />} />
               <Route path="/rooms/:id" element={<RoomPage />} />
               <Route path="*" element={<Navigate to="/" />} />
             </>
           ) : (
             <>
+              <Route path="/rooms/:id" element={<RoomPage />} />
               <Route path="*" element={<Navigate to="/" />} />
             </>
           )}
@@ -60,20 +61,39 @@ function Router() {
 					<Route path='/reserve' element={<ReserveComponent />}></Route> */}
         </Route>
 
-        <Route path="/create-host">
-          <Route path="intro" element={<CreateHostPage />} />
-          <Route path="property-type-group" element={<TypeGroupContainer />} />
-          <Route path="property-type/:id" element={<PropertyTypeContainer />} />
-          <Route path="privacy-type/:id" element={<PrivacyTypeContainer />} />
-          <Route path="location/:id" element={<LocationContainer />} />
-          <Route path="floor-plan/:id" element={<FloorPlanContainer />} />
-          <Route path="amenities/:id" element={<AmenitiesContainer />} />
-          <Route path="photos/:id" element={<PhotosContainer />} />
-          <Route path="title/:id" element={<TitleContainer />} />
-          <Route path="description/:id" element={<DescriptionContainer />} />
-          <Route path="price/:id" element={<PriceContainer />} />
-          <Route path="preview/:id" element={<PreviewContainer />} />
-        </Route>
+        {user ? (
+          <>
+            <Route path="/becomeHosting" element={<BecomeHostPage />} />
+            <Route path="/create-host">
+              <Route path="intro" element={<CreateHostPage />} />
+              <Route
+                path="property-type-group"
+                element={<TypeGroupContainer />}
+              />
+              <Route
+                path="property-type/:id"
+                element={<PropertyTypeContainer />}
+              />
+              <Route
+                path="privacy-type/:id"
+                element={<PrivacyTypeContainer />}
+              />
+              <Route path="location/:id" element={<LocationContainer />} />
+              <Route path="floor-plan/:id" element={<FloorPlanContainer />} />
+              <Route path="amenities/:id" element={<AmenitiesContainer />} />
+              <Route path="photos/:id" element={<PhotosContainer />} />
+              <Route path="title/:id" element={<TitleContainer />} />
+              <Route
+                path="description/:id"
+                element={<DescriptionContainer />}
+              />
+              <Route path="price/:id" element={<PriceContainer />} />
+              <Route path="preview/:id" element={<PreviewContainer />} />
+            </Route>
+          </>
+        ) : (
+          <Route path="*" element={<Navigate to="/" />} />
+        )}
       </Routes>
     </>
   )
