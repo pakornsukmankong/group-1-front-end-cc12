@@ -27,3 +27,7 @@ input:checked+svg {
 .input-active .box-list {
     visibility: visible;
 }
+
+.photo-box {
+    overflow: overlay !important;
+}
