@@ -13,3 +13,5 @@ export const loginWithEmail = (email) =>
 	axios.post('/auth/loginwithemail', { email });
 
 export const getMe = () => axios.get('/auth/me');
+
+export const updateUser = (data) => axios.patch('/auth/updateprofile', data);
