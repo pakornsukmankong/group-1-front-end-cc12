@@ -1,7 +1,7 @@
 import { useAuth } from '../../contexts/AuthContext';
 import { useState } from 'react';
 import { useLoading } from '../../contexts/LoadingContext';
-// import { toastError, toastSuccess } from '../../utils/toast';
+import { toastError, toastSuccess } from '../../utils/toast';
 
 function EditGenderForm({ clostEditGenderForm }) {
 	const { updateAccountUser } = useAuth();
@@ -15,8 +15,10 @@ function EditGenderForm({ clostEditGenderForm }) {
 			await updateAccountUser({ gender });
 			clostEditGenderForm();
 			stopLoading();
+			toastSuccess('Update Gender Success');
 		} catch (err) {
 			console.log(err);
+			toastError('Update Gender Fail');
 		}
 	};
 

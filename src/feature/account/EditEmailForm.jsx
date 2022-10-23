@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useLoading } from '../../contexts/LoadingContext';
+import { toastError, toastSuccess } from '../../utils/toast';
 
 function EditEmailForm({ clostEditEmailForm }) {
 	const { user, updateAccountUser } = useAuth();
@@ -14,8 +15,10 @@ function EditEmailForm({ clostEditEmailForm }) {
 			await updateAccountUser({ email });
 			clostEditEmailForm();
 			stopLoading();
+			toastSuccess('Update Email Success');
 		} catch (err) {
 			console.log(err);
+			toastError('Update Email Fail');
 		}
 	};
 
