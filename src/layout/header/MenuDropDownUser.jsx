@@ -4,9 +4,7 @@ import { Link } from 'react-router-dom'
 import { useAuth } from '../../contexts/AuthContext'
 
 function MenuDropDownAsUser() {
-  const { user, logout } = useAuth()
-
-  const { id } = user
+  const { logout } = useAuth()
 
   const classNames = (...classes) => {
     return classes.filter(Boolean).join(' ')
@@ -40,7 +38,7 @@ function MenuDropDownAsUser() {
             <Menu.Item>
               {({ active }) => (
                 <Link
-                  to={`/wishlists/${id}`}
+                  to={`/wishlists`}
                   className={classNames(
                     active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                     'block px-4 py-2 text-sm'
@@ -54,7 +52,21 @@ function MenuDropDownAsUser() {
             <Menu.Item>
               {({ active }) => (
                 <Link
-                  to={`/account/${id}`}
+                  to={`/hosting`}
+                  className={classNames(
+                    active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                    'block px-4 py-2 text-sm'
+                  )}>
+                  Manage listings
+                </Link>
+              )}
+            </Menu.Item>
+          </div>
+          <div className="py-1">
+            <Menu.Item>
+              {({ active }) => (
+                <Link
+                  to={`/account`}
                   className={classNames(
                     active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                     'block px-4 py-2 text-sm'

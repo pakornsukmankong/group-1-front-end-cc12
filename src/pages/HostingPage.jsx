@@ -1,15 +1,7 @@
-import HostingEntire from '../feature/hosting/HostingEntire';
-import HostingTipAndUpdate from '../feature/hosting/HostingTipAndUpdate';
-import HostngReservations from '../feature/hosting/HostngReservations';
+import HostingContainer from '../feature/hosting/HostingContainer'
 
-function Hosting() {
-	return (
-		<div>
-			<HostingEntire />
-			<HostngReservations />
-			<HostingTipAndUpdate />
-		</div>
-	);
+function HostingPage() {
+  return <HostingContainer />
 }
 
-export default Hosting;
+export default HostingPage

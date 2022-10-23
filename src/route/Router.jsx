@@ -14,6 +14,7 @@ import HomePage from '../pages/HomePage'
 import RoomPage from '../pages/RoomPage'
 import WishlistPage from '../pages/WishlistPage'
 import CreateHostPage from '../pages/CreateHostPage'
+import HostingPage from '../pages/HostingPage'
 import TypeGroupContainer from '../feature/create-host/TypeGroupContainer'
 import PropertyTypeContainer from '../feature/create-host/PropertyTypeContainer'
 import PrivacyTypeContainer from '../feature/create-host/PrivacyTypeContainer'
@@ -39,8 +40,8 @@ function Router() {
         <Route path="/" element={<HomeLayout />}>
           {user ? (
             <>
-              <Route path="/account/:id" element={<AccountPage />} />
-              <Route path="/wishlists/:id" element={<WishlistPage />} />
+              <Route path="/account" element={<AccountPage />} />
+              <Route path="/wishlists" element={<WishlistPage />} />
               <Route
                 path="/confirmPayment/:id"
                 element={<ConfirmPaymentPage />}
@@ -58,11 +59,15 @@ function Router() {
           {/* <Route path='/loginEmail' element={<EmailLoginModal />}></Route>
 					<Route path='/register' element={<RegisterModal />}></Route>
 					<Route path='/phoneAuth' element={<PhoneAuthModal />}></Route>
-					<Route path='/reserve' element={<ReserveComponent />}></Route> */}
+        <Route path='/reserve' element={<ReserveComponent />}></Route> */}
         </Route>
 
         {user ? (
           <>
+            <Route path="/" element={<AuthLayout />}>
+              <Route path="/hosting" element={<HostingPage />} />
+              <Route path="*" element={<Navigate to="/" />} />
+            </Route>
             <Route path="/becomeHosting" element={<BecomeHostPage />} />
             <Route path="/create-host">
               <Route path="intro" element={<CreateHostPage />} />
