@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useLoading } from '../../contexts/LoadingContext';
+import { toastError, toastSuccess } from '../../utils/toast';
 
 function EditPasswordFrom({ clostEditPasswordForm }) {
 	const { user, updateAccountUser } = useAuth();
@@ -16,8 +17,10 @@ function EditPasswordFrom({ clostEditPasswordForm }) {
 			await updateAccountUser({ currentPassword, newPassword });
 			clostEditPasswordForm();
 			stopLoading();
+			toastSuccess('Update Password Success');
 		} catch (err) {
 			console.log(err);
+			toastError('Update Password Error');
 		}
 	};
 	return (

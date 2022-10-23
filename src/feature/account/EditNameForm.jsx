@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useLoading } from '../../contexts/LoadingContext';
+import { toastError, toastSuccess } from '../../utils/toast';
 
 function EditNameForm({ clostEditNameForm }) {
 	const { user, updateAccountUser } = useAuth();
@@ -15,8 +16,10 @@ function EditNameForm({ clostEditNameForm }) {
 			await updateAccountUser({ firstName, lastName });
 			clostEditNameForm();
 			stopLoading();
+			toastSuccess('Update Legal Name Success');
 		} catch (err) {
 			console.log(err);
+			toastError('Update Fail');
 		}
 	};
 	return (

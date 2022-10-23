@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useLoading } from '../../contexts/LoadingContext';
+import { toastError, toastSuccess } from '../../utils/toast';
 
 function EditPhoneForm({ clostEditPhoneForm }) {
 	const { user, updateAccountUser } = useAuth();
@@ -14,8 +15,10 @@ function EditPhoneForm({ clostEditPhoneForm }) {
 			await updateAccountUser({ phoneNumber });
 			clostEditPhoneForm();
 			stopLoading();
+			toastSuccess('Update Phone numbers Success');
 		} catch (err) {
 			console.log(err);
+			toastError('Update Phone numbers Fail');
 		}
 	};
 
