@@ -5,22 +5,42 @@ const PropertyContext = createContext();
 
 function PropertyContextProvider({ children }) {
 	const [property, setProperty] = useState(null);
+	const [wishList, setWishList] = useState(null);
+
+	const fetchProperty = async () => {
+		try {
+			const res = await propertyService.getAllProperty();
+			// console.log(res.data.property);
+			setProperty(res.data.property);
+		} catch (err) {
+			console.log(err);
+		}
+	};
+
+	const fetchWishList = async () => {
+		try {
+			const res = await propertyService.getUserWishList();
+			// console.log(res.data.findWishListByUser);
+			setWishList(res.data.findWishListByUser);
+		} catch (err) {
+			console.log(err);
+		}
+	};
 
 	useEffect(() => {
-		const fetchProperty = async () => {
-			try {
-				const res = await propertyService.getAllProperty();
-				// console.log(res.data.post);
-				setProperty(res.data.property);
-			} catch (err) {
-				console.log(err);
-			}
-		};
 		fetchProperty();
+		fetchWishList();
 	}, []);
 
+	const toggleWishList = async (propertyId) => {
+		const res = await propertyService.toggleWishList(propertyId);
+		await fetchWishList();
+	};
+
 	return (
-		<PropertyContext.Provider value={{ property }}>
+		<PropertyContext.Provider
+			value={{ property, toggleWishList, wishList, fetchWishList }}
+		>
 			{children}
 		</PropertyContext.Provider>
 	);

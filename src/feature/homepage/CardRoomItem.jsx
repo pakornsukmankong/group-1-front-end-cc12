@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useProperty } from '../../contexts/PropertyContext';
 
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -15,25 +16,25 @@ import './card-room-item.css';
 import { Link } from 'react-router-dom';
 
 function CardRoomItem({ dataItem }) {
+	const { wishList, toggleWishList } = useProperty(null);
 	const {
+		id,
 		propertyName,
 		address,
-		// roomOpen,
 		pricePerDate,
-		// roomRate,
 		PropertyImages,
+		// roomRate,
+		// roomOpen,
 	} = dataItem;
 
-	console.log(dataItem);
-	// console.log(PropertyImages);
+	const wishListed = wishList.map((property) => property.propertyId);
+	const userWishList = wishListed.includes(id);
 
 	const [prevEl, setPrevEl] = useState(null);
 	const [nextEl, setNextEl] = useState(null);
 
-	const [favorite, setFavorite] = useState(false);
-
-	const favAction = (item) => {
-		setFavorite(!favorite);
+	const favAction = async () => {
+		await toggleWishList(id);
 	};
 
 	return (
@@ -64,7 +65,7 @@ function CardRoomItem({ dataItem }) {
 						<svg
 							onClick={favAction}
 							className={`fill-black/50 w-6 h-6 stroke-white stroke-2 ${
-								favorite ? 'fill-[#ff385c]' : ''
+								userWishList ? 'fill-[#ff385c]' : ''
 							}`}
 							viewBox='0 0 32 32'
 							xmlns='http://www.w3.org/2000/svg'
