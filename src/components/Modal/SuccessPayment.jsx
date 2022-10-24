@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useNavigate } from 'react-router-dom'
 
 function SuccessPayment({ Booking, charge }) {
-  const { email, name, amount } = Booking;
+  const navigate = useNavigate()
+  const { email, name } = Booking
   return (
     <div className="fixed top-0 bottom-0 left-0 right-0 bg-gray-900 bg-opacity-50 z-50 leading-5">
       <div className="flex flex-col justify-center items-center h-full">
@@ -18,22 +19,31 @@ function SuccessPayment({ Booking, charge }) {
             <br />
             <div className="text-center">
               Thank you for your Payment.
+              <br />
               <p>
-                email: {email} , customerNsame: {name}
+                email: {email} , customerName: {name}
               </p>
-              <p>Your Payment amount is {charge.amount / 100} Baht </p>
+              <br />
+              <p>
+                Your Payment amount is{' '}
+                {Booking.amount / 100 || charge.amount / 100} Baht
+              </p>
             </div>
           </div>
         </div>
         <div className="w-[568px] h-[70px] px-6 bg-white border-t rounded-b-xl flex flex-col">
           <div className="flex justify-end">
-            <button className="my-2 px-5 w-1/5 h-12 text-base flex items-center justify-center text-white rounded-lg bg-black hover:bg-gray-900">
-              continue
+            <button
+              type="button"
+              className="my-2 px-5 w-1/5 h-12 text-base flex items-center justify-center text-white rounded-lg bg-black hover:bg-gray-900"
+              onClick={() => navigate('/')}
+            >
+              done
             </button>
           </div>
         </div>
       </div>
     </div>
-  );
+  )
 }
-export default SuccessPayment;
+export default SuccessPayment

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import axios from '../config/axios'
 import SuccessPayment from './Modal/SuccessPayment'
 import * as paymentService from '../api/omiseApi'
+import * as reserveService from '../api/reserveApi'
 import { toast } from 'react-toastify'
 
 function ConfirmForm() {
@@ -17,13 +17,34 @@ function ConfirmForm() {
       submitLabel: 'Pay now',
       buttonLabel: 'Confirm and pay',
     })
+
+    reservedRoom()
   }, [])
 
-  // Must be  props from customer booking
-  const Booking = {
-    email: 'john@gmail.com',
-    name: 'john',
-    amount: 2300,
+  const [Booking, setBooking] = useState({})
+  // console.log(Booking)
+
+
+  const reservedRoom = async () => {
+    try {
+      const res = await reserveService.getReserveRoom()
+      console.log(res.data)
+      const {
+        room: {
+          User: { email, firstName },
+          amountPaid,
+        },
+      } = res.data
+      const amountPaidNocomma = amountPaid.replace(',', '')
+      // console.log(amountPaidNocomma)
+      setBooking({
+        email,
+        name: firstName,
+        amount: +amountPaidNocomma,
+      })
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   const [charge, setCharge] = useState(null)
@@ -46,7 +67,7 @@ function ConfirmForm() {
         await createCreditCardCharge(
           Booking.email,
           Booking.name,
-          Booking.amount,
+          Booking.amount, // unit amount sent to Omise is Satang Unit
           token
         )
         toast.success('success Payment')
@@ -84,8 +105,6 @@ function ConfirmForm() {
       console.log(err)
     }
   }
-
-  // const createBooking = async ()
 
   const [methodPay, setMethodPay] = useState('CREDIT_CARD')
   return (
