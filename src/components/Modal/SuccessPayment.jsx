@@ -26,7 +26,7 @@ function SuccessPayment({ Booking, charge }) {
               <br />
               <p>
                 Your Payment amount is{' '}
-                {Booking.amount / 100 || charge.amount / 100} Baht
+                {Booking.amount / 100 || charge.amount / 100}{' '} Baht
               </p>
             </div>
           </div>
