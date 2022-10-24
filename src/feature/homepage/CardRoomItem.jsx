@@ -24,8 +24,8 @@ function CardRoomItem({ dataItem }) {
 		PropertyImages,
 	} = dataItem;
 
-	// console.log(dataItem);
-	console.log(PropertyImages);
+	console.log(dataItem);
+	// console.log(PropertyImages);
 
 	const [prevEl, setPrevEl] = useState(null);
 	const [nextEl, setNextEl] = useState(null);
@@ -50,7 +50,7 @@ function CardRoomItem({ dataItem }) {
 					{(PropertyImages || []).map((item, keys) => {
 						return (
 							<SwiperSlide key={keys}>
-								<Link to='/rooms/:id'>
+								<Link to={`/rooms/${item.id}`}>
 									<img
 										className='object-cover aspect-[149125/141668] rounded-lg'
 										src={item.propertyImage}
