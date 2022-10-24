@@ -39,7 +39,7 @@ function PhoneAuthModal({ closeModalVerify, openModalOtp, openModalRegis }) {
         <div className="w-[568px] h-[160px] px-6 bg-white flex flex-col">
           <div className="mt-2 w-full">
             <div className="mt-6 text-base text-gray-500 font-light">
-              Enter the code we sent over SMS to +66 85XXXXXXX:
+              Enter the code we sent over SMS to {phoneNumber} :
             </div>
             <input
               type="text"
