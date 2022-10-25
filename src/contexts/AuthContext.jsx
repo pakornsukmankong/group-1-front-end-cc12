@@ -67,9 +67,9 @@ function AuthContextProvider({ children }) {
 	};
 
 	const updateAccountUser = async (data) => {
-		const res = await authService.updateUser(data);
-		// console.log(res.data);
-		getMe();
+		return await authService.updateUser(data);
+		// getMe();
+		// return res;
 	};
 
 	return (
