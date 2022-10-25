@@ -1,20 +1,13 @@
 import { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import {
-	adultIncrease,
-	adultDecrease,
-	childIncrease,
-	childDecrease,
-} from '../../store/ReserveCounterSlice';
 
-function ReserveComponent({ room }) {
+import { Link } from 'react-router-dom';
+
+function ReserveComponent({room}) {
 	const [input, setInput] = useState('');
 	const [isOpen, setIsOpen] = useState(false);
-	const dispatch = useDispatch();
-	const adultCounter = useSelector((state) => state.reserveCounter.adultsCount);
-	const childCounter = useSelector(
-		(state) => state.reserveCounter.childrenCount
-	);
+
+	const id = 1;
+
 	const handleClick = () => {
 		setIsOpen((prev) => !prev);
 	};
@@ -23,7 +16,9 @@ function ReserveComponent({ room }) {
 			<div className='flex items-center justify-center mt-10'>
 				<div className='flex flex-col h-[28rem] border rounded-xl p-3 w-max'>
 					<div className='w-[15rem] flex mx-auto mt-[1rem] justify-between'>
+
 						<h1 className='text-xl'>{room?.pricePerDate}</h1>
+
 						<div className='font-light mt-[0.1rem]'>night</div>
 						<i className='fa-solid fa-star mt-[0.3rem] ml-[1rem]'></i>
 						<div className='text-sm ml-[0.1rem] mt-[0.3rem]'> 4.67</div>
@@ -74,7 +69,9 @@ function ReserveComponent({ room }) {
 							GUESTS
 						</div>
 						<div className='font-light text-[0.8rem] ml-[0.5rem]'>
-							{adultCounter + childCounter} guest
+
+							12 guest
+
 							<i className='fa-solid fa-chevron-down ml-[9rem] mt-[-0.9rem]'></i>
 						</div>
 						{/* setShow */}
@@ -94,19 +91,13 @@ function ReserveComponent({ room }) {
 									<div className='w-[8rem] text-sm text-gray-500'>Age 13+</div>
 								</div>
 								<div className='flex flex-row w-[6rem] ml-[-1.6rem]'>
-									<button
-										onClick={() => dispatch(adultDecrease())}
-										className='border w-[2rem] h-[2rem] text-gray-400 rounded-full mt-[0.5rem] hover:border-black hover:text-black'
-									>
+
+									<button className='border w-[2rem] h-[2rem] text-gray-400 rounded-full mt-[0.5rem] hover:border-black hover:text-black'>
 										-
 									</button>
-									<div className='w-[2rem] text-center mt-[0.7rem]'>
-										{adultCounter}
-									</div>
-									<button
-										onClick={() => dispatch(adultIncrease())}
-										className='border w-[2rem] h-[2rem] text-gray-400 rounded-full mt-[0.5rem] hover:border-black hover:text-black'
-									>
+									<div className='w-[2rem] text-center mt-[0.7rem]'>23</div>
+									<button className='border w-[2rem] h-[2rem] text-gray-400 rounded-full mt-[0.5rem] hover:border-black hover:text-black'>
+
 										+
 									</button>
 								</div>
@@ -120,19 +111,13 @@ function ReserveComponent({ room }) {
 									</div>
 								</div>
 								<div className='flex flex-row w-[10rem] ml-[-1.6rem]'>
-									<button
-										onClick={() => dispatch(childDecrease())}
-										className='border w-[2rem] h-[2rem] text-gray-400 rounded-full mt-[0.5rem] hover:border-black hover:text-black'
-									>
+
+									<button className='border w-[2rem] h-[2rem] text-gray-400 rounded-full mt-[0.5rem] hover:border-black hover:text-black'>
 										-
 									</button>
-									<div className='w-[2rem] text-center mt-[0.7rem]'>
-										{childCounter}
-									</div>
-									<button
-										onClick={() => dispatch(childIncrease())}
-										className='border  w-[2rem] h-[2rem] text-gray-400 rounded-full mt-[0.5rem] hover:border-black hover:text-black'
-									>
+									<div className='w-[2rem] text-center mt-[0.7rem]'>3</div>
+									<button className='border  w-[2rem] h-[2rem] text-gray-400 rounded-full mt-[0.5rem] hover:border-black hover:text-black'>
+
 										+
 									</button>
 								</div>
@@ -146,6 +131,7 @@ function ReserveComponent({ room }) {
 							</div>
 							{/* table 4 */}
 							<div className='p-3 flex underline'>
+
 								<button className='ml-[9rem]'>Close</button>
 							</div>
 						</div>
@@ -157,15 +143,18 @@ function ReserveComponent({ room }) {
 					</div>
 					<div className='w-[15rem] mx-auto mt-[1rem] flex justify-between'>
 						<div className='underline'>{room?.pricePerDate} x 5 nights</div>
+
 						<div>$16,352</div>
 					</div>
 					<div className='w-[15rem] mx-auto mt-[1rem] flex justify-between'>
 						<div className='underline'>Cleaning fee</div>
+
 						<div>{room?.cleaningFees}</div>
 					</div>
 					<div className='w-[15rem] mx-auto mt-[1rem] flex justify-between'>
 						<div className='underline'>Service fee</div>
 						<div>{room?.serviceFees}</div>
+
 					</div>
 					<hr className='mt-[2rem] w-[15rem] mx-auto'></hr>
 					<div className='w-[15rem] mx-auto mt-[1.5rem] flex justify-between mb-[1.5rem] font-bold'>
