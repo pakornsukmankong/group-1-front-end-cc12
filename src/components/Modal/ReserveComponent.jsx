@@ -1,9 +1,30 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useReserve } from '../../contexts/ReserveContext';
+import dateFormat from 'dateformat';
 
 function ReserveComponent() {
 	const [input, setInput] = useState('');
 	const [isOpen, setIsOpen] = useState(false);
+
+	const {
+		handleCheckInDate,
+		handleCheckOutDate,
+		checkOutDate,
+		checkInDate,
+		handleCheckAdults,
+		adults,
+		handleCheckChild,
+		child,
+	} = useReserve();
+	console.log(checkInDate, checkOutDate);
+	const today = dateFormat(new Date(), 'yyyy-mm-dd');
+
+	const date1 = new Date(checkInDate);
+	const date2 = new Date(checkOutDate);
+	const resultTime = date2.getTime() - date1.getTime();
+	const resultDay = resultTime / (1000 * 3600 * 24);
+	console.log(resultDay);
 
 	const id = 1;
 
@@ -36,7 +57,8 @@ function ReserveComponent() {
 									type='date'
 									id='checkIn'
 									name='checkIn'
-									onChange={(e) => setInput(e.target.value)}
+									min={today}
+									onChange={(e) => handleCheckInDate(e.target.value)}
 								/>
 							</form>
 						</div>
@@ -52,7 +74,8 @@ function ReserveComponent() {
 										type='date'
 										id='checkout'
 										name='checkout'
-										onChange={(e) => setInput(e.target.value)}
+										min={checkInDate}
+										onChange={(e) => handleCheckOutDate(e.target.value)}
 									/>
 								</div>
 							</form>
@@ -89,7 +112,9 @@ function ReserveComponent() {
 									<button className='border w-[2rem] h-[2rem] text-gray-400 rounded-full mt-[0.5rem] hover:border-black hover:text-black'>
 										-
 									</button>
-									<div className='w-[2rem] text-center mt-[0.7rem]'>23</div>
+									<div className='w-[2rem] text-center mt-[0.7rem]'>
+										{adults}
+									</div>
 									<button className='border w-[2rem] h-[2rem] text-gray-400 rounded-full mt-[0.5rem] hover:border-black hover:text-black'>
 										+
 									</button>
@@ -137,7 +162,7 @@ function ReserveComponent() {
 						</Link>
 					</div>
 					<div className='w-[15rem] mx-auto mt-[1rem] flex justify-between'>
-						<div className='underline'>$3,270 x 5 nights</div>
+						<div className='underline'>$3,270 x{resultDay} nights</div>
 						<div>$16,352</div>
 					</div>
 					<div className='w-[15rem] mx-auto mt-[1rem] flex justify-between'>
