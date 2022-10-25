@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import axios from '../config/axios';
-import SuccessPayment from './Modal/SuccessPayment';
-import * as paymentService from '../api/omiseApi';
+import React, { useEffect, useState } from 'react'
+import SuccessPayment from './Modal/SuccessPayment'
+import * as paymentService from '../api/omiseApi'
+import * as reserveService from '../api/reserveApi'
+import { toast } from 'react-toastify'
 
 function ConfirmForm() {
   useEffect(() => {
-    let OmiseCard = window.OmiseCard;
+    let OmiseCard = window.OmiseCard
 
     OmiseCard.configure({
       publicKey: 'pkey_test_5tipgjhhwdna10j7tym',
@@ -15,49 +16,71 @@ function ConfirmForm() {
       frameLabel: 'airBnb',
       submitLabel: 'Pay now',
       buttonLabel: 'Confirm and pay',
-    });
-  }, []);
+    })
 
-  // Must be  props from customer booking
-  const Booking = {
-    email: 'john@gmail.com',
-    name: 'john',
-    amount: 2300,
-  };
+    reservedRoom()
+  }, [])
 
-  const [charge, setCharge] = useState(undefined);
-  console.log(charge);
+  const [Booking, setBooking] = useState({})
+  // console.log(Booking)
+
+
+  const reservedRoom = async () => {
+    try {
+      const res = await reserveService.getReserveRoom()
+      console.log(res.data)
+      const {
+        room: {
+          User: { email, firstName },
+          amountPaid,
+        },
+      } = res.data
+      const amountPaidNocomma = amountPaid.replace(',', '')
+      // console.log(amountPaidNocomma)
+      setBooking({
+        email,
+        name: firstName,
+        amount: +amountPaidNocomma,
+      })
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  const [charge, setCharge] = useState(null)
+  // console.log(charge)
 
   const creditCardConfigure = () => {
     OmiseCard.configure({
       defaultPaymentMehod: 'credit_card',
       otherPaymentMethods: [],
-    });
-    OmiseCard.configureButton('#credit-card');
-    OmiseCard.attach();
-  };
+    })
+    OmiseCard.configureButton('#credit-card')
+    OmiseCard.attach()
+  }
 
   const omiseCardHandler = () => {
     OmiseCard.open({
       frameDescription: 'Invoice #0001',
       amount: Booking.amount,
-      onCreateTokenSuccess: (token) => {
-        createCreditCardCharge(
+      onCreateTokenSuccess: async (token) => {
+        await createCreditCardCharge(
           Booking.email,
           Booking.name,
-          Booking.amount,
+          Booking.amount, // unit amount sent to Omise is Satang Unit
           token
-        );
+        )
+        toast.success('success Payment')
       },
       onFormClose: () => {},
-    });
-  };
+    })
+  }
 
   const handleClickConfirmPayment = (e) => {
-    e.preventDefault();
-    creditCardConfigure();
-    omiseCardHandler();
-  };
+    e.preventDefault()
+    creditCardConfigure()
+    omiseCardHandler()
+  }
 
   const createCreditCardCharge = async (
     email,
@@ -75,15 +98,15 @@ function ConfirmForm() {
         amount,
         token,
         headers,
-      });
-      console.log(res);
-      setCharge({ amount: res.data.amount.amount, status: res.data.status });
+      })
+      console.log(res)
+      setCharge({ amount: res.data.amount.amount, status: res.data.status })
     } catch (err) {
-      console.log(err);
+      console.log(err)
     }
-  };
+  }
 
-  const [methodPay, setMethodPay] = useState('CREDIT_CARD');
+  const [methodPay, setMethodPay] = useState('CREDIT_CARD')
   return (
     <form>
       <div className="border border-gray-300 p-6 rounded-lg w-[34rem] mb-6">
@@ -191,9 +214,9 @@ function ConfirmForm() {
       >
         Confirm and pay
       </button>
-      {charge && <SuccessPayment Booking={Booking} charge={charge}/>}
+      {charge && <SuccessPayment Booking={Booking} charge={charge} />}
     </form>
-  );
+  )
 }
 
-export default ConfirmForm;
+export default ConfirmForm
