@@ -21,7 +21,7 @@ function ReserveComponent() {
   return (
     <>
       <div className="flex items-center justify-center mt-10">
-        <div className="flex flex-col h-[27rem] border rounded-xl p-3 w-max">
+        <div className="flex flex-col h-[28rem] border rounded-xl p-3 w-max">
           <div className="w-[15rem] flex mx-auto mt-[1rem] justify-between">
             <h1 className="text-xl">$3,764</h1>
             <div className="font-light mt-[0.1rem]">night</div>
@@ -154,8 +154,12 @@ function ReserveComponent() {
             <div>$16,352</div>
           </div>
           <div className="w-[15rem] mx-auto mt-[1rem] flex justify-between">
+            <div className="underline">Cleaning fee</div>
+            <div>$400</div>
+          </div>
+          <div className="w-[15rem] mx-auto mt-[1rem] flex justify-between">
             <div className="underline">Service fee</div>
-            <div>$2,470</div>
+            <div>$500</div>
           </div>
           <hr className="mt-[2rem] w-[15rem] mx-auto"></hr>
           <div className="w-[15rem] mx-auto mt-[1.5rem] flex justify-between mb-[1.5rem] font-bold">
