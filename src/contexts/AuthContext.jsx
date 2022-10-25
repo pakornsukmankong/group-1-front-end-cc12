@@ -67,9 +67,19 @@ function AuthContextProvider({ children }) {
 	};
 
 	const updateAccountUser = async (data) => {
-		return await authService.updateUser(data);
-		// getMe();
+		await authService.updateUser(data);
+		getMe();
 		// return res;
+	};
+
+	const deleteUser = async () => {
+		try {
+			await authService.deleteUser();
+			removeLocalStorage();
+			window.location.assign('/');
+		} catch (err) {
+			console.log(err);
+		}
 	};
 
 	return (
@@ -85,6 +95,8 @@ function AuthContextProvider({ children }) {
 				phoneNumber,
 				verifyStatus,
 				updateAccountUser,
+				deleteUser,
+				setVerifyStatus,
 			}}
 		>
 			{children}

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import DeleteModal from '../../components/Modal/DeleteModal';
 import { useAuth } from '../../contexts/AuthContext';
 import EditEmailForm from './EditEmailForm';
 import EditGenderForm from './EditGenderForm';
@@ -15,6 +16,7 @@ function AccountContainer() {
 	const [isEditPhone, setIsEditPhone] = useState(false);
 	const [isEditGender, setIsEditGender] = useState(false);
 	const [isEditPassword, setIsEditPassword] = useState(false);
+	const [deleteUser, setDeleteUser] = useState(false);
 
 	return (
 		<div className='mx-[5rem]'>
@@ -227,9 +229,19 @@ function AccountContainer() {
 									</div>
 								</div>
 								<div className='w-[6.25rem] mt-[1.813rem]'>
-									<button className='text-red-500 hover:underline cursor-pointer'>
+									<button
+										className='text-red-500 hover:underline cursor-pointer'
+										onClick={() => setDeleteUser(true)}
+									>
 										Deactivate
 									</button>
+								</div>
+								<div>
+									{deleteUser ? (
+										<DeleteModal closeDeleteUser={() => setDeleteUser(false)} />
+									) : (
+										''
+									)}
 								</div>
 							</div>
 						</div>
