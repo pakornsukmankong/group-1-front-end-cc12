@@ -12,19 +12,22 @@ function ReserveComponent() {
 		handleCheckOutDate,
 		checkOutDate,
 		checkInDate,
-		handleCheckAdults,
+		handleIncreseAdults,
+		handleDeceaseAdults,
+		handleIncreseChild,
+		handleDeceaseChild,
 		adults,
-		handleCheckChild,
 		child,
 	} = useReserve();
-	console.log(checkInDate, checkOutDate);
+	console.log(adults);
+	// console.log(checkInDate, checkOutDate);
 	const today = dateFormat(new Date(), 'yyyy-mm-dd');
 
 	const date1 = new Date(checkInDate);
 	const date2 = new Date(checkOutDate);
 	const resultTime = date2.getTime() - date1.getTime();
 	const resultDay = resultTime / (1000 * 3600 * 24);
-	console.log(resultDay);
+	// console.log(resultDay);
 
 	const id = 1;
 
@@ -89,7 +92,7 @@ function ReserveComponent() {
 							GUESTS
 						</div>
 						<div className='font-light text-[0.8rem] ml-[0.5rem]'>
-							12 guest
+							{adults + child} guest
 							<i className='fa-solid fa-chevron-down ml-[9rem] mt-[-0.9rem]'></i>
 						</div>
 						{/* setShow */}
@@ -109,13 +112,19 @@ function ReserveComponent() {
 									<div className='w-[8rem] text-sm text-gray-500'>Age 13+</div>
 								</div>
 								<div className='flex flex-row w-[6rem] ml-[-1.6rem]'>
-									<button className='border w-[2rem] h-[2rem] text-gray-400 rounded-full mt-[0.5rem] hover:border-black hover:text-black'>
+									<button
+										className='border w-[2rem] h-[2rem] text-gray-400 rounded-full mt-[0.5rem] hover:border-black hover:text-black'
+										onClick={handleDeceaseAdults}
+									>
 										-
 									</button>
 									<div className='w-[2rem] text-center mt-[0.7rem]'>
 										{adults}
 									</div>
-									<button className='border w-[2rem] h-[2rem] text-gray-400 rounded-full mt-[0.5rem] hover:border-black hover:text-black'>
+									<button
+										className='border w-[2rem] h-[2rem] text-gray-400 rounded-full mt-[0.5rem] hover:border-black hover:text-black'
+										onClick={handleIncreseAdults}
+									>
 										+
 									</button>
 								</div>
@@ -129,11 +138,19 @@ function ReserveComponent() {
 									</div>
 								</div>
 								<div className='flex flex-row w-[10rem] ml-[-1.6rem]'>
-									<button className='border w-[2rem] h-[2rem] text-gray-400 rounded-full mt-[0.5rem] hover:border-black hover:text-black'>
+									<button
+										className='border w-[2rem] h-[2rem] text-gray-400 rounded-full mt-[0.5rem] hover:border-black hover:text-black'
+										onClick={handleDeceaseChild}
+									>
 										-
 									</button>
-									<div className='w-[2rem] text-center mt-[0.7rem]'>3</div>
-									<button className='border  w-[2rem] h-[2rem] text-gray-400 rounded-full mt-[0.5rem] hover:border-black hover:text-black'>
+									<div className='w-[2rem] text-center mt-[0.7rem]'>
+										{child}
+									</div>
+									<button
+										className='border  w-[2rem] h-[2rem] text-gray-400 rounded-full mt-[0.5rem] hover:border-black hover:text-black'
+										onClick={handleIncreseChild}
+									>
 										+
 									</button>
 								</div>
