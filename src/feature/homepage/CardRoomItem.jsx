@@ -27,8 +27,8 @@ function CardRoomItem({ dataItem }) {
 		// roomOpen,
 	} = dataItem;
 
-	const wishListed = wishList.map((property) => property.propertyId);
-	const userWishList = wishListed.includes(id);
+	const wishListed = wishList?.map((property) => property.propertyId);
+	const userWishList = wishListed?.includes(id);
 
 	const [prevEl, setPrevEl] = useState(null);
 	const [nextEl, setNextEl] = useState(null);
