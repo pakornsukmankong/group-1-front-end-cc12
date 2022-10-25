@@ -6,6 +6,7 @@ const PropertyContext = createContext();
 function PropertyContextProvider({ children }) {
 	const [property, setProperty] = useState(null);
 	const [wishList, setWishList] = useState(null);
+	const [room, setRoom] = useState(null);
 
 	const fetchProperty = async () => {
 		try {
@@ -14,6 +15,17 @@ function PropertyContextProvider({ children }) {
 			setProperty(res.data.property);
 		} catch (err) {
 			console.log(err);
+		}
+	};
+
+	const fetchRoomFromID = async (id) => {
+		try {
+			const res = await propertyService.getPropertyByRoom(id);
+			// setRoom(res.data.userLearningCourse);
+			// console.log(res.data.property);
+			setRoom(res.data.property);
+		} catch (err) {
+			console.log('Fetch fetchUserCourse Error');
 		}
 	};
 
@@ -39,7 +51,14 @@ function PropertyContextProvider({ children }) {
 
 	return (
 		<PropertyContext.Provider
-			value={{ property, toggleWishList, wishList, fetchWishList }}
+			value={{
+				property,
+				toggleWishList,
+				wishList,
+				fetchWishList,
+				fetchRoomFromID,
+				room,
+			}}
 		>
 			{children}
 		</PropertyContext.Provider>

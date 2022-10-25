@@ -7,28 +7,18 @@ import ImageItem from './ImageItem';
 import ReserveComponent from '../../components/Modal/ReserveComponent';
 import StickyBox from 'react-sticky-box';
 import { useParams } from 'react-router-dom';
-import { useState } from 'react';
-import * as propertyApi from '../../api/propertyApi';
+import { useProperty } from '../../contexts/PropertyContext';
+import { useEffect } from 'react';
 
 function RoomContainer() {
-	const [room, setRoom] = useState(null);
 	const { id } = useParams();
+	const { fetchRoomFromID, room } = useProperty();
 
-	console.log(id);
+	console.log(room);
 
-	// const fetchRoomFromID = async (id) => {
-	// 	try {
-	// 		const res = await propertyApi.getPropertyByRoom(id);
-	// 		setRoom(res.data.userLearningCourse);
-	// 		// console.log(res.data.userLearningCourse);
-	// 	} catch (err) {
-	// 		console.log('Fetch fetchUserCourse Error');
-	// 	}
-	// };
-
-	// useEffect(() => {
-	// 	fetchRoomFromID(params.courseid);
-	// }, []);
+	useEffect(() => {
+		fetchRoomFromID(id);
+	}, []);
 
 	const { isLoaded } = useLoadScript({
 		googleMapsApiKey: 'AIzaSyCjS_58fk-DKUFw0nSQyeHpy1myF5HCy4o',
@@ -38,14 +28,14 @@ function RoomContainer() {
 		<>
 			{/* property name ,review, location */}
 			<div className='flex flex-col gap-2 py-5 border-b-2'>
-				<p className='text-3xl'>Rare Villa right on the beach!!</p>
+				<p className='text-3xl'>{room?.propertyName}</p>
 				<div className='flex gap-2 justify-start items-center font-light'>
 					<svg viewBox='0 0 32 32' className='block h-[1rem] w-[1rem]'>
 						<path d='M15.094 1.579l-4.124 8.885-9.86 1.27a1 1 0 0 0-.542 1.736l7.293 6.565-1.965 9.852a1 1 0 0 0 1.483 1.061L16 25.951l8.625 4.997a1 1 0 0 0 1.482-1.06l-1.965-9.853 7.293-6.565a1 1 0 0 0-.541-1.735l-9.86-1.271-4.127-8.885a1 1 0 0 0-1.814 0z' />
 					</svg>
 					<p>4.68</p>
 					<p>&middot; 100 review</p>
-					<p>&middot; Muang Pattaya,Chang Wat Chon Buri, Thailand</p>
+					<p>&middot; {room?.address}</p>
 				</div>
 			</div>
 
@@ -59,7 +49,8 @@ function RoomContainer() {
 						<div className='flex flex-col gap-2'>
 							<p className='text-2xl'>Entire home hosted by Floksong</p>
 							<p className='font-light'>
-								6 guests &middot; 2 bedrooms &middot; 3 beds &middot; 2 baths
+								{room?.bedRoomQty} bedrooms &middot; {room?.bedQty} beds
+								&middot; {room?.bathRoomQty} baths
 							</p>
 						</div>
 						<Avatar hSize='h-10' wSize='w-10' />
@@ -75,15 +66,7 @@ function RoomContainer() {
 					{/* about this place */}
 					<div className='flex flex-col gap-2 py-5 border-b-2 justify-start'>
 						<p className='text-xl'>About this place</p>
-						<p className='font-light'>
-							Lorem ipsum dolor sit amet consectetur adipisicing elit.
-							Provident, hic repellendus voluptatibus veritatis architecto
-							impedit minus quam sed possimus. Distinctio harum ad praesentium
-							tempore, cumque cupiditate eveniet omnis porro veritatis
-							reiciendis id, mollitia blanditiis? Nostrum molestias error
-							possimus, odio repellendus ipsum facilis quis laboriosam veritatis
-							voluptatum inventore eaque delectus dolores.
-						</p>
+						<p className='font-light'>{room?.description}</p>
 					</div>
 
 					{/* What this place offers */}
@@ -108,7 +91,7 @@ function RoomContainer() {
 			{/* Where you will be */}
 			<div className='flex flex-col gap-2 py-5 border-b-2 justify-start'>
 				<p className='text-xl my-2'>Where you'll be</p>
-				{isLoaded ? <Map /> : <div>Loading...</div>}
+				{isLoaded ? <Map room={room} /> : <div>Loading...</div>}
 			</div>
 
 			{/* Reviews */}
