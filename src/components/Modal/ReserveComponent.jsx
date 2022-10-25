@@ -1,7 +1,8 @@
 import { useState } from 'react';
+
 import { Link } from 'react-router-dom';
 
-function ReserveComponent() {
+function ReserveComponent({room}) {
 	const [input, setInput] = useState('');
 	const [isOpen, setIsOpen] = useState(false);
 
@@ -15,7 +16,9 @@ function ReserveComponent() {
 			<div className='flex items-center justify-center mt-10'>
 				<div className='flex flex-col h-[28rem] border rounded-xl p-3 w-max'>
 					<div className='w-[15rem] flex mx-auto mt-[1rem] justify-between'>
-						<h1 className='text-xl'>$3,764</h1>
+
+						<h1 className='text-xl'>{room?.pricePerDate}</h1>
+
 						<div className='font-light mt-[0.1rem]'>night</div>
 						<i className='fa-solid fa-star mt-[0.3rem] ml-[1rem]'></i>
 						<div className='text-sm ml-[0.1rem] mt-[0.3rem]'> 4.67</div>
@@ -66,7 +69,9 @@ function ReserveComponent() {
 							GUESTS
 						</div>
 						<div className='font-light text-[0.8rem] ml-[0.5rem]'>
+
 							12 guest
+
 							<i className='fa-solid fa-chevron-down ml-[9rem] mt-[-0.9rem]'></i>
 						</div>
 						{/* setShow */}
@@ -86,11 +91,13 @@ function ReserveComponent() {
 									<div className='w-[8rem] text-sm text-gray-500'>Age 13+</div>
 								</div>
 								<div className='flex flex-row w-[6rem] ml-[-1.6rem]'>
+
 									<button className='border w-[2rem] h-[2rem] text-gray-400 rounded-full mt-[0.5rem] hover:border-black hover:text-black'>
 										-
 									</button>
 									<div className='w-[2rem] text-center mt-[0.7rem]'>23</div>
 									<button className='border w-[2rem] h-[2rem] text-gray-400 rounded-full mt-[0.5rem] hover:border-black hover:text-black'>
+
 										+
 									</button>
 								</div>
@@ -104,11 +111,13 @@ function ReserveComponent() {
 									</div>
 								</div>
 								<div className='flex flex-row w-[10rem] ml-[-1.6rem]'>
+
 									<button className='border w-[2rem] h-[2rem] text-gray-400 rounded-full mt-[0.5rem] hover:border-black hover:text-black'>
 										-
 									</button>
 									<div className='w-[2rem] text-center mt-[0.7rem]'>3</div>
 									<button className='border  w-[2rem] h-[2rem] text-gray-400 rounded-full mt-[0.5rem] hover:border-black hover:text-black'>
+
 										+
 									</button>
 								</div>
@@ -122,31 +131,30 @@ function ReserveComponent() {
 							</div>
 							{/* table 4 */}
 							<div className='p-3 flex underline'>
-								<button className='ml-[9rem]' onClick={handleClick}>
-									Close
-								</button>
+
+								<button className='ml-[9rem]'>Close</button>
 							</div>
 						</div>
 					</div>
-
 					<div className='w-[15rem] mx-auto mt-[1rem]'>
-						<Link to={`/confirmPayment/${id}`}>
-							<button className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded w-[15rem]'>
-								Reserve
-							</button>
-						</Link>
+						<button className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded w-[15rem]'>
+							Reserve
+						</button>
 					</div>
 					<div className='w-[15rem] mx-auto mt-[1rem] flex justify-between'>
-						<div className='underline'>$3,270 x 5 nights</div>
+						<div className='underline'>{room?.pricePerDate} x 5 nights</div>
+
 						<div>$16,352</div>
 					</div>
 					<div className='w-[15rem] mx-auto mt-[1rem] flex justify-between'>
 						<div className='underline'>Cleaning fee</div>
-						<div>$400</div>
+
+						<div>{room?.cleaningFees}</div>
 					</div>
 					<div className='w-[15rem] mx-auto mt-[1rem] flex justify-between'>
 						<div className='underline'>Service fee</div>
-						<div>$500</div>
+						<div>{room?.serviceFees}</div>
+
 					</div>
 					<hr className='mt-[2rem] w-[15rem] mx-auto'></hr>
 					<div className='w-[15rem] mx-auto mt-[1.5rem] flex justify-between mb-[1.5rem] font-bold'>

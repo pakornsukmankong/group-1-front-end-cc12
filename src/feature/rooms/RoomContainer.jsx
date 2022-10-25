@@ -14,8 +14,6 @@ function RoomContainer() {
 	const { id } = useParams();
 	const { fetchRoomFromID, room } = useProperty();
 
-	console.log(room);
-
 	useEffect(() => {
 		fetchRoomFromID(id);
 	}, []);
@@ -40,14 +38,17 @@ function RoomContainer() {
 			</div>
 
 			{/* property Image */}
-			<ImageItem />
+			<ImageItem room={room} />
 
 			<div className='md:grid md:grid-cols-2'>
 				<div>
 					{/* owner and property info */}
 					<div className='flex gap-2 py-5 border-b-2 justify-between items-center'>
 						<div className='flex flex-col gap-2'>
-							<p className='text-2xl'>Entire home hosted by Floksong</p>
+							<p className='text-2xl'>
+								Entire home hosted by {room?.User?.firstName}{' '}
+								{room?.User?.lastName}
+							</p>
 							<p className='font-light'>
 								{room?.bedRoomQty} bedrooms &middot; {room?.bedQty} beds
 								&middot; {room?.bathRoomQty} baths
@@ -83,7 +84,7 @@ function RoomContainer() {
 				<div className=''>
 					{/* reserve component */}
 					<StickyBox>
-						<ReserveComponent />
+						<ReserveComponent room={room} />
 					</StickyBox>
 				</div>
 			</div>
@@ -127,7 +128,9 @@ function RoomContainer() {
 				<div className='flex gap-3'>
 					<Avatar hSize='h-12' wSize='w-12' />
 					<div className='flex flex-col'>
-						<p className='text-xl'>Hosted By Floksong</p>
+						<p className='text-xl'>
+							Hosted By {room?.User?.firstName} {room?.User?.lastName}
+						</p>
 						<p className='text-sm font-thin mb-3'>Joined in October 2013</p>
 					</div>
 				</div>
