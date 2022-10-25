@@ -122,7 +122,9 @@ function ReserveComponent() {
 							</div>
 							{/* table 4 */}
 							<div className='p-3 flex underline'>
-								<button className='ml-[9rem]'>Close</button>
+								<button className='ml-[9rem]' onClick={handleClick}>
+									Close
+								</button>
 							</div>
 						</div>
 					</div>
