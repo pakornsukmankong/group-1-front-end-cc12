@@ -15,6 +15,7 @@ import RoomPage from '../pages/RoomPage'
 import WishlistPage from '../pages/WishlistPage'
 import CreateHostPage from '../pages/CreateHostPage'
 import HostingPage from '../pages/HostingPage'
+import TripsPage from '../pages/TripsPage'
 import TypeGroupContainer from '../feature/create-host/TypeGroupContainer'
 import PropertyTypeContainer from '../feature/create-host/PropertyTypeContainer'
 import PrivacyTypeContainer from '../feature/create-host/PrivacyTypeContainer'
@@ -41,6 +42,7 @@ function Router() {
           {user ? (
             <>
               <Route path="/account" element={<AccountPage />} />
+              <Route path="/trips" element={<TripsPage />} />
               <Route path="/wishlists" element={<WishlistPage />} />
               <Route
                 path="/confirmPayment/:id"
