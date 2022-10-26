@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import dateFormat from 'dateformat';
+import * as reserveService from '../api/reserveApi';
 const ReserveContext = createContext();
 
 function ReserveContextProvider({ children }) {
@@ -13,6 +14,7 @@ function ReserveContextProvider({ children }) {
 	const [adults, setAdults] = useState(1);
 	const [child, setChild] = useState(0);
 	const [totalGuest, setTotalGuest] = useState(0);
+	const [roomData, setRoomData] = useState(null);
 
 	useEffect(() => {
 		setTotalGuest(adults + child);
@@ -54,6 +56,12 @@ function ReserveContextProvider({ children }) {
 		return price?.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
 	};
 
+	const getReserveRoomByReserveId = async (reserveId) => {
+		const res = await reserveService.getReserveRoom(reserveId);
+		console.log(res?.data.room);
+		setRoomData(res?.data?.room);
+	};
+
 	return (
 		<ReserveContext.Provider
 			value={{
@@ -71,6 +79,8 @@ function ReserveContextProvider({ children }) {
 				today,
 				tomorrow,
 				totalGuest,
+				getReserveRoomByReserveId,
+				roomData,
 			}}
 		>
 			{children}
