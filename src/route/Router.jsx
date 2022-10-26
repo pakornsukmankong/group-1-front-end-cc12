@@ -15,6 +15,7 @@ import RoomPage from '../pages/RoomPage';
 import WishlistPage from '../pages/WishlistPage';
 import CreateHostPage from '../pages/CreateHostPage';
 import HostingPage from '../pages/HostingPage';
+import TripsPage from '../pages/TripsPage';
 import TypeGroupContainer from '../feature/create-host/TypeGroupContainer';
 import LocationContainer from '../feature/create-host/LocationContainer';
 import FloorPlanContainer from '../feature/create-host/FloorPlanContainer';
@@ -24,8 +25,9 @@ import TitleContainer from '../feature/create-host/TitleContainer';
 import DescriptionContainer from '../feature/create-host/DescriptionContainer';
 import PriceContainer from '../feature/create-host/PriceContainer';
 import PreviewContainer from '../feature/create-host/PreviewContainer';
-import { useAuth } from '../contexts/AuthContext';
 import CategoryTypeContainer from '../feature/create-host/CategoryTypeContainer';
+
+import { useAuth } from '../contexts/AuthContext';
 
 function Router() {
   const { user } = useAuth();
@@ -40,9 +42,10 @@ function Router() {
           {user ? (
             <>
               <Route path="/account" element={<AccountPage />} />
+              <Route path="/trips" element={<TripsPage />} />
               <Route path="/wishlists" element={<WishlistPage />} />
               <Route
-                path="/confirmPayment/:id"
+                path="/confirmPayment/:reserveId"
                 element={<ConfirmPaymentPage />}
               />
               <Route path="/rooms/:id" element={<RoomPage />} />
