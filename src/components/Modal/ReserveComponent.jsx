@@ -19,15 +19,14 @@ function ReserveComponent() {
 		adults,
 		child,
 	} = useReserve();
-	console.log(adults);
+	// console.log(adults);
 	// console.log(checkInDate, checkOutDate);
 	const today = dateFormat(new Date(), 'yyyy-mm-dd');
-
 	const date1 = new Date(checkInDate);
 	const date2 = new Date(checkOutDate);
 	const resultTime = date2.getTime() - date1.getTime();
-	const resultDay = resultTime / (1000 * 3600 * 24);
-	// console.log(resultDay);
+	const resultAllDay = resultTime / (1000 * 3600 * 24);
+	console.log(resultAllDay);
 
 	const id = 1;
 
@@ -179,7 +178,7 @@ function ReserveComponent() {
 						</Link>
 					</div>
 					<div className='w-[15rem] mx-auto mt-[1rem] flex justify-between'>
-						<div className='underline'>$3,270 x{resultDay} nights</div>
+						<div className='underline'>$3,270 x{resultAllDay} nights</div>
 						<div>$16,352</div>
 					</div>
 					<div className='w-[15rem] mx-auto mt-[1rem] flex justify-between'>

@@ -5,7 +5,7 @@ const ReserveContext = createContext();
 function ReserveContextProvider({ children }) {
 	const [checkInDate, setCheckInDate] = useState(null);
 	const [checkOutDate, setCheckOutDate] = useState(null);
-	const [adults, setAdults] = useState(0);
+	const [adults, setAdults] = useState(1);
 	const [child, setChild] = useState(0);
 
 	const handleIncreseAdults = () => {
@@ -23,7 +23,7 @@ function ReserveContextProvider({ children }) {
 	};
 
 	const handleDeceaseChild = () => {
-		if (child > 1) {
+		if (child > 0) {
 			setChild((prev) => prev - 1);
 		}
 	};
