@@ -64,6 +64,7 @@ function AuthContextProvider({ children }) {
 		setUser(null);
 		setPhoneNumber('');
 		setVerifyStatus('');
+		window.location.assign('/');
 	};
 
 	const updateAccountUser = async (data) => {
