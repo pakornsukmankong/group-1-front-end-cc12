@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import { useAuth } from '../../contexts/AuthContext';
-import { register, verify } from '../../store/AuthSlice';
+import { useLoading } from '../../contexts/LoadingContext';
+import { toastError, toastSuccess } from '../../utils/toast';
 
 function RegisterModalEmail({ openModalOtp, closeModalRegisEmail }) {
-	const { registerWithEmail } = useAuth();
-	// const phoneNumber = useSelector((state) => state.auth.phoneNumber);
+	const { register } = useAuth();
+	const { startLoading, stopLoading } = useLoading();
 
 	const [input, setInput] = useState({
 		firstName: '',
@@ -24,8 +24,17 @@ function RegisterModalEmail({ openModalOtp, closeModalRegisEmail }) {
 	};
 
 	const handleClickRegister = async () => {
-		await registerWithEmail(input);
-		closeModalRegisEmail();
+		try {
+			startLoading();
+			await register(input);
+			closeModalRegisEmail();
+			toastSuccess('register success');
+		} catch (err) {
+			console.log(err);
+			toastError(err);
+		} finally {
+			stopLoading();
+		}
 	};
 
 	return (
@@ -96,16 +105,16 @@ function RegisterModalEmail({ openModalOtp, closeModalRegisEmail }) {
 
 						<div className='relative'>
 							<input
-								type='text'
+								type='password'
 								className='mt-5 pl-3 border border-gray-300 h-[3.5rem] rounded-lg  w-full font-light'
 								placeholder='Password'
 								name='password'
 								value={input.password}
 								onChange={handleChangeInput}
 							/>
-							<span className='absolute top-[2.3rem] right-4 text-sm underline cursor-pointer'>
+							<button className='absolute top-[2.3rem] right-4 text-sm underline cursor-pointer'>
 								Show
-							</span>
+							</button>
 						</div>
 						<div className='my-2 text-xs text-gray-500'>
 							By selecting

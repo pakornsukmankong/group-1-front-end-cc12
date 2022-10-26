@@ -1,11 +1,13 @@
 import { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { register, verify } from '../../store/AuthSlice';
+import { useAuth } from '../../contexts/AuthContext';
+import { useLoading } from '../../contexts/LoadingContext';
+import { toastError, toastSuccess } from '../../utils/toast';
 
-function RegisterModal({ openModalOtp, closeModalRegis }) {
-	const [logEmail, setlogEmail] = useState(false);
-	const dispatch = useDispatch();
-	const phoneNumber = useSelector((state) => state.auth.phoneNumber);
+function RegisterModal({ openModalOtp }) {
+	const { register } = useAuth();
+	const { startLoading, stopLoading } = useLoading();
+	const { phoneNumber } = useAuth();
+	const { setVerifyStatus } = useAuth();
 
 	const [input, setInput] = useState({
 		firstName: '',
@@ -20,12 +22,22 @@ function RegisterModal({ openModalOtp, closeModalRegis }) {
 	};
 
 	const handleClickBack = async () => {
-		await dispatch(verify(''));
+		setVerifyStatus('');
 		openModalOtp();
 	};
 
 	const handleClickRegister = async () => {
-		await dispatch(register(input));
+		try {
+			startLoading();
+			await register(input);
+			toastSuccess('register success');
+			closeModalRegis();
+		} catch (err) {
+			console.log(err);
+			toastError(err);
+		} finally {
+			stopLoading();
+		}
 	};
 
 	return (
@@ -96,16 +108,16 @@ function RegisterModal({ openModalOtp, closeModalRegis }) {
 
 						<div className='relative'>
 							<input
-								type='text'
+								type='password'
 								className='mt-5 pl-3 border border-gray-300 h-[3.5rem] rounded-lg  w-full font-light'
 								placeholder='Password'
 								name='password'
 								value={input.password}
 								onChange={handleChangeInput}
 							/>
-							<span className='absolute top-[2.3rem] right-4 text-sm underline cursor-pointer'>
-								Show
-							</span>
+							<button className='absolute top-[2.3rem] right-4 text-sm underline cursor-pointer'>
+								show
+							</button>
 						</div>
 						<div className='my-2 text-xs text-gray-500'>
 							By selecting

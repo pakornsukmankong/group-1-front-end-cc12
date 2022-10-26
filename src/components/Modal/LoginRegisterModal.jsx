@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { sendOutOtp } from '../../store/AuthSlice'
+import { useState } from 'react'
+import { useAuth } from '../../contexts/AuthContext'
+import { useLoading } from '../../contexts/LoadingContext'
+import { toastError, toastSuccess } from '../../utils/toast'
 
 function LoginRegisterModal({
   closeModalOtp,
@@ -8,20 +9,21 @@ function LoginRegisterModal({
   openEmailLoginModal,
 }) {
   const [phoneNumber, setPhoneNumber] = useState('')
-
-  const dispatch = useDispatch()
+  const { startLoading, stopLoading } = useLoading()
+  const { sendOutOtp } = useAuth()
 
   const handleContinueBtn = async () => {
     try {
-      await dispatch(sendOutOtp(phoneNumber))
-      // if (phoneNumber.length !== 10 || !phoneNumber) {
-      // 	return console.log('first');
-      // }
-
+      startLoading()
+      await sendOutOtp(phoneNumber)
       closeModalOtp()
       openModelVerify()
+      toastSuccess('send otp')
     } catch (err) {
       console.log(err)
+      toastError('not a phone number, please enter again')
+    } finally {
+      stopLoading()
     }
   }
 

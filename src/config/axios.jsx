@@ -15,14 +15,18 @@ axios.interceptors.request.use(
 	(err) => Promise.reject(err)
 );
 
-axios.interceptors.response.use(
-	(response) => response,
-	(err) => {
-		if (err.response.status === '401') {
-			removeLocalStorage();
-			return window.location.replace('/');
-		}
-	}
-);
+// axios.interceptors.response.use(
+// 	(response) => {
+// 		console.log(response);
+// 		return response;
+// 	},
+// 	(err) => {
+// 		console.log(err);
+// 		if (err.response.status === '401') {
+// 			removeLocalStorage();
+// 			return window.location.replace('/');
+// 		}
+// 	}
+// );
 
 export default axios;

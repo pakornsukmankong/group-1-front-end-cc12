@@ -1,5 +1,5 @@
 function MainContainer({ children }) {
-	return <div className='px-20'>{children}</div>;
+  return <div className="px-20">{children}</div>
 }
 
-export default MainContainer;
+export default MainContainer

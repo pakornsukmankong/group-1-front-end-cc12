@@ -19,7 +19,8 @@ function MenuDropDownGuest() {
 	const [modalRegisEmail, setModalRegisEmail] = useState(false);
 	const [emailLoginModal, setEmailLoginModal] = useState(false);
 
-	const verifyStatus = useSelector((state) => state.auth.verifyStatus);
+	// const verifyStatus = useSelector((state) => state.auth.verifyStatus);
+	const { verifyStatus } = useAuth();
 	const userStatus = useSelector((state) => state.auth.userStatus);
 
 	return (
@@ -137,7 +138,7 @@ function MenuDropDownGuest() {
 					)}
 				</div>
 				<div>
-					{verifyStatus === 'approved' && !userStatus ? (
+					{verifyStatus === 'approved' ? (
 						<RegisterModal openModalOtp={() => setModalOtp(true)} />
 					) : (
 						''

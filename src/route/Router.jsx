@@ -14,6 +14,7 @@ import HomePage from '../pages/HomePage'
 import RoomPage from '../pages/RoomPage'
 import WishlistPage from '../pages/WishlistPage'
 import CreateHostPage from '../pages/CreateHostPage'
+import HostingPage from '../pages/HostingPage'
 import TypeGroupContainer from '../feature/create-host/TypeGroupContainer'
 import PropertyTypeContainer from '../feature/create-host/PropertyTypeContainer'
 import PrivacyTypeContainer from '../feature/create-host/PrivacyTypeContainer'
@@ -34,22 +35,23 @@ function Router() {
       <Routes>
         <Route path="/" element={<AuthLayout />}>
           <Route path="/" element={<HomePage />} />
+          <Route path="*" element={<Navigate to="/" />} />
         </Route>
         <Route path="/" element={<HomeLayout />}>
           {user ? (
             <>
-              <Route path="/account/:id" element={<AccountPage />} />
-              <Route path="/wishlists/:id" element={<WishlistPage />} />
+              <Route path="/account" element={<AccountPage />} />
+              <Route path="/wishlists" element={<WishlistPage />} />
               <Route
                 path="/confirmPayment/:id"
                 element={<ConfirmPaymentPage />}
               />
-              <Route path="/becomeHosting" element={<BecomeHostPage />} />
               <Route path="/rooms/:id" element={<RoomPage />} />
               <Route path="*" element={<Navigate to="/" />} />
             </>
           ) : (
             <>
+              <Route path="/rooms/:id" element={<RoomPage />} />
               <Route path="*" element={<Navigate to="/" />} />
             </>
           )}
@@ -57,23 +59,46 @@ function Router() {
           {/* <Route path='/loginEmail' element={<EmailLoginModal />}></Route>
 					<Route path='/register' element={<RegisterModal />}></Route>
 					<Route path='/phoneAuth' element={<PhoneAuthModal />}></Route>
-					<Route path='/reserve' element={<ReserveComponent />}></Route> */}
+        <Route path='/reserve' element={<ReserveComponent />}></Route> */}
         </Route>
 
-        <Route path="/create-host">
-          <Route path="intro" element={<CreateHostPage />} />
-          <Route path="property-type-group" element={<TypeGroupContainer />} />
-          <Route path="property-type/:id" element={<PropertyTypeContainer />} />
-          <Route path="privacy-type/:id" element={<PrivacyTypeContainer />} />
-          <Route path="location/:id" element={<LocationContainer />} />
-          <Route path="floor-plan/:id" element={<FloorPlanContainer />} />
-          <Route path="amenities/:id" element={<AmenitiesContainer />} />
-          <Route path="photos/:id" element={<PhotosContainer />} />
-          <Route path="title/:id" element={<TitleContainer />} />
-          <Route path="description/:id" element={<DescriptionContainer />} />
-          <Route path="price/:id" element={<PriceContainer />} />
-          <Route path="preview/:id" element={<PreviewContainer />} />
-        </Route>
+        {user ? (
+          <>
+            <Route path="/" element={<AuthLayout />}>
+              <Route path="/hosting" element={<HostingPage />} />
+              <Route path="*" element={<Navigate to="/" />} />
+            </Route>
+            <Route path="/becomeHosting" element={<BecomeHostPage />} />
+            <Route path="/create-host">
+              <Route path="intro" element={<CreateHostPage />} />
+              <Route
+                path="property-type-group"
+                element={<TypeGroupContainer />}
+              />
+              <Route
+                path="property-type/:id"
+                element={<PropertyTypeContainer />}
+              />
+              <Route
+                path="privacy-type/:id"
+                element={<PrivacyTypeContainer />}
+              />
+              <Route path="location/:id" element={<LocationContainer />} />
+              <Route path="floor-plan/:id" element={<FloorPlanContainer />} />
+              <Route path="amenities/:id" element={<AmenitiesContainer />} />
+              <Route path="photos/:id" element={<PhotosContainer />} />
+              <Route path="title/:id" element={<TitleContainer />} />
+              <Route
+                path="description/:id"
+                element={<DescriptionContainer />}
+              />
+              <Route path="price/:id" element={<PriceContainer />} />
+              <Route path="preview/:id" element={<PreviewContainer />} />
+            </Route>
+          </>
+        ) : (
+          <Route path="*" element={<Navigate to="/" />} />
+        )}
       </Routes>
     </>
   )
