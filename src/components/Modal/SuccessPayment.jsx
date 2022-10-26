@@ -1,6 +1,8 @@
 import { useNavigate } from 'react-router-dom'
+import { useReserve } from '../../contexts/ReserveContext'
 
 function SuccessPayment({ Booking, charge }) {
+  const { formatPrice } = useReserve()
   const navigate = useNavigate()
   const { email, name } = Booking
   return (
@@ -25,7 +27,8 @@ function SuccessPayment({ Booking, charge }) {
               </p>
               <br />
               <p>
-                Your Payment amount is {Booking.amount /100 || charge.amount} Baht
+                Your Payment amount is{' '}
+                {formatPrice(charge.amount / 100 + '')} Baht
               </p>
             </div>
           </div>
