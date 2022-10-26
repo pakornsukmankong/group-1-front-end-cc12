@@ -95,11 +95,11 @@ function BecomeHostCarousel() {
 			<div className='mx-[3rem] mt-[1.5rem]'>
 				<Slider {...settings}>
 					{mockData.map((item) => (
-						<div className='flex flex-col gap-5 w-[30rem]'>
+						<div className='gap-5 w-[30rem] flex'>
 							<div className=''>
 								<img src={item.img} className='w-[35rem] shadow-2xl'></img>
 							</div>
-							<div className='my-[1.5rem] w-[35rem]'>
+							<div className='my-[1.5rem] w-[30rem]'>
 								<p className='font-light text-2xl'>{item.description}</p>
 							</div>
 							<div className='w-[35rem]'>
