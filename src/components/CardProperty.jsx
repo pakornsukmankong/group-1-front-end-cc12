@@ -14,10 +14,7 @@ function CardProperty({ roomData }) {
 				/>
 				<div className='flex flex-col justify-between pl-3'>
 					<div className='text-[#717171] text-[0.75rem] leading-4'>
-						Private room in treehouse
-						<div className='text-[0.875rem] leading-[1.125rem]'>
-							Tree House 10 mins drive fr center
-						</div>
+						{roomData?.Property.propertyName}
 					</div>
 					<div className='text-[0.75rem] flex  justify-start items-center gap-[1px]'>
 						<i className='fa-solid fa-star '></i>
