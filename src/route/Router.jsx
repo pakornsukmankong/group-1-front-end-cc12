@@ -1,3 +1,4 @@
+
 import { Routes, Route } from 'react-router-dom'
 import { Navigate } from 'react-router-dom'
 import EmailLoginModal from '../components/Modal/EmailLoginModal'
@@ -45,7 +46,7 @@ function Router() {
               <Route path="/trips" element={<TripsPage />} />
               <Route path="/wishlists" element={<WishlistPage />} />
               <Route
-                path="/confirmPayment/:id"
+                path="/confirmPayment/:reserveId"
                 element={<ConfirmPaymentPage />}
               />
               <Route path="/rooms/:id" element={<RoomPage />} />
@@ -62,48 +63,48 @@ function Router() {
 					<Route path='/register' element={<RegisterModal />}></Route>
 					<Route path='/phoneAuth' element={<PhoneAuthModal />}></Route>
         <Route path='/reserve' element={<ReserveComponent />}></Route> */}
-        </Route>
+				</Route>
 
-        {user ? (
-          <>
-            <Route path="/" element={<AuthLayout />}>
-              <Route path="/hosting" element={<HostingPage />} />
-              <Route path="*" element={<Navigate to="/" />} />
-            </Route>
-            <Route path="/becomeHosting" element={<BecomeHostPage />} />
-            <Route path="/create-host">
-              <Route path="intro" element={<CreateHostPage />} />
-              <Route
-                path="property-type-group"
-                element={<TypeGroupContainer />}
-              />
-              <Route
-                path="property-type/:id"
-                element={<PropertyTypeContainer />}
-              />
-              <Route
-                path="privacy-type/:id"
-                element={<PrivacyTypeContainer />}
-              />
-              <Route path="location/:id" element={<LocationContainer />} />
-              <Route path="floor-plan/:id" element={<FloorPlanContainer />} />
-              <Route path="amenities/:id" element={<AmenitiesContainer />} />
-              <Route path="photos/:id" element={<PhotosContainer />} />
-              <Route path="title/:id" element={<TitleContainer />} />
-              <Route
-                path="description/:id"
-                element={<DescriptionContainer />}
-              />
-              <Route path="price/:id" element={<PriceContainer />} />
-              <Route path="preview/:id" element={<PreviewContainer />} />
-            </Route>
-          </>
-        ) : (
-          <Route path="*" element={<Navigate to="/" />} />
-        )}
-      </Routes>
-    </>
-  )
+				{user ? (
+					<>
+						<Route path='/' element={<AuthLayout />}>
+							<Route path='/hosting' element={<HostingPage />} />
+							<Route path='*' element={<Navigate to='/' />} />
+						</Route>
+						<Route path='/becomeHosting' element={<BecomeHostPage />} />
+						<Route path='/create-host'>
+							<Route path='intro' element={<CreateHostPage />} />
+							<Route
+								path='property-type-group'
+								element={<TypeGroupContainer />}
+							/>
+							<Route
+								path='property-type/:id'
+								element={<PropertyTypeContainer />}
+							/>
+							<Route
+								path='privacy-type/:id'
+								element={<PrivacyTypeContainer />}
+							/>
+							<Route path='location/:id' element={<LocationContainer />} />
+							<Route path='floor-plan/:id' element={<FloorPlanContainer />} />
+							<Route path='amenities/:id' element={<AmenitiesContainer />} />
+							<Route path='photos/:id' element={<PhotosContainer />} />
+							<Route path='title/:id' element={<TitleContainer />} />
+							<Route
+								path='description/:id'
+								element={<DescriptionContainer />}
+							/>
+							<Route path='price/:id' element={<PriceContainer />} />
+							<Route path='preview/:id' element={<PreviewContainer />} />
+						</Route>
+					</>
+				) : (
+					<Route path='*' element={<Navigate to='/' />} />
+				)}
+			</Routes>
+		</>
+	);
 }
 
-export default Router
+export default Router;
