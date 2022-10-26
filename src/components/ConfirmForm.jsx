@@ -202,6 +202,7 @@ function ConfirmForm({ roomData: [roomData, reserveId] }) {
       {charge && <SuccessPayment Booking={Booking} charge={charge} />}
     </form>
   )
+
 }
 
 export default ConfirmForm
