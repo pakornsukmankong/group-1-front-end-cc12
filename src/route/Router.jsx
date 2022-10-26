@@ -1,35 +1,34 @@
-import { Routes, Route } from 'react-router-dom'
-import { Navigate } from 'react-router-dom'
-import EmailLoginModal from '../components/Modal/EmailLoginModal'
-import LoginRegisterModal from '../components/Modal/LoginRegisterModal'
-import PhoneAuthModal from '../components/Modal/PhoneAuthModal'
-import RegisterModal from '../components/Modal/RegisterModal'
-import ReserveComponent from '../components/Modal/ReserveComponent'
-import AuthLayout from '../layout/auth/AuthLayout'
-import HomeLayout from '../layout/auth/HomeLayout'
-import AccountPage from '../pages/AccountPage'
-import BecomeHostPage from '../pages/BecomeHostPage'
-import ConfirmPaymentPage from '../pages/ConfirmPaymentPage'
-import HomePage from '../pages/HomePage'
-import RoomPage from '../pages/RoomPage'
-import WishlistPage from '../pages/WishlistPage'
-import CreateHostPage from '../pages/CreateHostPage'
-import HostingPage from '../pages/HostingPage'
-import TypeGroupContainer from '../feature/create-host/TypeGroupContainer'
-import PropertyTypeContainer from '../feature/create-host/PropertyTypeContainer'
-import PrivacyTypeContainer from '../feature/create-host/PrivacyTypeContainer'
-import LocationContainer from '../feature/create-host/LocationContainer'
-import FloorPlanContainer from '../feature/create-host/FloorPlanContainer'
-import AmenitiesContainer from '../feature/create-host/AmenitiesContainer'
-import PhotosContainer from '../feature/create-host/PhotosContainer'
-import TitleContainer from '../feature/create-host/TitleContainer'
-import DescriptionContainer from '../feature/create-host/DescriptionContainer'
-import PriceContainer from '../feature/create-host/PriceContainer'
-import PreviewContainer from '../feature/create-host/PreviewContainer'
-import { useAuth } from '../contexts/AuthContext'
+import { Routes, Route } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
+import EmailLoginModal from '../components/Modal/EmailLoginModal';
+import LoginRegisterModal from '../components/Modal/LoginRegisterModal';
+import PhoneAuthModal from '../components/Modal/PhoneAuthModal';
+import RegisterModal from '../components/Modal/RegisterModal';
+import ReserveComponent from '../components/Modal/ReserveComponent';
+import AuthLayout from '../layout/auth/AuthLayout';
+import HomeLayout from '../layout/auth/HomeLayout';
+import AccountPage from '../pages/AccountPage';
+import BecomeHostPage from '../pages/BecomeHostPage';
+import ConfirmPaymentPage from '../pages/ConfirmPaymentPage';
+import HomePage from '../pages/HomePage';
+import RoomPage from '../pages/RoomPage';
+import WishlistPage from '../pages/WishlistPage';
+import CreateHostPage from '../pages/CreateHostPage';
+import HostingPage from '../pages/HostingPage';
+import TypeGroupContainer from '../feature/create-host/TypeGroupContainer';
+import LocationContainer from '../feature/create-host/LocationContainer';
+import FloorPlanContainer from '../feature/create-host/FloorPlanContainer';
+import AmenitiesContainer from '../feature/create-host/AmenitiesContainer';
+import PhotosContainer from '../feature/create-host/PhotosContainer';
+import TitleContainer from '../feature/create-host/TitleContainer';
+import DescriptionContainer from '../feature/create-host/DescriptionContainer';
+import PriceContainer from '../feature/create-host/PriceContainer';
+import PreviewContainer from '../feature/create-host/PreviewContainer';
+import { useAuth } from '../contexts/AuthContext';
+import CategoryTypeContainer from '../feature/create-host/CategoryTypeContainer';
 
 function Router() {
-  const { user } = useAuth()
+  const { user } = useAuth();
   return (
     <>
       <Routes>
@@ -76,12 +75,8 @@ function Router() {
                 element={<TypeGroupContainer />}
               />
               <Route
-                path="property-type/:id"
-                element={<PropertyTypeContainer />}
-              />
-              <Route
-                path="privacy-type/:id"
-                element={<PrivacyTypeContainer />}
+                path="category-type/:id"
+                element={<CategoryTypeContainer />}
               />
               <Route path="location/:id" element={<LocationContainer />} />
               <Route path="floor-plan/:id" element={<FloorPlanContainer />} />
@@ -101,7 +96,7 @@ function Router() {
         )}
       </Routes>
     </>
-  )
+  );
 }
 
-export default Router
+export default Router;
