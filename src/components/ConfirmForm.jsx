@@ -3,8 +3,11 @@ import SuccessPayment from './Modal/SuccessPayment';
 import * as paymentService from '../api/omiseApi';
 import * as reserveService from '../api/reserveApi';
 import { toast } from 'react-toastify';
+import { useReserve } from '../contexts/ReserveContext';
 
 function ConfirmForm({ roomData }) {
+	console.log(roomData, 'confirmPayment');
+	const { formatDateDay } = useReserve();
 	useEffect(() => {
 		let OmiseCard = window.OmiseCard;
 
@@ -27,7 +30,7 @@ function ConfirmForm({ roomData }) {
 	const reservedRoom = async () => {
 		try {
 			const res = await reserveService.getReserveRoom();
-			// console.log(res.data)
+			// console.log(res.data);
 			const {
 				room: {
 					User: { email, firstName },
@@ -35,12 +38,11 @@ function ConfirmForm({ roomData }) {
 				},
 			} = res.data;
 			const amountPaidNocomma = amountPaid.replace(',', '');
-			console.log(amountPaid);
 			// console.log(amountPaidNocomma)
 			setBooking({
 				email,
 				name: firstName,
-				amount: amountPaidNocomma,
+				amount: +amountPaidNocomma,
 			});
 		} catch (err) {
 			console.log(err);
@@ -125,21 +127,24 @@ function ConfirmForm({ roomData }) {
 				<span className='underline'>Edit</span>
 			</div>
 			<div className='flex justify-start w-[34rem] text-gray-700  pb-6'>
-				<span>Oct 15-21</span>
+				<span>
+					{formatDateDay(roomData?.checkInDate)} -{' '}
+					{formatDateDay(roomData?.checkOutDate)}
+				</span>
 			</div>
 			<div className='flex justify-between w-[34rem]'>
 				<span>Check-in time</span>
-				<span className='underline'>Edit</span>
+				{/* <span className='underline'>Edit</span> */}
 			</div>
 			<div className='flex justify-start w-[34rem] text-gray-700  pb-6'>
-				<span>2:00 PM - 6:00 PM</span>
+				<span>2:00 PM - 5:00 PM</span>
 			</div>
 			<div className='flex justify-between w-[34rem]'>
 				<span>Guests</span>
 				<span className='underline'>Edit</span>
 			</div>
 			<div className='flex justify-start w-[34rem] text-gray-700  pb-6'>
-				<span>{roomData?.guestsCount} guests</span>
+				<span>{roomData?.guestsCount} guest</span>
 			</div>
 
 			<div className='w-[34rem] border-b border-gray-300'></div>
