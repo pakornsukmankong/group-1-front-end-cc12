@@ -14,6 +14,7 @@ import { Pagination, Navigation } from 'swiper';
 
 import './card-room-item.css';
 import { Link } from 'react-router-dom';
+import { useReserve } from '../../contexts/ReserveContext';
 
 function CardRoomItem({ dataItem }) {
 	const { wishList, toggleWishList } = useProperty(null);
@@ -26,6 +27,8 @@ function CardRoomItem({ dataItem }) {
 		// roomRate,
 		// roomOpen,
 	} = dataItem;
+
+	const { formatPrice } = useReserve();
 
 	const wishListed = wishList?.map((property) => property?.propertyId);
 	const userWishList = wishListed?.includes(id);
@@ -109,7 +112,7 @@ function CardRoomItem({ dataItem }) {
 					<div className='font-light text-gray'>{address}</div>
 					{/* <div className='font-light text-gray'>roomOpen</div> */}
 					<div className='font-medium'>
-						<span>{pricePerDate}</span>
+						<span>฿{formatPrice(pricePerDate)}</span>
 						<span className='font-light'> night </span>
 					</div>
 				</div>
