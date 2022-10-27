@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import BottomMenu from './BottomMenu';
 import TopMenu from './TopMenu';
 
 import './create-host.css';
+import { getHostCreateId } from '../../utils/localStorage';
+import { updateHostPhoto } from '../../api/hostApi';
 
 const ImageBox = ({ imageURLs, onImageChange, onRemoveImage }) => {
   let imageArraySize = imageURLs?.length >= 5 ? imageURLs?.length : 4;
@@ -121,9 +123,14 @@ const ImageBox = ({ imageURLs, onImageChange, onRemoveImage }) => {
 };
 
 function PhotosContainer() {
+  let navigate = useNavigate();
+
   const [update, setUpdate] = useState(false);
   const [images, setImages] = useState([]);
   const [imageURLs, setImageURLs] = useState([]);
+  const [fileImages, setFileImages] = useState([]);
+  const [hostId, setHostId] = useState(getHostCreateId());
+  const [photoLoading, setPhotoLoading] = useState();
 
   useEffect(() => {
     const handleImage = () => {
@@ -135,7 +142,8 @@ function PhotosContainer() {
       images.forEach((image) => {
         newImageUrls.push(URL.createObjectURL(image));
       });
-
+      console.log('images', images);
+      setFileImages(images);
       setImageURLs(newImageUrls);
       setUpdate(false);
     };
@@ -151,6 +159,26 @@ function PhotosContainer() {
   const onRemoveImage = (item) => {
     const filterImage = imageURLs.filter((i) => i !== item);
     setImageURLs(filterImage);
+  };
+
+  const onNext = async (imageURLs) => {
+    try {
+      setPhotoLoading(true);
+
+      let formData = new FormData();
+      formData.append('propertyId', hostId);
+      for (let i = 0; i < fileImages.length; i++) {
+        formData.append('photos', fileImages[i]);
+      }
+      const res = await updateHostPhoto(formData);
+      if (res.status === 201) {
+        setPhotoLoading(false);
+        navigate(`/create-host/title/${hostId}`);
+      }
+    } catch (err) {
+      console.log(err);
+      setPhotoLoading(false);
+    }
   };
 
   return (
@@ -177,8 +205,10 @@ function PhotosContainer() {
           onRemoveImage={onRemoveImage}
         />
         <BottomMenu
-          back={'/create-host/amenities/123'}
-          next={'/create-host/title/123'}
+          back={`/create-host/amenities/${hostId}`}
+          isLoading={photoLoading}
+          disableNext={imageURLs && imageURLs.length >= 5 ? false : true}
+          onNext={() => onNext(imageURLs)}
         />
       </div>
     </div>

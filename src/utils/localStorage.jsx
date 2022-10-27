@@ -8,4 +8,4 @@ export const removeLocalStorage = () => localStorage.removeItem(AUTH_TOKEN);
 
 export const getHostCreateId = () => localStorage.getItem(HOST_CREATE);
 export const setHostCreateId = (id) => localStorage.setItem(HOST_CREATE, id);
-export const removeHostCreateId = (id) => localStorage.removeItem(HOST_CREATE);
+export const removeHostCreateId = () => localStorage.removeItem(HOST_CREATE);

@@ -1,5 +1,7 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { updateHostFloorPlan } from '../../api/hostApi';
+import { getHostCreateId } from '../../utils/localStorage';
 import BottomMenu from './BottomMenu';
 import TopMenu from './TopMenu';
 
@@ -11,7 +13,10 @@ function FloorPlanContainer() {
     { name: 'Bathrooms', value: 1 }
   ];
 
+  let navigate = useNavigate();
+
   const [selectRoom, setSelectRoom] = useState(dataMock);
+  const [hostId, setHostId] = useState(getHostCreateId());
 
   const onClickUpdate = (type, name) => {
     const newArr = [...selectRoom];
@@ -22,6 +27,25 @@ function FloorPlanContainer() {
       newArr[updateIndex].value--;
     }
     setSelectRoom(newArr);
+  };
+
+  const onNext = async (selectRoom) => {
+    try {
+      const input = {
+        propertyId: hostId,
+        guestQty: selectRoom[0].value,
+        bedQty: selectRoom[1].value,
+        bedRoomQty: selectRoom[2].value,
+        bathRoomQty: selectRoom[3].value
+      };
+
+      const res = await updateHostFloorPlan(input);
+      if (res.status === 201) {
+        navigate(`/create-host/amenities/${hostId}`);
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -67,8 +91,9 @@ function FloorPlanContainer() {
         </div>
 
         <BottomMenu
-          back={'/create-host/location/123'}
-          next={'/create-host/amenities/123'}
+          back={`/create-host/location/${hostId}`}
+          disableNext={selectRoom ? false : true}
+          onNext={() => onNext(selectRoom)}
         />
       </div>
     </div>

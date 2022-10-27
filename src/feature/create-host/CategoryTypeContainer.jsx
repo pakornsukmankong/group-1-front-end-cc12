@@ -1,11 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {
-  createHostPropertyType,
-  getCategoryList,
-  getPropertyTypeList,
-  updateHostCategory
-} from '../../api/hostApi';
+import { getCategoryList, updateHostCategory } from '../../api/hostApi';
 import { getHostCreateId } from '../../utils/localStorage';
 import BottomMenu from './BottomMenu';
 import TopMenu from './TopMenu';
@@ -32,10 +27,21 @@ function CategoryTypeContainer() {
 
   const onSelect = (item, currentSelect) => {
     if (currentSelect) {
-      const lastArr = currentSelect.length
-        ? currentSelect.pop()
-        : currentSelect;
-      const newArr = [{ ...lastArr }, { ...item }];
+      let newArr;
+      if (currentSelect.length) {
+        const newCurrentArr = [...currentSelect];
+        const findIndex = newCurrentArr.findIndex((i) => i.id === item.id);
+        //check current array have active
+        if (findIndex !== -1) {
+          newArr = newCurrentArr.filter((i) => i.id !== item.id);
+        } else {
+          newArr = [{ ...currentSelect.pop() }, { ...item }];
+        }
+      } else {
+        // first selected
+        newArr = [{ ...item }];
+      }
+
       setSelectType(newArr);
       setSelectName(newArr.map((i) => i.categoryName));
     } else {
@@ -46,13 +52,10 @@ function CategoryTypeContainer() {
 
   const onNext = async (selectType) => {
     try {
-      console.log(selectType);
       const list = selectType.map((i) => ({ categoryId: i.id }));
       const input = { propertyId: hostId, list };
-      console.log('getHostCreateId', hostId);
       const res = await updateHostCategory(input);
-      console.log('res', res);
-      if (res.status === 200) {
+      if (res.status === 201) {
         navigate(`/create-host/location/${hostId}`);
       }
     } catch (err) {
@@ -86,13 +89,13 @@ function CategoryTypeContainer() {
           <div className="flex flex-wrap gap-3">
             {dataList.map((item, keys) => {
               const active = selectName.includes(item.categoryName)
-                ? `border-black bg-gray-50 border-black`
+                ? `border-black bg-gray-50 border-2 hover:border-black`
                 : '';
               return (
                 <button
                   onClick={() => onSelect(item, selectType)}
                   key={keys}
-                  className={`px-5 py-4 bg-white border-gray text-start flex flex-nowrap items-center border-2  rounded-full hover:border-black focus:bg-gray-50 focus:border-black ${active}`}
+                  className={`px-5 py-4 box-border bg-white border-gray text-start flex flex-nowrap items-center border-2  rounded-full  ${active}`}
                 >
                   <img
                     className="w-5 h-5 mr-2"
@@ -107,7 +110,8 @@ function CategoryTypeContainer() {
           </div>
         </div>
         <BottomMenu
-          disableNext={selectType ? false : true}
+          back={`/create-host/property-type-group`}
+          disableNext={selectType && selectType.length === 2 ? false : true}
           onNext={() => onNext(selectType)}
         />
       </div>

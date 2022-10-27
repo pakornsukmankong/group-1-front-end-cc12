@@ -1,11 +1,37 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { updateHostDescription } from '../../api/hostApi';
+import { getHostCreateId } from '../../utils/localStorage';
 import BottomMenu from './BottomMenu';
 import TopMenu from './TopMenu';
 
 function DescriptionContainer() {
+  let navigate = useNavigate();
   const maxLength = 500;
   const [count, setCount] = useState(0);
+  const [description, setDescription] = useState('');
+  const [hostId, setHostId] = useState(getHostCreateId());
+
+  const onNext = async (description) => {
+    try {
+      const input = {
+        propertyId: hostId,
+        description
+      };
+      const res = await updateHostDescription(input);
+      if (res.status === 201) {
+        navigate(`/create-host/price/${hostId}`);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const onChange = (e) => {
+    const value = e.target.value;
+    setCount(value.length);
+    setDescription(value);
+  };
 
   return (
     <div className="flex min-h-screen flex-col sm:flex-row">
@@ -35,7 +61,7 @@ function DescriptionContainer() {
             type="text"
             maxLength={maxLength}
             rows={4}
-            onChange={(e) => setCount(e.target.value.length)}
+            onChange={onChange}
             className="px-6 py-4 w-full h-[10rem] text-[1.15rem] bg-white border-gray flex justify-center items-center flex-col border-2 rounded-lg  hover:border-black  focus:border-black focus-visible:border-black focus-visible:outline-black "
             defaultValue={
               "You'll have a great time at this comfortable place to stay."
@@ -46,8 +72,9 @@ function DescriptionContainer() {
           </p>
         </div>
         <BottomMenu
-          back={'/create-host/title/123'}
-          next={'/create-host/price/123'}
+          back={`/create-host/title/${hostId}`}
+          disableNext={count > 0 ? false : true}
+          onNext={() => onNext(description)}
         />
       </div>
     </div>
