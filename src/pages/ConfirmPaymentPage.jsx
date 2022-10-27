@@ -1,5 +1,5 @@
 import React from 'react';
-import ConfirmPaymentContainer from '../feature/confitm-payment/ConfirmPaymentContainer';
+import ConfirmPaymentContainer from '../feature/confirm-payment/ConfirmPaymentContainer';
 
 function ConfirmPaymentPage() {
   return (
