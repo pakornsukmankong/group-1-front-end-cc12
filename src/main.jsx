@@ -13,21 +13,24 @@ import AuthContextProvider from './contexts/AuthContext';
 import PropertyContextProvider from './contexts/PropertyContext';
 import ReserveContextProvider from './contexts/ReserveContext';
 import BookingContextProvider from './contexts/BookingContext';
+import ReviewContextProvider from './contexts/ReviewContext';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
 	// <React.StrictMode>
 	<BrowserRouter>
 		<LoadingContextProvider>
 			<AuthContextProvider>
-				<ReserveContextProvider>
-					<PropertyContextProvider>
-						<BookingContextProvider>
-							<Provider store={store}>
-								<App />
-							</Provider>
-						</BookingContextProvider>
-					</PropertyContextProvider>
-				</ReserveContextProvider>
+				<ReviewContextProvider>
+					<ReserveContextProvider>
+						<PropertyContextProvider>
+							<BookingContextProvider>
+								<Provider store={store}>
+									<App />
+								</Provider>
+							</BookingContextProvider>
+						</PropertyContextProvider>
+					</ReserveContextProvider>
+				</ReviewContextProvider>
 			</AuthContextProvider>
 		</LoadingContextProvider>
 	</BrowserRouter>
