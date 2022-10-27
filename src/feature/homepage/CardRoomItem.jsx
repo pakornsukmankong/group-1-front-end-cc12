@@ -14,6 +14,7 @@ import { Pagination, Navigation } from 'swiper';
 
 import './card-room-item.css';
 import { Link } from 'react-router-dom';
+import { useReserve } from '../../contexts/ReserveContext';
 
 function CardRoomItem({ dataItem }) {
   const { wishList, toggleWishList } = useProperty(null);
@@ -26,6 +27,7 @@ function CardRoomItem({ dataItem }) {
     // roomRate,
     // roomOpen,
   } = dataItem;
+
 
   const wishListed = wishList?.map((property) => property?.propertyId);
   const userWishList = wishListed?.includes(id);
@@ -97,6 +99,7 @@ function CardRoomItem({ dataItem }) {
         </Swiper>
       </div>
 
+
       <Link to={`/rooms/${id}`}>
         <div className="py-2">
           <div className="font-bold flex justify-between">
@@ -116,6 +119,7 @@ function CardRoomItem({ dataItem }) {
       </Link>
     </div>
   );
+
 }
 
 export default CardRoomItem;
