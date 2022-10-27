@@ -3,8 +3,14 @@ import BottomMenu from './BottomMenu';
 import TopMenu from './TopMenu';
 
 import './create-host.css';
+import { updateHostPrice } from '../../api/hostApi';
+import { useNavigate } from 'react-router-dom';
+import { getHostCreateId } from '../../utils/localStorage';
 
 function PriceContainer() {
+  let navigate = useNavigate();
+  const [hostId, setHostId] = useState(getHostCreateId());
+
   const [price, setPrice] = useState(782);
   const inputRef = useRef(null);
 
@@ -20,6 +26,21 @@ function PriceContainer() {
     }
     setPrice(newValue);
     inputRef.current.value = `฿${newValue}`;
+  };
+
+  const onNext = async (price) => {
+    try {
+      const input = {
+        propertyId: hostId,
+        pricePerDate: price
+      };
+      const res = await updateHostPrice(input);
+      if (res.status === 201) {
+        navigate(`/create-host/preview/${hostId}`);
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -74,30 +95,11 @@ function PriceContainer() {
               </p>
             </div>
           </div>
-          <div className="pt-10 pb-5 px-7">
-            <label className="flex flex-row justify-center items-center cursor-pointer px-6 py-4 text-[1rem] bg-white border-gray  border-2 rounded-lg ">
-              <div className="">
-                <span>
-                  Offer a 20% discount for your first 3 guests to help you get
-                  booked faster.
-                </span>
-                <span className="ml-2 underline font-medium">Learn more</span>
-              </div>
-              <div className="checkbox border-2 rounded border-gray-400 w-6 h-6 flex flex-shrink-0 justify-center items-center mr-2 focus-within:border-black">
-                <input type="checkbox" className="opacity-0 absolute group " />
-                <svg
-                  className="hidden w-4 h-4 fill-white text-black cursor-pointer"
-                  viewBox="0 0 20 20"
-                >
-                  <path d="M0 11l2-2 5 5L18 3l2 2L7 18z" />
-                </svg>
-              </div>
-            </label>
-          </div>
         </div>
         <BottomMenu
-          back={'/create-host/description/123'}
-          next={'/create-host/preview/123'}
+          back={`/create-host/description/${hostId}`}
+          disableNext={price > 0 ? false : true}
+          onNext={() => onNext(price)}
         />
       </div>
     </div>

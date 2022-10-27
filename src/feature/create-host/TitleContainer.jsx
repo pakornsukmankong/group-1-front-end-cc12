@@ -1,11 +1,38 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { updateHostTitle } from '../../api/hostApi';
+import { getHostCreateId } from '../../utils/localStorage';
 import BottomMenu from './BottomMenu';
 import TopMenu from './TopMenu';
 
 function TitleContainer() {
+  let navigate = useNavigate();
+
   const maxLength = 50;
   const [count, setCount] = useState(0);
+  const [title, setTitle] = useState('');
+  const [hostId, setHostId] = useState(getHostCreateId());
+
+  const onNext = async (title) => {
+    try {
+      const input = {
+        propertyId: hostId,
+        title
+      };
+      const res = await updateHostTitle(input);
+      if (res.status === 201) {
+        navigate(`/create-host/description/${hostId}`);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const onChange = (e) => {
+    const value = e.target.value;
+    setCount(value.length);
+    setTitle(value);
+  };
 
   return (
     <div className="flex min-h-screen flex-col sm:flex-row">
@@ -41,7 +68,7 @@ function TitleContainer() {
             type="text"
             maxLength={maxLength}
             rows={4}
-            onChange={(e) => setCount(e.target.value.length)}
+            onChange={onChange}
             className="px-7 py-4 w-[100%] h-[20rem] text-[2rem] bg-white border-gray flex justify-center items-center flex-col border-2 rounded-lg  hover:border-black  focus:border-black focus-visible:border-black focus-visible:outline-black "
           ></textarea>
           <p className="text-[.95rem] mt-4">
@@ -49,8 +76,9 @@ function TitleContainer() {
           </p>
         </div>
         <BottomMenu
-          back={'/create-host/photos/123'}
-          next={'/create-host/description/123'}
+          back={`/create-host/photos/${hostId}`}
+          disableNext={count > 0 ? false : true}
+          onNext={() => onNext(title)}
         />
       </div>
     </div>
