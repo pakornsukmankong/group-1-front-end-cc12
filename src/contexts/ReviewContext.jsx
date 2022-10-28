@@ -1,9 +1,10 @@
-import { createContext, useCallback, useContext, useState } from 'react';
-import * as reviewService from '../api/reviewApi';
+import { createContext, useCallback, useContext, useState } from 'react'
+import * as reviewService from '../api/reviewApi'
 
-const ReviewContext = createContext();
+const ReviewContext = createContext()
 
 function ReviewContextProvider({ children }) {
+
   const [review, setReview] = useState([]);
 
   const getAllPropertyReview = async (propertyId) => {
@@ -33,4 +34,4 @@ export const useReview = () => {
   return useContext(ReviewContext);
 };
 
-export default ReviewContextProvider;
+export default ReviewContextProvider
