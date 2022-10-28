@@ -17,6 +17,7 @@ import { useBooking } from '../../contexts/BookingContext'
 import { useAuth } from '../../contexts/AuthContext'
 
 function RoomContainer() {
+
   const { formatMonthYear } = useReserve()
   const { getAllPropertyReview, review } = useReview()
   const { id } = useParams()

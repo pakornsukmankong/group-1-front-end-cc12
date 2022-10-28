@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react'
-import SuccessPayment from './Modal/SuccessPayment'
-import * as paymentService from '../api/omiseApi'
-import * as reserveService from '../api/reserveApi'
-import { toast } from 'react-toastify'
-import { useReserve } from '../contexts/ReserveContext'
+import React, { useEffect, useState } from 'react';
+import SuccessPayment from './Modal/SuccessPayment';
+import * as paymentService from '../api/omiseApi';
+import * as reserveService from '../api/reserveApi';
+import { toast } from 'react-toastify';
+import { useReserve } from '../contexts/ReserveContext';
 
 function ConfirmForm({ roomData: [roomData, reserveId] }) {
   useEffect(() => {
-    let OmiseCard = window.OmiseCard
+    let OmiseCard = window.OmiseCard;
 
     OmiseCard.configure({
       publicKey: 'pkey_test_5tipgjhhwdna10j7tym',
@@ -17,33 +17,33 @@ function ConfirmForm({ roomData: [roomData, reserveId] }) {
       frameLabel: 'airBnb',
       submitLabel: 'Pay now',
       buttonLabel: 'Confirm and pay',
-    })
-    handleBooking()
-  }, [roomData])
+    });
+    handleBooking();
+  }, [roomData]);
 
-  const { formatDateDay } = useReserve()
-  const [Booking, setBooking] = useState({})
+  const { formatDateDay } = useReserve();
+  const [Booking, setBooking] = useState({});
   // console.log(Booking)
-  console.log(roomData)
+  console.log(roomData);
   const handleBooking = () => {
     setBooking({
       email: roomData?.User.email,
       name: roomData?.User.firstName,
       amount: roomData?.amountPaid,
-    })
-  }
+    });
+  };
 
-  const [charge, setCharge] = useState(null)
+  const [charge, setCharge] = useState(null);
   // console.log(charge)
 
   const creditCardConfigure = () => {
     OmiseCard.configure({
       defaultPaymentMehod: 'credit_card',
       otherPaymentMethods: [],
-    })
-    OmiseCard.configureButton('#credit-card')
-    OmiseCard.attach()
-  }
+    });
+    OmiseCard.configureButton('#credit-card');
+    OmiseCard.attach();
+  };
 
   const omiseCardHandler = () => {
     OmiseCard.open({
@@ -55,18 +55,18 @@ function ConfirmForm({ roomData: [roomData, reserveId] }) {
           roomData?.User.firstName,
           roomData?.amountPaid * 100, // unit amount sent to Omise is Satang Unit
           token
-        )
-        toast.success('success Payment')
+        );
+        toast.success('success Payment');
       },
-      onFormClose: () => {},
-    })
-  }
+      onFormClose: () => {console.log('formClose')},
+    });
+  };
 
   const handleClickConfirmPayment = (e) => {
-    e.preventDefault()
-    creditCardConfigure()
-    omiseCardHandler()
-  }
+    e.preventDefault();
+    creditCardConfigure();
+    omiseCardHandler();
+  };
 
   const createCreditCardCharge = async (
     email,
@@ -85,15 +85,15 @@ function ConfirmForm({ roomData: [roomData, reserveId] }) {
         token,
         headers,
         reserveId,
-      })
-      console.log(res)
-      setCharge({ amount: res.data.amount.amount, status: res.data.status })
+      });
+      console.log(res);
+      setCharge({ amount: res.data.amount.amount, status: res.data.status });
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
-  }
+  };
 
-  const [methodPay, setMethodPay] = useState('CREDIT_CARD')
+  const [methodPay, setMethodPay] = useState('CREDIT_CARD');
   return (
     <form>
       <div className="border border-gray-300 p-6 rounded-lg w-[34rem] mb-6">
@@ -206,7 +206,7 @@ function ConfirmForm({ roomData: [roomData, reserveId] }) {
       </button>
       {charge && <SuccessPayment Booking={Booking} charge={charge} />}
     </form>
-  )
+  );
 }
 
-export default ConfirmForm
+export default ConfirmForm;

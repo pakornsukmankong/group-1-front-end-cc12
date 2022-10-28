@@ -5,6 +5,7 @@ import { useReview } from '../../contexts/ReviewContext'
 import { toastError, toastSuccess } from '../../utils/toast'
 
 function ReviewInput() {
+
   const { id: propertyId } = useParams()
   const { startLoading, stopLoading } = useLoading()
   const { createReview } = useReview()
@@ -34,6 +35,7 @@ function ReviewInput() {
         value={input}
         onChange={(e) => setInput(e.target.value)}
       />
+
       {input && (
         <div className="my-3">
           <button
