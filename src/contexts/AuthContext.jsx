@@ -47,8 +47,8 @@ function AuthContextProvider({ children }) {
 		setVerifyStatus(res.data.statusOtp);
 	};
 
-	const loginWithEmail = async (email) => {
-		const res = await authService.loginWithEmail(email);
+	const loginWithEmail = async (input) => {
+		const res = await authService.loginWithEmail(input);
 		addLocalStorage(res.data.token);
 		getMe();
 	};

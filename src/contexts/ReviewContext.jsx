@@ -1,10 +1,9 @@
-import { createContext, useCallback, useContext, useState } from 'react'
-import * as reviewService from '../api/reviewApi'
+import { createContext, useCallback, useContext, useState } from 'react';
+import * as reviewService from '../api/reviewApi';
 
-const ReviewContext = createContext()
+const ReviewContext = createContext();
 
 function ReviewContextProvider({ children }) {
-
   const [review, setReview] = useState([]);
 
   const getAllPropertyReview = async (propertyId) => {
@@ -15,8 +14,8 @@ function ReviewContextProvider({ children }) {
 
   const createReview = async (propertyId, comment) => {
     const res = await reviewService.createReview(propertyId, comment);
-	const cloneReview = [...review]
-	cloneReview.push(res.data.newReview)
+    const cloneReview = [...review];
+    cloneReview.unshift(res.data.newReview);
     setReview(cloneReview);
     // console.log(res.data);
   };
@@ -34,4 +33,4 @@ export const useReview = () => {
   return useContext(ReviewContext);
 };
 
-export default ReviewContextProvider
+export default ReviewContextProvider;

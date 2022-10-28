@@ -15,7 +15,7 @@ function ReviewInput() {
     try {
       startLoading()
       await createReview(propertyId, input)
-      setInput()
+      setInput('')
       toastSuccess('review created')
     } catch (err) {
       console.log(err)
