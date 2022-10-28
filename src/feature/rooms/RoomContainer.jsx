@@ -33,7 +33,7 @@ function RoomContainer() {
 
 	useEffect(() => {
 		getAllPropertyReview(id);
-	}, []);
+	}, [review]);
 
 	useEffect(() => {
 		fetchRoomFromID(id);
