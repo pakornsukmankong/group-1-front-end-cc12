@@ -1,43 +1,43 @@
-import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { getHostPreview, updateHostSavePreview } from '../../api/hostApi';
-import { getHostCreateId, removeHostCreateId } from '../../utils/localStorage';
-import TopMenu from './TopMenu';
+import { useEffect, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { getHostPreview, updateHostSavePreview } from '../../api/hostApi'
+import { getHostCreateId, removeHostCreateId } from '../../utils/localStorage'
+import TopMenu from './TopMenu'
 
 function PreviewContainer() {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
-  const [host, setHost] = useState([]);
-  const [selectType, setSelectType] = useState();
-  const [hostId, setHostId] = useState(getHostCreateId());
+  const [host, setHost] = useState([])
+  const [selectType, setSelectType] = useState()
+  const [hostId, setHostId] = useState(getHostCreateId())
 
   useEffect(() => {
     const fetchPropertyTypeList = async () => {
       try {
-        const res = await getHostPreview(hostId);
-        const { data } = res.data;
-        setHost(data[0]);
+        const res = await getHostPreview(hostId)
+        const { data } = res.data
+        setHost(data[0])
       } catch (err) {
-        console.log(err);
+        console.log(err)
       }
-    };
-    fetchPropertyTypeList();
-  }, []);
+    }
+    fetchPropertyTypeList()
+  }, [])
 
   const onNext = async (hostId) => {
     try {
       const input = {
-        propertyId: hostId
-      };
-      const res = await updateHostSavePreview(input);
+        propertyId: hostId,
+      }
+      const res = await updateHostSavePreview(input)
       if (res.status === 201) {
-        navigate(`/becomeHosting`, { replace: true });
-        removeHostCreateId();
+        navigate(`/`, { replace: true })
+        removeHostCreateId()
       }
     } catch (err) {
-      console.log(err);
+      console.log(err)
     }
-  };
+  }
 
   return (
     <div className="flex flex-row min-h-screen">
@@ -81,7 +81,7 @@ function PreviewContainer() {
                     style={{
                       objectFit: 'cover',
                       verticalAlign: 'bottom',
-                      borderRadius: '50px'
+                      borderRadius: '50px',
                     }}
                   />
                 </div>
@@ -94,20 +94,18 @@ function PreviewContainer() {
                 <div className="pt-5 border-b border-gray flex flex-col">
                   <span className="text-left text-xl my-5">Amenities</span>
                   {host?.PropertyFacilities?.map((item, keys) => {
-                    const { Facility } = item;
+                    const { Facility } = item
                     return (
                       <div
                         key={keys}
-                        className="py-5 px-1 border-b border-gray flex flex-row justify-between items-center"
-                      >
+                        className="py-5 px-1 border-b border-gray flex flex-row justify-between items-center">
                         <span className="text-lg font-light">
                           {Facility?.facilityName}
                         </span>
                         <i
-                          className={`${Facility?.facilityIconImage} text-[1.6rem]`}
-                        ></i>
+                          className={`${Facility?.facilityIconImage} text-[1.6rem]`}></i>
                       </div>
-                    );
+                    )
                   })}
                 </div>
                 <div className="pt-5 flex flex-col">
@@ -128,19 +126,17 @@ function PreviewContainer() {
         <div className="sticky bottom-0 right-0 z-50 flex justify-between border-t bg-white border-t-slate-200 py-3.5 px-5">
           <Link
             to={`/create-host/price/${hostId}`}
-            className="px-6 py-3 font-semibold text-black underline underline-offset-1 "
-          >
+            className="px-6 py-3 font-semibold text-black underline underline-offset-1 ">
             Back
           </Link>
           <Link
             onClick={() => onNext(hostId)}
-            className="px-5 py-3 font-semibold text-white bg-gradient-to-r from-red-500 to-pink-600 rounded shadow-sm bt-let-go"
-          >
+            className="px-5 py-3 font-semibold text-white bg-gradient-to-r from-red-500 to-pink-600 rounded shadow-sm bt-let-go">
             Save your listing
           </Link>
         </div>
       </div>
     </div>
-  );
+  )
 }
-export default PreviewContainer;
+export default PreviewContainer
