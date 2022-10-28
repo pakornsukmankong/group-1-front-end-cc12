@@ -27,13 +27,13 @@ function RoomContainer() {
 	const facility = room?.PropertyFacilities;
 
 	console.log(review.userId, 'review');
-	console.log(userBooking, 'booking');
-	console.log(user.id, 'user');
-	console.log(room?.userHostId, 'property');
+	// console.log(userBooking, 'booking');
+	// console.log(user.id, 'user');
+	// console.log(room?.userHostId, 'property');
 
 	useEffect(() => {
 		getAllPropertyReview(id);
-	}, [review]);
+	}, []);
 
 	useEffect(() => {
 		fetchRoomFromID(id);
