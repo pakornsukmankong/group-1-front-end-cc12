@@ -19,7 +19,10 @@ function CreateHostContainer() {
       </div>
       <div className="basis-2/4 bg-black flex flex-col justify-between">
         <div className="pt-8 px-12 flex justify-end">
-          <Link to={'/'} className="px-4 py-2  font-light text-xs bg-gray-800 text-gray-300 rounded-full shadow-sm">
+          <Link
+            to={'/becomeHosting'}
+            className="px-4 py-2  font-light text-xs bg-gray-800 text-gray-300 rounded-full shadow-sm"
+          >
             Exit
           </Link>
         </div>
