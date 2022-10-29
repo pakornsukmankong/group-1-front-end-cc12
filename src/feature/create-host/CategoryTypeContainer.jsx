@@ -45,7 +45,7 @@ function CategoryTypeContainer() {
       setSelectType(newArr);
       setSelectName(newArr.map((i) => i.categoryName));
     } else {
-      setSelectType(item);
+      setSelectType([item]);
       setSelectName([item.categoryName]);
     }
   };
