@@ -13,10 +13,10 @@ function ReserveComponent({ room }) {
     handleCheckOutDate,
     checkOutDate,
     checkInDate,
-    handleIncreseAdults,
-    handleDeceaseAdults,
-    handleIncreseChild,
-    handleDeceaseChild,
+    handleIncreaseAdults,
+    handleDecreaseAdults,
+    handleIncreaseChild,
+    handleDecreaseChild,
     adults,
     child,
     today,
@@ -183,7 +183,7 @@ function ReserveComponent({ room }) {
                 <div className="flex flex-row w-[6rem] ml-[-1.6rem]">
                   <button
                     className="border w-[2rem] h-[2rem] text-gray-400 rounded-full mt-[0.5rem] hover:border-black hover:text-black"
-                    onClick={handleDeceaseAdults}>
+                    onClick={handleDecreaseAdults}>
                     -
                   </button>
                   <div className="w-[2rem] text-center mt-[0.7rem]">
@@ -191,7 +191,7 @@ function ReserveComponent({ room }) {
                   </div>
                   <button
                     className="border w-[2rem] h-[2rem] text-gray-400 rounded-full mt-[0.5rem] hover:border-black hover:text-black"
-                    onClick={handleIncreseAdults}>
+                    onClick={handleIncreaseAdults}>
                     +
                   </button>
                 </div>
@@ -207,7 +207,7 @@ function ReserveComponent({ room }) {
                 <div className="flex flex-row w-[10rem] ml-[-1.6rem]">
                   <button
                     className="border w-[2rem] h-[2rem] text-gray-400 rounded-full mt-[0.5rem] hover:border-black hover:text-black"
-                    onClick={handleDeceaseChild}>
+                    onClick={handleDecreaseChild}>
                     -
                   </button>
                   <div className="w-[2rem] text-center mt-[0.7rem]">
@@ -215,7 +215,7 @@ function ReserveComponent({ room }) {
                   </div>
                   <button
                     className="border  w-[2rem] h-[2rem] text-gray-400 rounded-full mt-[0.5rem] hover:border-black hover:text-black"
-                    onClick={handleIncreseChild}>
+                    onClick={handleIncreaseChild}>
                     +
                   </button>
                 </div>

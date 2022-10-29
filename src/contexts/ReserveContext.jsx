@@ -1,108 +1,107 @@
-import { createContext, useContext, useEffect, useState } from 'react';
-import dateFormat from 'dateformat';
-import * as reserveService from '../api/reserveApi';
+import { createContext, useContext, useEffect, useState } from 'react'
+import dateFormat from 'dateformat'
+import * as reserveService from '../api/reserveApi'
 
-const ReserveContext = createContext();
+const ReserveContext = createContext()
 
 function ReserveContextProvider({ children }) {
-	const today = dateFormat(new Date(), 'yyyy-mm-dd');
-	let getTomorrow = new Date();
-	getTomorrow.setDate(getTomorrow.getDate() + 1);
-	const tomorrow = dateFormat(getTomorrow, 'yyyy-mm-dd');
+  const today = dateFormat(new Date(), 'yyyy-mm-dd')
+  let getTomorrow = new Date()
+  getTomorrow.setDate(getTomorrow.getDate() + 1)
+  const tomorrow = dateFormat(getTomorrow, 'yyyy-mm-dd')
 
-	const [checkInDate, setCheckInDate] = useState(today);
-	const [checkOutDate, setCheckOutDate] = useState(tomorrow);
-	const [adults, setAdults] = useState(1);
-	const [child, setChild] = useState(0);
-	const [totalGuest, setTotalGuest] = useState(0);
-	const [roomData, setRoomData] = useState(null);
+  const [checkInDate, setCheckInDate] = useState(today)
+  const [checkOutDate, setCheckOutDate] = useState(tomorrow)
+  const [adults, setAdults] = useState(1)
+  const [child, setChild] = useState(0)
+  const [totalGuest, setTotalGuest] = useState(0)
+  const [roomData, setRoomData] = useState(null)
 
-	useEffect(() => {
-		setTotalGuest(adults + child);
-	}, [adults, child]);
+  useEffect(() => {
+    setTotalGuest(adults + child)
+  }, [adults, child])
 
-	const handleIncreseAdults = () => {
-		setAdults((prev) => prev + 1);
-		setTotalGuest(adults + child);
-	};
+  const handleIncreaseAdults = () => {
+    setAdults((prev) => prev + 1)
+    setTotalGuest(adults + child)
+  }
 
-	const handleDeceaseAdults = () => {
-		if (adults > 1) {
-			setAdults((prev) => prev - 1);
-			setTotalGuest(adults + child);
-		}
-	};
+  const handleDecreaseAdults = () => {
+    if (adults > 1) {
+      setAdults((prev) => prev - 1)
+      setTotalGuest(adults + child)
+    }
+  }
 
-	const handleIncreseChild = () => {
-		setChild((prev) => prev + 1);
-		setTotalGuest(adults + child);
-	};
+  const handleIncreaseChild = () => {
+    setChild((prev) => prev + 1)
+    setTotalGuest(adults + child)
+  }
 
-	const handleDeceaseChild = () => {
-		if (child > 0) {
-			setChild((prev) => prev - 1);
-			setTotalGuest(adults + child);
-		}
-	};
+  const handleDecreaseChild = () => {
+    if (child > 0) {
+      setChild((prev) => prev - 1)
+      setTotalGuest(adults + child)
+    }
+  }
 
-	const handleCheckInDate = (input) => {
-		setCheckInDate(input);
-	};
+  const handleCheckInDate = (input) => {
+    setCheckInDate(input)
+  }
 
-	const handleCheckOutDate = (input) => {
-		setCheckOutDate(input);
-	};
+  const handleCheckOutDate = (input) => {
+    setCheckOutDate(input)
+  }
 
-	const formatPrice = (price) => {
-		return String(price)?.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
-	};
+  const formatPrice = (price) => {
+    return String(price)?.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+  }
 
-	const formatDateDay = (dateObj) => {
-		const newDate = dateFormat(dateObj, 'dd mmmm');
-		return newDate;
-	};
+  const formatDateDay = (dateObj) => {
+    const newDate = dateFormat(dateObj, 'dd mmmm')
+    return newDate
+  }
 
-	const formatMonthYear = (dateObj) => {
-		const newDate = dateFormat(dateObj, 'mmmm yyyy');
-		return newDate;
-	};
+  const formatMonthYear = (dateObj) => {
+    const newDate = dateFormat(dateObj, 'mmmm yyyy')
+    return newDate
+  }
 
-	const getReserveRoomByReserveId = async (reserveId) => {
-		const res = await reserveService.getReserveRoom(reserveId);
-		// console.log(res?.data.room);
-		setRoomData(res?.data?.room);
-	};
+  const getReserveRoomByReserveId = async (reserveId) => {
+    const res = await reserveService.getReserveRoom(reserveId)
+    // console.log(res?.data.room);
+    setRoomData(res?.data?.room)
+  }
 
-	return (
-		<ReserveContext.Provider
-			value={{
-				formatPrice,
-				handleCheckInDate,
-				handleCheckOutDate,
-				checkInDate,
-				checkOutDate,
-				handleIncreseAdults,
-				handleDeceaseAdults,
-				handleIncreseChild,
-				handleDeceaseChild,
-				adults,
-				child,
-				today,
-				tomorrow,
-				totalGuest,
-				getReserveRoomByReserveId,
-				roomData,
-				formatDateDay,
-				formatMonthYear,
-			}}
-		>
-			{children}
-		</ReserveContext.Provider>
-	);
+  return (
+    <ReserveContext.Provider
+      value={{
+        formatPrice,
+        handleCheckInDate,
+        handleCheckOutDate,
+        checkInDate,
+        checkOutDate,
+        handleIncreaseAdults,
+        handleDecreaseAdults,
+        handleIncreaseChild,
+        handleDecreaseChild,
+        adults,
+        child,
+        today,
+        tomorrow,
+        totalGuest,
+        getReserveRoomByReserveId,
+        roomData,
+        formatDateDay,
+        formatMonthYear,
+      }}>
+      {children}
+    </ReserveContext.Provider>
+  )
 }
 
 export const useReserve = () => {
-	return useContext(ReserveContext);
-};
+  return useContext(ReserveContext)
+}
 
-export default ReserveContextProvider;
+export default ReserveContextProvider
