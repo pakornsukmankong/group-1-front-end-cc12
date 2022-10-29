@@ -27,39 +27,32 @@ function ReserveComponent({ room }) {
     recentCheckOutDate,
   } = useReserve();
 
+  const propertyId = room?.id;
+  const formatrecentCheckOutDate = recentCheckOutDate?.checkOutDate?.slice(
+    0,
+    10
+  );
+  console.log(formatrecentCheckOutDate);
+  let getRecentTomorrow = new Date(formatrecentCheckOutDate);
+  getRecentTomorrow?.setDate(getRecentTomorrow.getDate() + 1);
+  console.log(getRecentTomorrow);
+  const recentTomorrow = getRecentTomorrow??
+
+
+  // const recentTomorrow = dateFormat?.(getRecentTomorrow, 'yyyy-mm-dd')
+  //   ? dateFormat(getRecentTomorrow, 'yyyy-mm-dd')
+  //   : tomorrow;
+  console.log(recentTomorrow);
+  const { review } = useReview();
   const [input, setInput] = useState({
     pricePerDate: room?.pricePerDate,
     guestsCount: totalGuest,
     cleaningFees: room?.cleaningFees,
     amountPaid: '',
     serviceFees: room?.serviceFees,
-    checkInDate: today,
-    checkOutDate: tomorrow,
+    checkInDate: formatrecentCheckOutDate ? formatrecentCheckOutDate : today,
+    checkOutDate: formatrecentCheckOutDate ? recentTomorrow : tomorrow,
   });
-
-  const propertyId = room?.id;
-  const formatrecentCheckOutDate = recentCheckOutDate?.checkOutDate?.slice(
-    0,
-    10
-  );
-
-  let recentTomorrow;
-
-  // const fnRecentTomorrow = async () => {
-  //   var getRecentTomorrow = new Date(formatrecentCheckOutDate);
-  //   if (typeof getRecentTomorrow == 'string') {
-  //     var a = getRecentTomorrow.getTime();
-  //     console.log(a);
-  //   }
-    // var a = getRecentTomorrow?.setDate(getRecentTomorrow.getDate() + 1);
-    // recentTomorrow = dateFormat(getRecentTomorrow, 'yyyy-mm-dd');
-  // };
-
-  // const recentTomorrow = dateFormat?.(getRecentTomorrow, 'yyyy-mm-dd')
-  //   ? dateFormat(getRecentTomorrow, 'yyyy-mm-dd')
-  //   : tomorrow;
-  // console.log(recentTomorrow);
-  const { review } = useReview();
 
   const { startLoading, stopLoading } = useLoading();
 
@@ -94,7 +87,6 @@ function ReserveComponent({ room }) {
 
   useEffect(() => {
     fetchStatusBookingByPropertyId(propertyId);
-    fnRecentTomorrow();
     setInput({
       ...input,
       guestsCount: totalGuest,
