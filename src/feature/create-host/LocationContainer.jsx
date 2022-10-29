@@ -169,6 +169,7 @@ function LocationContainer() {
                 <i className="fa-solid fa-location-dot text-[1.3rem]"></i>
               </span>
               <input
+                autoComplete="off"
                 id="search"
                 ref={searchRef}
                 type="text"

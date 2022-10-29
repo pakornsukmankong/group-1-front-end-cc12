@@ -7,7 +7,7 @@ import './create-host.css';
 import { getHostCreateId } from '../../utils/localStorage';
 import { updateHostPhoto } from '../../api/hostApi';
 
-const ImageBox = ({ imageURLs, onImageChange, onRemoveImage }) => {
+const ImageBox = ({ imageURLs, fileImages, onImageChange, onRemoveImage }) => {
   let imageArraySize = imageURLs?.length >= 5 ? imageURLs?.length : 4;
 
   let boxSize = new Array(imageArraySize).fill({});
@@ -77,7 +77,7 @@ const ImageBox = ({ imageURLs, onImageChange, onRemoveImage }) => {
               Cover photo
             </div>
             <button
-              onClick={() => onRemoveImage(imageURLs[0])}
+              onClick={() => onRemoveImage(imageURLs[0], fileImages[0])}
               className="absolute z-[5] top-2 right-3 bg-gray-100 px-3 py-1.5 rounded-full shadow-lg"
             >
               <i className="fa-solid fa-trash text-[0.9rem] text-black cursor-pointer"></i>
@@ -103,7 +103,9 @@ const ImageBox = ({ imageURLs, onImageChange, onRemoveImage }) => {
                 className="relative aspect-[577/374] bg-white flex justify-center items-center flex-col"
               >
                 <button
-                  onClick={() => onRemoveImage(imageURLs[index + 1])}
+                  onClick={() =>
+                    onRemoveImage(imageURLs[index + 1], fileImages[index + 1])
+                  }
                   className="absolute z-[5] top-2 right-3 bg-gray-100 px-3 py-1.5 rounded-full shadow-lg"
                 >
                   <i className="fa-solid fa-trash text-[0.9rem] text-black cursor-pointer"></i>
@@ -139,11 +141,12 @@ function PhotosContainer() {
       if (!update) return;
 
       const newImageUrls = [...imageURLs];
+      const newFileImages = [...fileImages];
       images.forEach((image) => {
         newImageUrls.push(URL.createObjectURL(image));
+        newFileImages.push(image);
       });
-      console.log('images', images);
-      setFileImages(images);
+      setFileImages(newFileImages);
       setImageURLs(newImageUrls);
       setUpdate(false);
     };
@@ -156,9 +159,11 @@ function PhotosContainer() {
     setImages([...e.target.files]);
   };
 
-  const onRemoveImage = (item) => {
-    const filterImage = imageURLs.filter((i) => i !== item);
-    setImageURLs(filterImage);
+  const onRemoveImage = (itemUrl, itemFile) => {
+    const filterImageUrl = imageURLs.filter((i) => i !== itemUrl);
+    setImageURLs(filterImageUrl);
+    const filterImageFile = fileImages.filter((i) => i !== itemFile);
+    setFileImages(filterImageFile);
   };
 
   const onNext = async (imageURLs) => {
@@ -201,6 +206,7 @@ function PhotosContainer() {
         <TopMenu />
         <ImageBox
           imageURLs={imageURLs}
+          fileImages={fileImages}
           onImageChange={onImageChange}
           onRemoveImage={onRemoveImage}
         />
