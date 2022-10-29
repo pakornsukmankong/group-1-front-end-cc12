@@ -1,13 +1,15 @@
 import * as reserveService from '../../api/reserveApi';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useReserve } from '../../contexts/ReserveContext';
 import { useLoading } from '../../contexts/LoadingContext';
 import { useReview } from '../../contexts/ReviewContext';
+import dateFormat from 'dateformat';
 
 function ReserveComponent({ room }) {
   const {
+    fetchStatusBookingByPropertyId,
     formatPrice,
     handleCheckInDate,
     handleCheckOutDate,
@@ -22,9 +24,9 @@ function ReserveComponent({ room }) {
     today,
     tomorrow,
     totalGuest,
+    recentCheckOutDate,
   } = useReserve();
 
-  const { review } = useReview();
   const [input, setInput] = useState({
     pricePerDate: room?.pricePerDate,
     guestsCount: totalGuest,
@@ -34,6 +36,30 @@ function ReserveComponent({ room }) {
     checkInDate: today,
     checkOutDate: tomorrow,
   });
+
+  const propertyId = room?.id;
+  const formatrecentCheckOutDate = recentCheckOutDate?.checkOutDate?.slice(
+    0,
+    10
+  );
+
+  let recentTomorrow;
+
+  // const fnRecentTomorrow = async () => {
+  //   var getRecentTomorrow = new Date(formatrecentCheckOutDate);
+  //   if (typeof getRecentTomorrow == 'string') {
+  //     var a = getRecentTomorrow.getTime();
+  //     console.log(a);
+  //   }
+    // var a = getRecentTomorrow?.setDate(getRecentTomorrow.getDate() + 1);
+    // recentTomorrow = dateFormat(getRecentTomorrow, 'yyyy-mm-dd');
+  // };
+
+  // const recentTomorrow = dateFormat?.(getRecentTomorrow, 'yyyy-mm-dd')
+  //   ? dateFormat(getRecentTomorrow, 'yyyy-mm-dd')
+  //   : tomorrow;
+  // console.log(recentTomorrow);
+  const { review } = useReview();
 
   const { startLoading, stopLoading } = useLoading();
 
@@ -67,6 +93,8 @@ function ReserveComponent({ room }) {
   };
 
   useEffect(() => {
+    fetchStatusBookingByPropertyId(propertyId);
+    fnRecentTomorrow();
     setInput({
       ...input,
       guestsCount: totalGuest,
@@ -129,7 +157,10 @@ function ReserveComponent({ room }) {
                   id='checkInDate'
                   name='checkInDate'
                   value={input.checkInDate}
-                  min={today}
+                  // min={today}
+                  min={`${
+                    formatrecentCheckOutDate ? formatrecentCheckOutDate : today
+                  }`}
                   onChange={handleChangeInput}
                 />
               </form>
@@ -146,7 +177,9 @@ function ReserveComponent({ room }) {
                     type='date'
                     id='checkOutDate'
                     name='checkOutDate'
-                    min={checkInDate}
+                    min={`${
+                      formatrecentCheckOutDate ? recentTomorrow : tomorrow
+                    }`}
                     value={input.checkOutDate}
                     onChange={handleChangeInput}
                   />

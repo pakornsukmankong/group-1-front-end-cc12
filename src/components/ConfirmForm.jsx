@@ -93,7 +93,7 @@ function ConfirmForm({ roomData: [roomData, reserveId] }) {
     }
   };
 
-  const [methodPay, setMethodPay] = useState('CREDIT_CARD');
+  // const [methodPay, setMethodPay] = useState('CREDIT_CARD');
   return (
     <form>
       <div className="border border-gray-300 p-6 rounded-lg w-[34rem] mb-6">
@@ -159,7 +159,7 @@ function ConfirmForm({ roomData: [roomData, reserveId] }) {
         >
           <option disabled>Choose Method To Pay</option>
           <option value="CREDIT_CARD">CREDIT CARD</option>
-          <option value="OMISE">OMISE</option>
+          {/* <option value="OMISE">OMISE</option> */}
         </select>
       </div>
       <div className="flex justify-center my-10">
