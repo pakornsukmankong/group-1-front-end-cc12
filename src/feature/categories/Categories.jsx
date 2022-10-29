@@ -126,9 +126,9 @@ function Categories() {
               slidesPerGroup: 5
             },
             1440: {
-              slidesPerView: 10,
+              slidesPerView: 5,
               spaceBetween: 100,
-              slidesPerGroup: 10
+              slidesPerGroup: 5
             }
           }}
           modules={[Pagination, Navigation]}
