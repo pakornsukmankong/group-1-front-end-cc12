@@ -9,62 +9,22 @@ import 'swiper/css/navigation';
 
 // import required modules
 import { Pagination, Navigation } from 'swiper';
+import { getCategoryList } from '../../api/hostApi';
+import { useNavigate } from 'react-router-dom';
+import { useProperty } from '../../contexts/PropertyContext';
+import * as propertyService from '../../api/propertyApi';
 
 function Categories() {
-  const listMock = [
-    {
-      name: 'Creative spaces',
-      image:
-        'https://a0.muscache.com/pictures/8a43b8c6-7eb4-421c-b3a9-1bd9fcb26622.jpg',
-      active: false
-    },
-    {
-      name: 'Design',
-      image:
-        'https://a0.muscache.com/pictures/50861fca-582c-4bcc-89d3-857fb7ca6528.jpg',
-      active: false
-    },
-    {
-      name: 'Amazing views',
-      image:
-        'https://a0.muscache.com/pictures/3b1eb541-46d9-4bef-abc4-c37d77e3c21b.jpg',
-      active: false
-    },
-    {
-      name: 'Beachfront',
-      image:
-        'https://a0.muscache.com/pictures/bcd1adc0-5cee-4d7a-85ec-f6730b0f8d0c.jpg',
-      active: false
-    },
-    {
-      name: 'Castles',
-      image:
-        'https://a0.muscache.com/pictures/1b6a8b70-a3b6-48b5-88e1-2243d9172c06.jpg',
-      active: false
-    },
-    {
-      name: 'Lake',
-      image:
-        'https://a0.muscache.com/pictures/a4634ca6-1407-4864-ab97-6e141967d782.jpg',
-      active: false
-    },
-    {
-      name: 'Beach',
-      image:
-        'https://a0.muscache.com/pictures/10ce1091-c854-40f3-a2fb-defc2995bcaf.jpg',
-      active: false
-    }
-  ];
-  const getRandom = (min, max) => {
-    return Math.floor(Math.random() * (max - min)) + min;
-  };
+  let navigate = useNavigate();
+
+  const { setProperty } = useProperty();
 
   const [prevEl, setPrevEl] = useState(null);
   const [nextEl, setNextEl] = useState(null);
 
   const [category, setCategory] = useState();
 
-  const onClickSlider = (indexActive) => {
+  const onClickSlider = async (indexActive, itemActive) => {
     let newArr = category.map((item, index) => {
       if (index === indexActive) {
         return {
@@ -78,15 +38,33 @@ function Categories() {
       };
     });
     setCategory([...newArr]);
+    await fetchProperty(itemActive.id);
+    navigate({
+      pathname: '/',
+      search: `?id=${itemActive.id}`
+    });
+  };
+
+  const fetchProperty = async (categoryId) => {
+    try {
+      let res = await propertyService.getPropertyByCategory(categoryId);
+      setProperty(res.data.property);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   useEffect(() => {
-    function initCategory() {
-      let mockData = new Array(20).fill(1).map((i) => {
-        return listMock[getRandom(0, listMock.length)];
-      });
-      setCategory(mockData);
-    }
+    const initCategory = async () => {
+      try {
+        const res = await getCategoryList();
+        const { data } = res.data;
+        const mapData = data.map((i) => ({ ...i, active: false }));
+        setCategory(mapData);
+      } catch (err) {
+        console.log(err);
+      }
+    };
 
     initCategory();
   }, []);
@@ -137,15 +115,23 @@ function Categories() {
           {category &&
             category.map((item, keys) => {
               return (
-                <SwiperSlide key={keys} onClick={() => onClickSlider(keys)}>
+                <SwiperSlide
+                  key={keys}
+                  onClick={() => onClickSlider(keys, item)}
+                >
                   <div className="flex flex-col justify-center items-center gap-x-5 cursor-pointer select-none">
-                    <img src={item.image} alt="icon" width="24" height="24" />
+                    <img
+                      src={item.categoryIconImage}
+                      alt="icon"
+                      width="24"
+                      height="24"
+                    />
                     <div
                       className={`w-24 text-center ${
                         item.active ? ' border-b-2 border-b-black ' : ''
                       } `}
                     >
-                      <span className="text-xs">{item.name}</span>
+                      <span className="text-xs">{item.categoryName}</span>
                     </div>
                   </div>
                 </SwiperSlide>
