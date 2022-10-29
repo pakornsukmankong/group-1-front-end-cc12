@@ -5,6 +5,7 @@ import {
 	addLocalStorage,
 	removeLocalStorage,
 } from '../utils/localStorage';
+import { toastSuccess } from '../utils/toast';
 
 const AuthContext = createContext();
 
@@ -13,6 +14,9 @@ function AuthContextProvider({ children }) {
 	const [phoneNumber, setPhoneNumber] = useState('');
 	const [verifyStatus, setVerifyStatus] = useState('');
 	const [initialLoading, setInitialLoading] = useState(true);
+	const [isRegisterEmail, setIsRegisterEmail] = useState('');
+
+	console.log(isRegisterEmail);
 
 	useEffect(() => {
 		const fetchMe = async () => {
@@ -49,8 +53,16 @@ function AuthContextProvider({ children }) {
 
 	const loginWithEmail = async (input) => {
 		const res = await authService.loginWithEmail(input);
-		addLocalStorage(res.data.token);
-		getMe();
+		if (res.data.token) {
+			setIsRegisterEmail(res.data.msg);
+			addLocalStorage(res.data.token);
+			getMe();
+			toastSuccess('Login Success');
+		}
+
+		if (res.data.msg === 'notRegister') {
+			setIsRegisterEmail(res.data.msg);
+		}
 	};
 
 	const register = async (input) => {
@@ -83,6 +95,10 @@ function AuthContextProvider({ children }) {
 		}
 	};
 
+	const closeModalRegisWithEmail = () => {
+		setIsRegisterEmail('');
+	};
+
 	return (
 		<AuthContext.Provider
 			value={{
@@ -98,6 +114,8 @@ function AuthContextProvider({ children }) {
 				updateAccountUser,
 				deleteUser,
 				setVerifyStatus,
+				isRegisterEmail,
+				closeModalRegisWithEmail,
 			}}
 		>
 			{children}

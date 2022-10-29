@@ -3,9 +3,10 @@ import { useAuth } from '../../contexts/AuthContext';
 import { useLoading } from '../../contexts/LoadingContext';
 import { toastError, toastSuccess } from '../../utils/toast';
 
-function RegisterModalEmail({ openModalOtp, closeModalRegisEmail }) {
-	const { register } = useAuth();
+function RegisterModalEmail({ openModalOtp }) {
+	const { register, closeModalRegisWithEmail } = useAuth();
 	const { startLoading, stopLoading } = useLoading();
+	const [showPassword, setShowPassword] = useState(false);
 
 	const [input, setInput] = useState({
 		firstName: '',
@@ -19,7 +20,7 @@ function RegisterModalEmail({ openModalOtp, closeModalRegisEmail }) {
 	};
 
 	const handleClickBack = async () => {
-		closeModalRegisEmail();
+		closeModalRegisWithEmail();
 		openModalOtp();
 	};
 
@@ -27,7 +28,6 @@ function RegisterModalEmail({ openModalOtp, closeModalRegisEmail }) {
 		try {
 			startLoading();
 			await register(input);
-			closeModalRegisEmail();
 			toastSuccess('register success');
 		} catch (err) {
 			console.log(err);
@@ -35,6 +35,10 @@ function RegisterModalEmail({ openModalOtp, closeModalRegisEmail }) {
 		} finally {
 			stopLoading();
 		}
+	};
+
+	const handleClickShowPassword = () => {
+		setShowPassword((prev) => !prev);
 	};
 
 	return (
@@ -105,15 +109,18 @@ function RegisterModalEmail({ openModalOtp, closeModalRegisEmail }) {
 
 						<div className='relative'>
 							<input
-								type='password'
+								type={showPassword ? 'text' : 'password'}
 								className='mt-5 pl-3 border border-gray-300 h-[3.5rem] rounded-lg  w-full font-light'
 								placeholder='Password'
 								name='password'
 								value={input.password}
 								onChange={handleChangeInput}
 							/>
-							<button className='absolute top-[2.3rem] right-4 text-sm underline cursor-pointer'>
-								Show
+							<button
+								className='absolute top-[2.3rem] right-4 text-sm underline cursor-pointer'
+								onClick={handleClickShowPassword}
+							>
+								{showPassword ? 'Hide' : 'Show'}
 							</button>
 						</div>
 						<div className='my-2 text-xs text-gray-500'>
