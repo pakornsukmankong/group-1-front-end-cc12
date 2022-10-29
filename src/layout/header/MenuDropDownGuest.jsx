@@ -20,8 +20,10 @@ function MenuDropDownGuest() {
 	const [emailLoginModal, setEmailLoginModal] = useState(false);
 
 	// const verifyStatus = useSelector((state) => state.auth.verifyStatus);
-	const { verifyStatus } = useAuth();
-	const userStatus = useSelector((state) => state.auth.userStatus);
+	const { verifyStatus, isRegisterEmail } = useAuth();
+	// const userStatus = useSelector((state) => state.auth.userStatus);
+
+	console.log(isRegisterEmail);
 
 	return (
 		<Menu
@@ -148,18 +150,15 @@ function MenuDropDownGuest() {
 					{emailLoginModal ? (
 						<EmailLoginModal
 							closeEmailLoginModal={() => setEmailLoginModal(false)}
-							openRegisModalEmail={() => setModalRegisEmail(true)}
+							openModalOtp={() => setModalOtp(true)}
 						/>
 					) : (
 						''
 					)}
 				</div>
 				<div>
-					{modalRegisEmail ? (
-						<RegisterModalEmail
-							closeModalRegisEmail={() => setModalRegisEmail(false)}
-							openModalOtp={() => setModalOtp(true)}
-						/>
+					{isRegisterEmail === 'notRegister' ? (
+						<RegisterModalEmail openModalOtp={() => setModalOtp(true)} />
 					) : (
 						''
 					)}
