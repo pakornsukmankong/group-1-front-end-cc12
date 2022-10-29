@@ -2,8 +2,8 @@ import axios from '../config/axios';
 
 export const getAllProperty = () => axios.get('/property/');
 
-export const getPropertyByCategory = (id) =>
-  axios.get(`/property/category?id=${id}`);
+export const getPropertyByCategory = (query) =>
+  axios.get(`/property/category?${query}`);
 
 export const getPropertyByRoom = (id) =>
   axios.get(`/property/findproperty/${id}`);

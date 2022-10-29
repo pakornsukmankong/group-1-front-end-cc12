@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { createSearchParams, useSearchParams } from 'react-router-dom';
 import * as propertyService from '../api/propertyApi';
 
 const PropertyContext = createContext();
@@ -13,9 +13,10 @@ function PropertyContextProvider({ children }) {
   const fetchProperty = async () => {
     try {
       let res;
-      let categoryId = searchParams.get('id');
-      if (categoryId) {
-        res = await propertyService.getPropertyByCategory(categoryId);
+      if (searchParams.get('id') || searchParams.get('search')) {
+        const param = Object.fromEntries([...searchParams]);
+        const queryParam = createSearchParams(param).toString();
+        res = await propertyService.getPropertyByCategory(queryParam);
       } else {
         res = await propertyService.getAllProperty();
       }

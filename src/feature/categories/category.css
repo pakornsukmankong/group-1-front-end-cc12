@@ -1,0 +1,4 @@
+.category-prev.swiper-button-disabled,
+.category-next.swiper-button-disabled {
+    display: none;
+}

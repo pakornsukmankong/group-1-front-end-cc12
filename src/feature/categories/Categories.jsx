@@ -1,26 +1,34 @@
 import React, { useEffect, useState } from 'react';
 // Import Swiper React components
-import { Swiper, SwiperSlide } from 'swiper/react';
+import { Swiper, SwiperSlide, useSwiper } from 'swiper/react';
 
 // Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 
+import './category.css';
+
 // import required modules
 import { Pagination, Navigation } from 'swiper';
 import { getCategoryList } from '../../api/hostApi';
-import { useNavigate } from 'react-router-dom';
+import {
+  createSearchParams,
+  useNavigate,
+  useSearchParams
+} from 'react-router-dom';
 import { useProperty } from '../../contexts/PropertyContext';
 import * as propertyService from '../../api/propertyApi';
 
 function Categories() {
   let navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const { setProperty } = useProperty();
 
   const [prevEl, setPrevEl] = useState(null);
   const [nextEl, setNextEl] = useState(null);
+  const [swiper, setSwiper] = useState(null);
 
   const [category, setCategory] = useState();
 
@@ -38,16 +46,19 @@ function Categories() {
       };
     });
     setCategory([...newArr]);
-    await fetchProperty(itemActive.id);
+
+    const param = Object.fromEntries([...searchParams, ['id', itemActive.id]]);
+    const queryParam = createSearchParams(param).toString();
+    await fetchProperty(queryParam);
     navigate({
       pathname: '/',
-      search: `?id=${itemActive.id}`
+      search: queryParam
     });
   };
 
-  const fetchProperty = async (categoryId) => {
+  const fetchProperty = async (queryParam) => {
     try {
-      let res = await propertyService.getPropertyByCategory(categoryId);
+      let res = await propertyService.getPropertyByCategory(queryParam);
       setProperty(res.data.property);
     } catch (err) {
       console.log(err);
@@ -59,21 +70,35 @@ function Categories() {
       try {
         const res = await getCategoryList();
         const { data } = res.data;
-        const mapData = data.map((i) => ({ ...i, active: false }));
+        const mapData = data.map((i) => ({
+          ...i,
+          active: i.id === +searchParams.get('id') ? true : false
+        }));
         setCategory(mapData);
       } catch (err) {
         console.log(err);
       }
     };
 
+    const initSwiper = async () => {
+      if (swiper) {
+        const timer = setTimeout(() => {
+          const activeId = +searchParams.get('id');
+          swiper.slideTo(activeId);
+        }, 500);
+        return () => clearTimeout(timer);
+      }
+    };
+
     initCategory();
-  }, []);
+    initSwiper();
+  }, [swiper]);
 
   return (
     <header className="bg-white border-b h-20 flex flex-row w-full ">
       <div className="flex flex-row justify-between items-center w-full gap-x-4">
         <button
-          className="bg-white border rounded-full left-button flex p-2"
+          className="bg-white border rounded-full left-button flex p-2 category-prev"
           ref={(node) => setPrevEl(node)}
         >
           <i className="fa-solid fa-chevron-left text-[0.75rem] h-3 w-3"></i>
@@ -106,10 +131,9 @@ function Categories() {
               slidesPerGroup: 10
             }
           }}
-          loop={true}
-          loopFillGroupWithBlank={true}
           modules={[Pagination, Navigation]}
           navigation={{ prevEl, nextEl }}
+          onSwiper={(s) => setSwiper(s)}
           className="mySwiper"
         >
           {category &&
@@ -139,7 +163,7 @@ function Categories() {
             })}
         </Swiper>
         <button
-          className="bg-white border rounded-full left-button flex p-2"
+          className="bg-white border rounded-full left-button flex p-2 category-next"
           ref={(node) => setNextEl(node)}
         >
           <i className="fa-solid fa-chevron-right text-[0.75rem] h-3 w-3"></i>
