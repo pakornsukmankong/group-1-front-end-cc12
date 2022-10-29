@@ -21,7 +21,7 @@ function PropertyContextProvider({ children }) {
 	const fetchRoomFromID = async (id) => {
 		try {
 			const res = await propertyService.getPropertyByRoom(id);
-			// setRoom(res.data.userLearningCourse);
+
 			// console.log(res.data.property);
 			setRoom(res.data.property);
 		} catch (err) {

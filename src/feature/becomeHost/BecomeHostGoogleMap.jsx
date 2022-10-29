@@ -17,7 +17,7 @@ function BecomeHostGoogleMap() {
       </div>
 
       <GoogleMap
-        zoom={10}
+        zoom={16}
         center={marker || center}
         mapContainerClassName="h-[25rem] z-[3]">
         {marker && <Marker position={marker} />}
