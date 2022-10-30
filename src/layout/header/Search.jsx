@@ -5,33 +5,23 @@ import {
   useSearchParams
 } from 'react-router-dom';
 import { useProperty } from '../../contexts/PropertyContext';
-import * as propertyService from '../../api/propertyApi';
 
 function Search() {
   const searchRef = useRef(null);
   let navigate = useNavigate();
-  const { setProperty } = useProperty();
+  const { fetchPropertyByCategory } = useProperty();
   const [searchParams, setSearchParams] = useSearchParams();
 
   const onClickSearch = async () => {
     const textSearch = searchRef.current.value;
     const param = Object.fromEntries([...searchParams, ['search', textSearch]]);
     const queryParam = createSearchParams(param).toString();
-    await fetchProperty(queryParam);
+    await fetchPropertyByCategory(queryParam);
     navigate({
       pathname: '/',
       search: queryParam
     });
     searchRef.current.focus();
-  };
-
-  const fetchProperty = async (queryParam) => {
-    try {
-      let res = await propertyService.getPropertyByCategory(queryParam);
-      setProperty(res.data.property);
-    } catch (err) {
-      console.log(err);
-    }
   };
 
   const keyUp = (event) => {

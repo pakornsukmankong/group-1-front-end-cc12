@@ -18,13 +18,12 @@ import {
   useSearchParams
 } from 'react-router-dom';
 import { useProperty } from '../../contexts/PropertyContext';
-import * as propertyService from '../../api/propertyApi';
 
 function Categories() {
   let navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const { setProperty } = useProperty();
+  const { fetchPropertyByCategory } = useProperty();
 
   const [prevEl, setPrevEl] = useState(null);
   const [nextEl, setNextEl] = useState(null);
@@ -49,20 +48,11 @@ function Categories() {
 
     const param = Object.fromEntries([...searchParams, ['id', itemActive.id]]);
     const queryParam = createSearchParams(param).toString();
-    await fetchProperty(queryParam);
+    await fetchPropertyByCategory(queryParam);
     navigate({
       pathname: '/',
       search: queryParam
     });
-  };
-
-  const fetchProperty = async (queryParam) => {
-    try {
-      let res = await propertyService.getPropertyByCategory(queryParam);
-      setProperty(res.data.property);
-    } catch (err) {
-      console.log(err);
-    }
   };
 
   useEffect(() => {

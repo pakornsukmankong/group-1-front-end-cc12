@@ -47,6 +47,26 @@ function PropertyContextProvider({ children }) {
     }
   };
 
+  const clearParams = () => {
+    searchParams.delete('id');
+    searchParams.delete('search');
+    setSearchParams(searchParams);
+  };
+
+  const resetProperty = async () => {
+    clearParams();
+    await fetchProperty();
+  };
+
+  const fetchPropertyByCategory = async (queryParam) => {
+    try {
+      let res = await propertyService.getPropertyByCategory(queryParam);
+      setProperty(res.data.property);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   useEffect(() => {
     fetchProperty();
     fetchWishList();
@@ -66,6 +86,8 @@ function PropertyContextProvider({ children }) {
         wishList,
         fetchWishList,
         fetchRoomFromID,
+        resetProperty,
+        fetchPropertyByCategory,
         room
       }}
     >
