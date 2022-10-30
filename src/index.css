@@ -3,5 +3,21 @@
 @tailwind utilities;
 
 body {
-    overflow: overlay;
+	overflow: overlay;
+}
+
+.fadein {
+	position: relative;
+	animation: animatebottom 0.5s;
+}
+
+@keyframes animatebottom {
+	from {
+		bottom: -400px;
+		opacity: 0;
+	}
+	to {
+		bottom: 0;
+		opacity: 1;
+	}
 }

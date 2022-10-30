@@ -7,6 +7,7 @@ function LoginRegisterModal({
 	closeModalOtp,
 	openModelVerify,
 	openEmailLoginModal,
+	modalOtp,
 }) {
 	const [phoneNumber, setPhoneNumber] = useState('');
 	const { startLoading, stopLoading } = useLoading();
@@ -33,11 +34,11 @@ function LoginRegisterModal({
 	};
 
 	return (
-		<div className='fixed top-0 bottom-0 left-0 right-0 bg-gray-900 bg-opacity-50 z-50 leading-5'>
-			<div className='flex flex-col justify-center items-center h-full'>
+		<div className='fixed top-0 bottom-0 left-0 right-0 bg-gray-900 bg-opacity-50 z-50 leading-5 '>
+			<div className='flex flex-col justify-center items-center h-full fadein '>
 				<div className='relative w-[568px] h-[4rem] px-6 bg-white rounded-t-xl flex justify-center items-center font-extrabold text-base'>
 					<i
-						className='absolute left-6 fa-solid fa-xmark rounded-full text-lg cursor-pointer'
+						className='absolute left-6 fa-solid fa-xmark rounded-full text-lg cursor-pointer '
 						onClick={() => closeModalOtp()}
 					></i>
 					<div className='flex justify-center'> Log in or Sign up</div>
