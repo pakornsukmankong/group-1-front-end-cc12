@@ -1,49 +1,49 @@
-import { useState } from 'react'
-import { useProperty } from '../../contexts/PropertyContext'
+import { useState } from 'react';
+import { useProperty } from '../../contexts/PropertyContext';
 
 // Import Swiper React components
-import { Swiper, SwiperSlide } from 'swiper/react'
+import { Swiper, SwiperSlide } from 'swiper/react';
 
 // Import Swiper styles
-import 'swiper/css'
-import 'swiper/css/pagination'
-import 'swiper/css/navigation'
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
 
 // import required modules
-import { Pagination, Navigation } from 'swiper'
+import { Pagination, Navigation } from 'swiper';
 
-import './card-room-item.css'
-import { Link } from 'react-router-dom'
-import { formatPrice } from '../../utils/priceFormat'
+import './card-room-item.css';
+import { Link } from 'react-router-dom';
+import { formatPrice } from '../../utils/priceFormat';
 
 function CardRoomItem({ dataItem }) {
-  const { wishList, toggleWishList } = useProperty(null)
+  const { wishList, toggleWishList } = useProperty(null);
   const {
     id,
     propertyName,
     address,
     pricePerDate,
-    PropertyImages,
+    PropertyImages
     // roomRate,
     // roomOpen,
-  } = dataItem
+  } = dataItem;
 
-  const wishListed = wishList?.map((property) => property?.propertyId)
-  const userWishList = wishListed?.includes(id)
+  const wishListed = wishList?.map((property) => property?.propertyId);
+  const userWishList = wishListed?.includes(id);
 
-  const [prevEl, setPrevEl] = useState(null)
-  const [nextEl, setNextEl] = useState(null)
+  const [prevEl, setPrevEl] = useState(null);
+  const [nextEl, setNextEl] = useState(null);
 
   const favAction = async () => {
-    await toggleWishList(id)
-  }
+    await toggleWishList(id);
+  };
 
   return (
     <div className="group cursor-pointer card-container">
       <div className="aspect-[149125/141668]">
         <Swiper
           pagination={{
-            dynamicBullets: true,
+            dynamicBullets: true
           }}
           spaceBetween={10}
           modules={[Pagination, Navigation]}
@@ -60,7 +60,7 @@ function CardRoomItem({ dataItem }) {
                   />
                 </Link>
               </SwiperSlide>
-            )
+            );
           })}
           <div className="text-white text-[1.25rem] flex justify-end mx-5 absolute top-[7%] right-0 z-[3] ">
             <svg
@@ -86,6 +86,7 @@ function CardRoomItem({ dataItem }) {
                 <i className="fa-solid fa-chevron-left text-[0.75rem] h-3 w-3"></i>
               </button>
             </div>
+            <Link className="w-full" to={`/rooms/${id}`}></Link>
             <div>
               <button
                 className="bg-white shadow border rounded-full flex p-2 card-next"
@@ -116,7 +117,7 @@ function CardRoomItem({ dataItem }) {
         </div>
       </Link>
     </div>
-  )
+  );
 }
 
-export default CardRoomItem
+export default CardRoomItem;

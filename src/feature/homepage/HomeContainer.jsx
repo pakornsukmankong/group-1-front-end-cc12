@@ -1,12 +1,35 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Categories from '../categories/Categories';
 import CardRoomItem from './CardRoomItem';
+import {
+  createSearchParams,
+  useNavigate,
+  useSearchParams
+} from 'react-router-dom';
 import { useProperty } from '../../contexts/PropertyContext';
+import * as propertyService from '../../api/propertyApi';
 
 function HomeContainer() {
-  const { property } = useProperty();
+  const { property, setProperty } = useProperty();
+  const [searchParams, setSearchParams] = useSearchParams();
   //   console.log(property);
+
+  useEffect(() => {
+    const fetchProperty = async () => {
+      try {
+        const param = Object.fromEntries([...searchParams]);
+        const queryParam = createSearchParams(param).toString();
+        let res = await propertyService.getPropertyByCategory(queryParam);
+        setProperty(res.data.property);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    fetchProperty();
+  }, []);
+
   return (
     <>
       <div className="sticky top-20 left-0 right-0 z-[5]">
