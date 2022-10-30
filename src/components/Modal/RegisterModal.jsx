@@ -50,7 +50,7 @@ function RegisterModal({ openModalOtp }) {
 			<div className='flex flex-col justify-center items-center h-full'>
 				<div className='relative w-[568px] h-[4rem] px-6 bg-white rounded-t-xl flex justify-center items-center font-extrabold border border-b-gray-300 text-base'>
 					<i
-						className='absolute left-6 fa-solid fa-angle-left rounded-full text-lg cursor-pointer'
+						className='absolute left-6 fa-solid fa-angle-left rounded-full text-lg cursor-pointer '
 						onClick={handleClickBack}
 					></i>
 					<div className='flex justify-center'> Finish Signing Up</div>

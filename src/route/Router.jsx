@@ -30,76 +30,79 @@ import CategoryTypeContainer from '../feature/create-host/CategoryTypeContainer'
 import { useAuth } from '../contexts/AuthContext';
 
 function Router() {
-  const { user } = useAuth();
-  return (
-    <>
-      <Routes>
-        <Route path="/" element={<AuthLayout />}>
-          <Route path="/" element={<HomePage />} />
-          <Route path="*" element={<Navigate to="/" />} />
-        </Route>
-        <Route path="/" element={<HomeLayout />}>
-          {user ? (
-            <>
-              <Route path="/account" element={<AccountPage />} />
-              <Route path="/trips" element={<TripsPage />} />
-              <Route path="/wishlists" element={<WishlistPage />} />
-              <Route
-                path="/confirmPayment/:reserveId"
-                element={<ConfirmPaymentPage />}
-              />
-              <Route path="/rooms/:id" element={<RoomPage />} />
-              <Route path="*" element={<Navigate to="/" />} />
-            </>
-          ) : (
-            <>
-              <Route path="/rooms/:id" element={<RoomPage />} />
-              <Route path="*" element={<Navigate to="/" />} />
-            </>
-          )}
-          {/* <Route path="/login" element={<LoginRegisterModal />}></Route> */}
-          {/* <Route path='/loginEmail' element={<EmailLoginModal />}></Route>
+	const { user } = useAuth();
+	return (
+		<>
+			<Routes>
+				<Route path='/' element={<AuthLayout />}>
+					<Route path='/' element={<HomePage />} />
+					<Route path='*' element={<Navigate to='/' />} />
+				</Route>
+				<Route path='/' element={<HomeLayout />}>
+					{user ? (
+						<>
+							<Route path='/account' element={<AccountPage />} />
+							<Route path='/trips' element={<TripsPage />} />
+							<Route path='/wishlists' element={<WishlistPage />} />
+							<Route
+								path='/confirmPayment/:reserveId'
+								element={<ConfirmPaymentPage />}
+							/>
+							<Route path='/rooms/:id' element={<RoomPage />} />
+							<Route path='*' element={<Navigate to='/' />} />
+						</>
+					) : (
+						<>
+							<Route path='/rooms/:id' element={<RoomPage />} />
+							<Route path='*' element={<Navigate to='/' />} />
+						</>
+					)}
+					{/* <Route path="/login" element={<LoginRegisterModal />}></Route> */}
+					{/* <Route path='/loginEmail' element={<EmailLoginModal />}></Route>
 					<Route path='/register' element={<RegisterModal />}></Route>
 					<Route path='/phoneAuth' element={<PhoneAuthModal />}></Route>
         <Route path='/reserve' element={<ReserveComponent />}></Route> */}
-        </Route>
+				</Route>
 
-        {user ? (
-          <>
-            <Route path="/" element={<AuthLayout />}>
-              <Route path="/hosting" element={<HostingPage />} />
-              <Route path="*" element={<Navigate to="/" />} />
-            </Route>
-            <Route path="/becomeHosting" element={<BecomeHostPage />} />
-            <Route path="/create-host">
-              <Route path="intro" element={<CreateHostPage />} />
-              <Route
-                path="property-type-group"
-                element={<TypeGroupContainer />}
-              />
-              <Route
-                path="category-type/:id"
-                element={<CategoryTypeContainer />}
-              />
-              <Route path="location/:id" element={<LocationContainer />} />
-              <Route path="floor-plan/:id" element={<FloorPlanContainer />} />
-              <Route path="amenities/:id" element={<AmenitiesContainer />} />
-              <Route path="photos/:id" element={<PhotosContainer />} />
-              <Route path="title/:id" element={<TitleContainer />} />
-              <Route
-                path="description/:id"
-                element={<DescriptionContainer />}
-              />
-              <Route path="price/:id" element={<PriceContainer />} />
-              <Route path="preview/:id" element={<PreviewContainer />} />
-            </Route>
-          </>
-        ) : (
-          <Route path="*" element={<Navigate to="/" />} />
-        )}
-      </Routes>
-    </>
-  );
+				{user ? (
+					<>
+						<Route path='/' element={<AuthLayout />}>
+							<Route path='/hosting' element={<HostingPage />} />
+							<Route path='*' element={<Navigate to='/' />} />
+						</Route>
+						<Route path='/becomeHosting' element={<BecomeHostPage />} />
+						<Route path='/create-host'>
+							<Route path='intro' element={<CreateHostPage />} />
+							<Route
+								path='property-type-group'
+								element={<TypeGroupContainer />}
+							/>
+							<Route
+								path='category-type/:id'
+								element={<CategoryTypeContainer />}
+							/>
+							<Route path='location/:id' element={<LocationContainer />} />
+							<Route path='floor-plan/:id' element={<FloorPlanContainer />} />
+							<Route path='amenities/:id' element={<AmenitiesContainer />} />
+							<Route path='photos/:id' element={<PhotosContainer />} />
+							<Route path='title/:id' element={<TitleContainer />} />
+							<Route
+								path='description/:id'
+								element={<DescriptionContainer />}
+							/>
+							<Route path='price/:id' element={<PriceContainer />} />
+							<Route path='preview/:id' element={<PreviewContainer />} />
+						</Route>
+					</>
+				) : (
+					<>
+						<Route path='/becomeHosting' element={<BecomeHostPage />} />
+						<Route path='*' element={<Navigate to='/' />} />
+					</>
+				)}
+			</Routes>
+		</>
+	);
 }
 
 export default Router;
