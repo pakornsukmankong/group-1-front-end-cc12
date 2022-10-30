@@ -7,9 +7,11 @@ import TopMenu from './TopMenu';
 
 function DescriptionContainer() {
   let navigate = useNavigate();
+  const defaultText =
+    "You'll have a great time at this comfortable place to stay.";
   const maxLength = 500;
-  const [count, setCount] = useState(0);
-  const [description, setDescription] = useState('');
+  const [count, setCount] = useState(defaultText.length);
+  const [description, setDescription] = useState(defaultText);
   const [hostId, setHostId] = useState(getHostCreateId());
 
   const onNext = async (description) => {
@@ -58,14 +60,12 @@ function DescriptionContainer() {
             </p>
           </div>
           <textarea
+            placeholder={defaultText}
             type="text"
             maxLength={maxLength}
             rows={4}
             onChange={onChange}
             className="px-6 py-4 w-full h-[10rem] text-[1.15rem] bg-white border-gray flex justify-center items-center flex-col border-2 rounded-lg  hover:border-black  focus:border-black focus-visible:border-black focus-visible:outline-black "
-            defaultValue={
-              "You'll have a great time at this comfortable place to stay."
-            }
           ></textarea>
           <p className="text-[.95rem] mt-4">
             {count}/{maxLength}

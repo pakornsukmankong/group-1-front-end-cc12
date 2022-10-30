@@ -1,4 +1,6 @@
 import { useRef, useState } from 'react';
+// use lib mask input https://github.com/uNmAnNeR/imaskjs/tree/master/packages/react-imask
+import { IMaskInput } from 'react-imask';
 import BottomMenu from './BottomMenu';
 import TopMenu from './TopMenu';
 
@@ -11,11 +13,16 @@ function PriceContainer() {
   let navigate = useNavigate();
   const [hostId, setHostId] = useState(getHostCreateId());
 
-  const [price, setPrice] = useState(782);
+  const defaultValue = 700;
+  const [minPrice, setMinPrice] = useState(defaultValue * 0.9);
+  const [maxPrice, setMaxPrice] = useState(defaultValue * 2.5);
+  const [price, setPrice] = useState(defaultValue);
+
   const inputRef = useRef(null);
+  const ref = useRef(null);
 
   const onClickUpdate = (type, value) => {
-    let newValue = value;
+    let newValue = Number(value);
     if (type === 'increase') {
       newValue += 50;
     } else {
@@ -25,7 +32,6 @@ function PriceContainer() {
       }
     }
     setPrice(newValue);
-    inputRef.current.value = `฿${newValue}`;
   };
 
   const onNext = async (price) => {
@@ -41,6 +47,17 @@ function PriceContainer() {
     } catch (err) {
       console.log(err);
     }
+  };
+
+  const onChange = (value) => {
+    setPrice(value);
+  };
+
+  const formatNumber = (value) => {
+    return value.toLocaleString('en-US', {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0
+    });
   };
 
   return (
@@ -71,11 +88,16 @@ function PriceContainer() {
               >
                 -
               </button>
-              <input
-                ref={inputRef}
-                type="text"
+              <IMaskInput
                 className="w-full h-[6rem] text-[4rem] font-medium text-center bg-white border-gray flex justify-center items-center flex-col border-2 rounded-lg  hover:border-black  focus:border-black focus-visible:border-black   focus-visible:outline-black "
-                defaultValue={`฿${price} ` ?? ''}
+                mask={'฿000000000'}
+                radix="."
+                value={price.toString()}
+                ref={ref}
+                inputRef={inputRef}
+                placeholder="฿00"
+                unmask={true}
+                onAccept={(value) => onChange(value)}
               />
               <button
                 onClick={() => onClickUpdate('increase', price)}
@@ -88,7 +110,7 @@ function PriceContainer() {
             <div className="flex justify-center mx-[6rem]">
               <p className="text-center text-[1.2rem] font-light tracking-[0.1rem] ">
                 Keep in mind, places like yours in your area usually range from
-                ฿819 to ฿1,365
+                ฿{formatNumber(minPrice)} to ฿{formatNumber(maxPrice)}
                 <span className="ml-3">
                   <i className="fa-solid fa-circle-info w-3"></i>
                 </span>

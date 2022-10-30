@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 function TopMenu({ isTransparent, bgButton, textColor }) {
   const bgColor = isTransparent ? ' bg-transparent ' : ' bg-white ';
   const position = isTransparent ? ' absolute ' : ' sticky ';
@@ -9,16 +11,12 @@ function TopMenu({ isTransparent, bgButton, textColor }) {
     <div
       className={`${position} top-0 right-0 z-50 py-6 px-12 flex justify-end space-x-5  ${bgColor}`}
     >
-      <button
-        className={`px-4 py-2 font-semibold text-xs ${bgButtonColor} ${textButtonColor} rounded-full shadow-sm`}
-      >
-        Help
-      </button>
-      <button
+      <Link
+        to={'/becomeHosting'}
         className={`px-4 py-2 font-semibold text-xs ${bgButtonColor} ${textButtonColor} rounded-full shadow-sm`}
       >
         Save and exit
-      </button>
+      </Link>
     </div>
   );
 }

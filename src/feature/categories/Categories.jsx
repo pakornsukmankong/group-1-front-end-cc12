@@ -1,70 +1,38 @@
 import React, { useEffect, useState } from 'react';
 // Import Swiper React components
-import { Swiper, SwiperSlide } from 'swiper/react';
+import { Swiper, SwiperSlide, useSwiper } from 'swiper/react';
 
 // Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 
+import './category.css';
+
 // import required modules
 import { Pagination, Navigation } from 'swiper';
+import { getCategoryList } from '../../api/hostApi';
+import {
+  createSearchParams,
+  useNavigate,
+  useSearchParams
+} from 'react-router-dom';
+import { useProperty } from '../../contexts/PropertyContext';
+import * as propertyService from '../../api/propertyApi';
 
 function Categories() {
-  const listMock = [
-    {
-      name: 'Creative spaces',
-      image:
-        'https://a0.muscache.com/pictures/8a43b8c6-7eb4-421c-b3a9-1bd9fcb26622.jpg',
-      active: false
-    },
-    {
-      name: 'Design',
-      image:
-        'https://a0.muscache.com/pictures/50861fca-582c-4bcc-89d3-857fb7ca6528.jpg',
-      active: false
-    },
-    {
-      name: 'Amazing views',
-      image:
-        'https://a0.muscache.com/pictures/3b1eb541-46d9-4bef-abc4-c37d77e3c21b.jpg',
-      active: false
-    },
-    {
-      name: 'Beachfront',
-      image:
-        'https://a0.muscache.com/pictures/bcd1adc0-5cee-4d7a-85ec-f6730b0f8d0c.jpg',
-      active: false
-    },
-    {
-      name: 'Castles',
-      image:
-        'https://a0.muscache.com/pictures/1b6a8b70-a3b6-48b5-88e1-2243d9172c06.jpg',
-      active: false
-    },
-    {
-      name: 'Lake',
-      image:
-        'https://a0.muscache.com/pictures/a4634ca6-1407-4864-ab97-6e141967d782.jpg',
-      active: false
-    },
-    {
-      name: 'Beach',
-      image:
-        'https://a0.muscache.com/pictures/10ce1091-c854-40f3-a2fb-defc2995bcaf.jpg',
-      active: false
-    }
-  ];
-  const getRandom = (min, max) => {
-    return Math.floor(Math.random() * (max - min)) + min;
-  };
+  let navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const { setProperty } = useProperty();
 
   const [prevEl, setPrevEl] = useState(null);
   const [nextEl, setNextEl] = useState(null);
+  const [swiper, setSwiper] = useState(null);
 
   const [category, setCategory] = useState();
 
-  const onClickSlider = (indexActive) => {
+  const onClickSlider = async (indexActive, itemActive) => {
     let newArr = category.map((item, index) => {
       if (index === indexActive) {
         return {
@@ -78,24 +46,59 @@ function Categories() {
       };
     });
     setCategory([...newArr]);
+
+    const param = Object.fromEntries([...searchParams, ['id', itemActive.id]]);
+    const queryParam = createSearchParams(param).toString();
+    await fetchProperty(queryParam);
+    navigate({
+      pathname: '/',
+      search: queryParam
+    });
+  };
+
+  const fetchProperty = async (queryParam) => {
+    try {
+      let res = await propertyService.getPropertyByCategory(queryParam);
+      setProperty(res.data.property);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   useEffect(() => {
-    function initCategory() {
-      let mockData = new Array(20).fill(1).map((i) => {
-        return listMock[getRandom(0, listMock.length)];
-      });
-      setCategory(mockData);
-    }
+    const initCategory = async () => {
+      try {
+        const res = await getCategoryList();
+        const { data } = res.data;
+        const mapData = data.map((i) => ({
+          ...i,
+          active: i.id === +searchParams.get('id') ? true : false
+        }));
+        setCategory(mapData);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    const initSwiper = async () => {
+      if (swiper) {
+        const timer = setTimeout(() => {
+          const activeId = +searchParams.get('id');
+          swiper.slideTo(activeId);
+        }, 500);
+        return () => clearTimeout(timer);
+      }
+    };
 
     initCategory();
-  }, []);
+    initSwiper();
+  }, [swiper]);
 
   return (
     <header className="bg-white border-b h-20 flex flex-row w-full ">
       <div className="flex flex-row justify-between items-center w-full gap-x-4">
         <button
-          className="bg-white border rounded-full left-button flex p-2"
+          className="bg-white border rounded-full left-button flex p-2 category-prev"
           ref={(node) => setPrevEl(node)}
         >
           <i className="fa-solid fa-chevron-left text-[0.75rem] h-3 w-3"></i>
@@ -104,48 +107,55 @@ function Categories() {
           breakpoints={{
             320: {
               slidesPerView: 1,
-              spaceBetween: 1,
+              spaceBetween: 15,
               slidesPerGroup: 1
             },
             425: {
-              slidesPerView: 3,
+              slidesPerView: 2,
               spaceBetween: 1,
-              slidesPerGroup: 3
+              slidesPerGroup: 2
             },
             768: {
-              slidesPerView: 4,
-              spaceBetween: 1,
-              slidesPerGroup: 4
+              slidesPerView: 5,
+              spaceBetween: 15,
+              slidesPerGroup: 5
             },
             1024: {
-              slidesPerView: 5,
-              spaceBetween: 1,
-              slidesPerGroup: 5
+              slidesPerView: 7,
+              spaceBetween: 15,
+              slidesPerGroup: 7
             },
             1440: {
               slidesPerView: 10,
-              spaceBetween: 100,
+              spaceBetween: 15,
               slidesPerGroup: 10
             }
           }}
-          loop={true}
-          loopFillGroupWithBlank={true}
           modules={[Pagination, Navigation]}
           navigation={{ prevEl, nextEl }}
+          onSwiper={(s) => setSwiper(s)}
           className="mySwiper"
         >
           {category &&
             category.map((item, keys) => {
               return (
-                <SwiperSlide key={keys} onClick={() => onClickSlider(keys)}>
+                <SwiperSlide
+                  key={keys}
+                  onClick={() => onClickSlider(keys, item)}
+                >
                   <div className="flex flex-col justify-center items-center gap-x-5 cursor-pointer select-none">
-                    <img src={item.image} alt="icon" width="24" height="24" />
+                    <img
+                      src={item.categoryIconImage}
+                      alt="icon"
+                      width="24"
+                      height="24"
+                    />
                     <div
                       className={`w-24 text-center ${
                         item.active ? ' border-b-2 border-b-black ' : ''
                       } `}
                     >
-                      <span className="text-xs">{item.name}</span>
+                      <span className="text-xs">{item.categoryName}</span>
                     </div>
                   </div>
                 </SwiperSlide>
@@ -153,7 +163,7 @@ function Categories() {
             })}
         </Swiper>
         <button
-          className="bg-white border rounded-full left-button flex p-2"
+          className="bg-white border rounded-full left-button flex p-2 category-next"
           ref={(node) => setNextEl(node)}
         >
           <i className="fa-solid fa-chevron-right text-[0.75rem] h-3 w-3"></i>

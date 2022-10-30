@@ -45,7 +45,7 @@ function CategoryTypeContainer() {
       setSelectType(newArr);
       setSelectName(newArr.map((i) => i.categoryName));
     } else {
-      setSelectType(item);
+      setSelectType([item]);
       setSelectName([item.categoryName]);
     }
   };
@@ -83,7 +83,7 @@ function CategoryTypeContainer() {
         <TopMenu />
 
         <div className="px-32 pb-10">
-          <p className="text-start font-medium mb-5">
+          <p className="text-start text-[1.3rem] font-medium mb-8">
             Choose up to 2 highlights
           </p>
           <div className="flex flex-wrap gap-3">
@@ -98,10 +98,10 @@ function CategoryTypeContainer() {
                   className={`px-5 py-4 box-border bg-white border-gray text-start flex flex-nowrap items-center border-2  rounded-full  ${active}`}
                 >
                   <img
-                    className="w-5 h-5 mr-2"
+                    className="w-6 h-6 mr-2"
                     src={item.categoryIconImage}
                   ></img>
-                  <span className=" text-start font-medium">
+                  <span className="text-start font-medium">
                     {item.categoryName}
                   </span>
                 </button>
