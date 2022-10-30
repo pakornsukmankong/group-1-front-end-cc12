@@ -107,28 +107,28 @@ function Categories() {
           breakpoints={{
             320: {
               slidesPerView: 1,
-              spaceBetween: 1,
+              spaceBetween: 15,
               slidesPerGroup: 1
             },
             425: {
-              slidesPerView: 3,
+              slidesPerView: 2,
               spaceBetween: 1,
-              slidesPerGroup: 3
+              slidesPerGroup: 2
             },
             768: {
-              slidesPerView: 4,
-              spaceBetween: 1,
-              slidesPerGroup: 4
+              slidesPerView: 5,
+              spaceBetween: 15,
+              slidesPerGroup: 5
             },
             1024: {
-              slidesPerView: 5,
-              spaceBetween: 1,
-              slidesPerGroup: 5
+              slidesPerView: 7,
+              spaceBetween: 15,
+              slidesPerGroup: 7
             },
             1440: {
-              slidesPerView: 5,
-              spaceBetween: 100,
-              slidesPerGroup: 5
+              slidesPerView: 10,
+              spaceBetween: 15,
+              slidesPerGroup: 10
             }
           }}
           modules={[Pagination, Navigation]}
