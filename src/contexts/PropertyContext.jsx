@@ -33,7 +33,7 @@ function PropertyContextProvider({ children }) {
       // console.log(res.data.property);
       setRoom(res.data.property)
     } catch (err) {
-      console.log('Fetch fetchUserCourse Error')
+      console.log('Fetch fetchRoom Error')
     }
   }
 

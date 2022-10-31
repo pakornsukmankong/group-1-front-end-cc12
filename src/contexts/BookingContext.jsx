@@ -1,32 +1,32 @@
-import { useEffect, useState, createContext, useContext } from 'react';
-import * as bookingService from '../api/bookingApi';
+import { useEffect, useState, createContext, useContext } from 'react'
+import * as bookingService from '../api/bookingApi'
 
-const BookingContext = createContext();
+const BookingContext = createContext()
 
 function BookingContextProvider({ children }) {
-	const [userBooking, setUserBooking] = useState(null);
+  const [userBooking, setUserBooking] = useState(null)
 
-	// console.log(userBooking, 'userBooking');
+  // console.log(userBooking, 'userBooking');
 
-	const getUserBooking = async () => {
-		const res = await bookingService.getUserBooking();
-		// console.log(res.data.booking);
-		setUserBooking(res.data.booking);
-	};
+  const getUserBooking = async () => {
+    const res = await bookingService.getUserBooking()
+    // console.log(res.data.booking);
+    setUserBooking(res.data.booking)
+  }
 
-	useEffect(() => {
-		getUserBooking();
-	}, []);
+  useEffect(() => {
+    getUserBooking()
+  }, [])
 
-	return (
-		<BookingContext.Provider value={{ userBooking }}>
-			{children}
-		</BookingContext.Provider>
-	);
+  return (
+    <BookingContext.Provider value={{ userBooking, getUserBooking }}>
+      {children}
+    </BookingContext.Provider>
+  )
 }
 
 export const useBooking = () => {
-	return useContext(BookingContext);
-};
+  return useContext(BookingContext)
+}
 
-export default BookingContextProvider;
+export default BookingContextProvider
