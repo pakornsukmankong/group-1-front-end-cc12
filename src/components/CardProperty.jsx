@@ -16,7 +16,7 @@ function CardProperty({ roomData }) {
           <div className="text-black text-[1rem] leading-4">
             {roomData?.Property.propertyName}
 			<div className="text-[#717171] text-[0.75rem] leading-4 mt-2">
-			{roomData?.Property.description}
+			{roomData?.Property.description.substring(0,100) + '...'}
 			</div>
           </div>
           <div className="text-[0.75rem] flex  justify-start items-center gap-[1px]">
